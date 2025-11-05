@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm uninstall:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(claude mcp add:*)",
+      "WebFetch(domain:playwright.dev)",
+      "Bash(npx playwright install)",
+      "Bash(npm test)",
+      "Bash(lsof:*)",
+      "Bash(curl:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(kill:*)",
+      "Bash(cat:*)",
+      "Bash(node:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_fill_form",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_wait_for",
+      "Bash(xargs:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(pkill:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
