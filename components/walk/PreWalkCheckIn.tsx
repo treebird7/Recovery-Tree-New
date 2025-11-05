@@ -6,7 +6,9 @@ interface PreWalkCheckInProps {
   onComplete: (
     step: 'step1' | 'step2' | 'step3',
     mood?: string,
-    intention?: string
+    intention?: string,
+    location?: string,
+    bodyNeed?: string
   ) => void;
 }
 
@@ -14,10 +16,12 @@ export default function PreWalkCheckIn({ onComplete }: PreWalkCheckInProps) {
   const [step, setStep] = useState<'step1' | 'step2' | 'step3'>('step1');
   const [mood, setMood] = useState('');
   const [intention, setIntention] = useState('');
+  const [location, setLocation] = useState('');
+  const [bodyNeed, setBodyNeed] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onComplete(step, mood, intention);
+    onComplete(step, mood, intention, location, bodyNeed);
   };
 
   return (
@@ -46,10 +50,10 @@ export default function PreWalkCheckIn({ onComplete }: PreWalkCheckInProps) {
       <div className="bg-white rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            🌳 Welcome to Your Walk
+            🌳 Ready to Step Outside?
           </h1>
           <p className="text-gray-600">
-            Take a moment to check in with yourself before we begin.
+            Walk out of your situation, let nature change your state
           </p>
         </div>
 
@@ -134,7 +138,7 @@ export default function PreWalkCheckIn({ onComplete }: PreWalkCheckInProps) {
               htmlFor="intention"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              What do you hope to gain from this walk? (Optional)
+              What do you hope to gain from this session? (Optional)
             </label>
             <textarea
               id="intention"
@@ -146,20 +150,82 @@ export default function PreWalkCheckIn({ onComplete }: PreWalkCheckInProps) {
             />
           </div>
 
+          {/* Location Selection */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              Where will you go?
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { id: 'park', label: 'Park / Forest', icon: '🌲' },
+                { id: 'water', label: 'Water', icon: '🌊' },
+                { id: 'garden', label: 'Garden', icon: '🌻' },
+                { id: 'urban', label: 'Urban nature', icon: '🏙️' },
+                { id: 'mountains', label: 'Mountains', icon: '⛰️' },
+                { id: 'outside', label: 'Just outside', icon: '🚪' },
+              ].map((loc) => (
+                <button
+                  key={loc.id}
+                  type="button"
+                  onClick={() => setLocation(loc.id)}
+                  className={`p-3 rounded-lg border-2 text-left transition-all ${
+                    location === loc.id
+                      ? 'border-green-500 bg-green-50'
+                      : 'border-gray-200 hover:border-green-300'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">{loc.icon}</span>
+                    <span className="text-sm font-medium text-gray-800">{loc.label}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Body Needs Selection */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              What does your body need today?
+            </label>
+            <div className="grid grid-cols-1 gap-3">
+              {[
+                { id: 'movement', label: 'Movement', desc: 'walking, stretching' },
+                { id: 'stillness', label: 'Stillness', desc: 'sitting, lying down' },
+                { id: 'both', label: 'Both', desc: "I'll see what feels right" },
+                { id: 'unsure', label: 'Not sure yet', desc: "I'll follow my body" },
+              ].map((need) => (
+                <button
+                  key={need.id}
+                  type="button"
+                  onClick={() => setBodyNeed(need.id)}
+                  className={`p-4 rounded-lg border-2 text-left transition-all ${
+                    bodyNeed === need.id
+                      ? 'border-green-500 bg-green-50'
+                      : 'border-gray-200 hover:border-green-300'
+                  }`}
+                >
+                  <div className="font-semibold text-gray-800">{need.label}</div>
+                  <div className="text-sm text-gray-600 mt-1">{need.desc}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors shadow-lg"
           >
-            Begin Walk
+            Step Outside
           </button>
         </form>
 
         <div className="mt-6 p-4 bg-green-50 rounded-lg">
           <p className="text-sm text-gray-700">
-            <strong>💡 Tip:</strong> Find a quiet place to walk - a park, trail, or even
-            around your neighborhood. The Elder Tree will guide you with questions as you
-            walk.
+            <strong>💡 The magic isn't in walking -</strong> it's in letting nature hold you
+            while you do the work. Move or be still as your body tells you. The timer rewards
+            presence in nature, not movement.
           </p>
         </div>
       </div>

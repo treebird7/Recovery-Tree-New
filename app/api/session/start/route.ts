@@ -22,11 +22,15 @@ export async function POST(request: NextRequest) {
       step,
       preWalkMood,
       preWalkIntention,
+      location,
+      bodyNeed,
       resumeSession,
     }: {
       step: 'step1' | 'step2' | 'step3';
       preWalkMood?: string;
       preWalkIntention?: string;
+      location?: string;
+      bodyNeed?: string;
       resumeSession?: boolean;
     } = body;
 
@@ -63,7 +67,9 @@ export async function POST(request: NextRequest) {
       user.id,
       step,
       preWalkMood,
-      preWalkIntention
+      preWalkIntention,
+      location,
+      bodyNeed
     );
 
     if (sessionError || !session) {
@@ -75,7 +81,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Initialize conversation manager
-    const manager = new ConversationManager(step);
+    const manager = new ConversationManager(step, undefined, location, bodyNeed);
     const initialQuestion = manager.getInitialQuestion();
 
     return NextResponse.json({
