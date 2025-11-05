@@ -65,7 +65,7 @@ export default function InventoryComplete({
 
       {/* Summary */}
       <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-        <h2 className="text-xl font-bold text-gray-900 mb-6">Today's Inventory</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-6">Today&apos;s Inventory</h2>
 
         <div className="space-y-6">
           <div>
@@ -91,7 +91,7 @@ export default function InventoryComplete({
 
           <div>
             <h3 className="text-sm font-semibold text-blue-700 mb-2">
-              Tomorrow's intention
+              Tomorrow&apos;s intention
             </h3>
             <p className="text-gray-800">{responses.tomorrowIntention}</p>
           </div>
