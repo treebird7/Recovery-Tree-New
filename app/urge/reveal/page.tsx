@@ -152,7 +152,7 @@ export default function MiningRevealPage() {
           <div className="text-center mb-8">
             <p className="text-gray-400 text-lg mb-3">You made it through the night.</p>
             <p className="text-white text-2xl font-semibold mb-6">
-              You didn't act out.
+              You didn&apos;t act out.
             </p>
 
             <div className="bg-green-900/30 border border-green-600 rounded-lg p-6 mb-6">
@@ -175,7 +175,7 @@ export default function MiningRevealPage() {
               You chose rest over acting out.
             </p>
             <p className="text-white font-semibold mt-4">
-              That's the work.
+              That&apos;s the work.
             </p>
           </div>
         </div>
@@ -206,7 +206,7 @@ export default function MiningRevealPage() {
             </div>
 
             <p className="text-gray-500 text-sm text-center mt-6">
-              Be honest. There's no wrong answer.
+              Be honest. There&apos;s no wrong answer.
             </p>
           </div>
         )}

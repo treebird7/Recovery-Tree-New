@@ -77,7 +77,7 @@ export default function PreWalkCheckIn({ onComplete }: PreWalkCheckInProps) {
                   Step 1: Powerlessness & Unmanageability
                 </div>
                 <div className="text-sm text-gray-600 mt-1">
-                  Understanding where you've lost control
+                  Understanding where you&apos;ve lost control
                 </div>
               </button>
 
@@ -223,7 +223,7 @@ export default function PreWalkCheckIn({ onComplete }: PreWalkCheckInProps) {
 
         <div className="mt-6 p-4 bg-green-50 rounded-lg">
           <p className="text-sm text-gray-700">
-            <strong>💡 The magic isn't in walking -</strong> it's in letting nature hold you
+            <strong>💡 The magic isn&apos;t in walking -</strong> it&apos;s in letting nature hold you
             while you do the work. Move or be still as your body tells you. The timer rewards
             presence in nature, not movement.
           </p>

@@ -133,7 +133,7 @@ export default function SessionComplete({
 
       {/* Encouragement */}
       <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg mb-8">
-        <p className="text-lg text-gray-800 italic">"{encouragement}"</p>
+        <p className="text-lg text-gray-800 italic">&quot;{encouragement}&quot;</p>
       </div>
 
       {/* Coins Earned */}
