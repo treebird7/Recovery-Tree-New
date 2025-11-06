@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function MiningTimerPage() {
+function MiningTimerPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');
@@ -251,5 +251,20 @@ export default function MiningTimerPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function MiningTimerPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-b from-purple-900 to-indigo-900 flex items-center justify-center px-4">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-300 mb-4"></div>
+          <p className="text-purple-100">Loading...</p>
+        </div>
+      </div>
+    }>
+      <MiningTimerPageContent />
+    </Suspense>
   );
 }

@@ -150,7 +150,7 @@ interface PricingCardProps {
   name: string;
   price: string;
   period: string;
-  features: string[];
+  features: readonly string[];
   buttonText: string;
   buttonVariant: 'primary' | 'secondary';
   popular?: boolean;

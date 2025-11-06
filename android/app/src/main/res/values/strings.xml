@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Recovery Tree</string>
+    <string name="title_activity_main">Recovery Tree</string>
+    <string name="package_name">com.recoverytree.app</string>
+    <string name="custom_url_scheme">com.recoverytree.app</string>
+</resources>
