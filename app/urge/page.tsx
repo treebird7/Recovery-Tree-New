@@ -143,10 +143,10 @@ export default function UrgePage() {
                 </p>
 
                 <p>
-                  I'm guessing you're not opening this app because everything feels easy right now.
+                  I&apos;m guessing you&apos;re not opening this app because everything feels easy right now.
                 </p>
 
-                <p className="text-gray-400 mb-6">What's going on?</p>
+                <p className="text-gray-400 mb-6">What&apos;s going on?</p>
 
                 <form onSubmit={handleUserSubmit}>
                   <textarea
@@ -215,7 +215,7 @@ export default function UrgePage() {
               onClick={() => setStage('solution')}
               className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-6 px-8 rounded-xl transition-all shadow-2xl text-xl"
             >
-              I'm Willing to Listen
+              I&apos;m Willing to Listen
             </button>
           </>
         )}
@@ -231,8 +231,8 @@ export default function UrgePage() {
                     you rest.</strong>
                   </p>
                   <p className="text-green-200 mt-2 text-base">
-                    Even if you can't sleep right away - just lying there in the dark, breathing, not acting
-                    out - that counts. Every minute you're <em>not</em> acting out, your tree grows stronger.
+                    Even if you can&apos;t sleep right away - just lying there in the dark, breathing, not acting
+                    out - that counts. Every minute you&apos;re <em>not</em> acting out, your tree grows stronger.
                   </p>
                 </div>
 
@@ -242,7 +242,7 @@ export default function UrgePage() {
                 </p>
 
                 <p className="text-xl font-bold text-white mt-6">
-                  What's it going to be, {username}?
+                  What&apos;s it going to be, {username}?
                 </p>
               </div>
             </div>
@@ -317,7 +317,7 @@ export default function UrgePage() {
                 onClick={handleGoToWalk}
                 className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-4 px-8 rounded-xl transition-all border-2 border-gray-600"
               >
-                I'm OK - Take Me to Walk Session
+                I&apos;m OK - Take Me to Walk Session
               </button>
             </div>
 

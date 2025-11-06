@@ -196,7 +196,7 @@ export default function MiningTimerPage() {
               Your tree is mining coins right now.
             </p>
             <p className="text-gray-300">
-              Every minute you're not acting out = 1 coin earned.
+              Every minute you&apos;re not acting out = 1 coin earned.
             </p>
           </div>
 
@@ -212,10 +212,10 @@ export default function MiningTimerPage() {
 
           <div className="bg-green-900/20 rounded-xl p-6 border border-green-800">
             <p className="text-green-200">
-              You don't have to sleep. Just rest.
+              You don&apos;t have to sleep. Just rest.
             </p>
             <p className="text-green-300 mt-3 text-lg">
-              Even lying there awake counts. You're not acting out. That's what matters.
+              Even lying there awake counts. You&apos;re not acting out. That&apos;s what matters.
             </p>
           </div>
 

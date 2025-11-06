@@ -97,7 +97,7 @@ export default function SuccessPage() {
 
         {/* What's Next */}
         <div className="bg-green-50 rounded-lg p-4 mb-6 text-left">
-          <h2 className="font-semibold text-gray-900 mb-2">What's next?</h2>
+          <h2 className="font-semibold text-gray-900 mb-2">What&apos;s next?</h2>
           <ul className="space-y-2 text-sm text-gray-700">
             <li className="flex items-start">
               <svg
