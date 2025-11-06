@@ -155,6 +155,8 @@ export async function POST(request: NextRequest) {
       moodDescription,
       coinsEarned,
       totalCoins,
+      location: session.location || undefined,
+      bodyNeed: session.body_need || undefined,
       analytics: {
         questionsCompleted: analytics.questionsCompleted,
         breakthroughMoments: analytics.breakthroughMoments,

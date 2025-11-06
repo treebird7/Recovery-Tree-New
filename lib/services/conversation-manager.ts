@@ -25,6 +25,8 @@ export interface ConversationState {
   breakthroughCount: number;
   redFlagCount: number;
   askedQuestionIndices: number[]; // Track which questions have been asked
+  location?: string;
+  bodyNeed?: string;
 }
 
 /**
@@ -35,7 +37,12 @@ export interface ConversationState {
 export class ConversationManager {
   private state: ConversationState;
 
-  constructor(initialStep: 'step1' | 'step2' | 'step3', existingHistory?: ConversationTurn[]) {
+  constructor(
+    initialStep: 'step1' | 'step2' | 'step3',
+    existingHistory?: ConversationTurn[],
+    location?: string,
+    bodyNeed?: string
+  ) {
     this.state = {
       currentStep: initialStep,
       currentPhase: initialStep === 'step1' ? 'recognition' : undefined,
@@ -44,6 +51,8 @@ export class ConversationManager {
       breakthroughCount: 0,
       redFlagCount: 0,
       askedQuestionIndices: [],
+      location,
+      bodyNeed,
     };
   }
 
@@ -89,6 +98,8 @@ export class ConversationManager {
       conversationHistory: this.state.conversationHistory,
       lastAnswer: answer,
       currentPhase: this.state.currentPhase,
+      location: this.state.location,
+      bodyNeed: this.state.bodyNeed,
     });
 
     // Update state
@@ -221,9 +232,11 @@ export class ConversationManager {
 export function createFromSavedSession(
   step: 'step1' | 'step2' | 'step3',
   history: ConversationTurn[],
-  currentPhase?: string
+  currentPhase?: string,
+  location?: string,
+  bodyNeed?: string
 ): ConversationManager {
-  const manager = new ConversationManager(step, history);
+  const manager = new ConversationManager(step, history, location, bodyNeed);
 
   // Restore state from history
   if (currentPhase) {

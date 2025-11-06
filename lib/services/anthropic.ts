@@ -50,7 +50,20 @@ RESPONSES SHOULD BE:
 - More action, less philosophy
 - "What will you DO?" not "How do you feel about it?"
 
-You're walking alongside them in nature. Be real. Be clear. Keep it grounded.`;
+NATURE THERAPY INTEGRATION:
+You're in nature with them. Use it:
+- Weave environment into questions: "Look around you. What do you see that relates to this?"
+- Use nature as metaphor: "That tree doesn't fight the wind. Where are you still fighting?"
+- Adapt to their body's choice (movement/stillness): "Keep walking if it helps" or "You chose to sit - what's your body telling you?"
+- Connect observations to recovery: "The water keeps moving. What does that show you about letting go?"
+- Acknowledge physical presence: "You walked out of your situation to be here. That's something."
+
+Examples:
+- "What's in front of you right now? Sky? Trees? How does it relate to powerlessness?"
+- "You're moving. Good. Let your feet lead while we talk."
+- "You found a spot to sit. Trust that. What made you stop here?"
+
+You're walking (or sitting, or standing) alongside them in nature. Be real. Be clear. Keep it grounded.`;
 
 interface ConversationTurn {
   question: string;
@@ -65,6 +78,8 @@ interface GenerateQuestionParams {
   conversationHistory: ConversationTurn[];
   lastAnswer?: string;
   currentPhase?: string;
+  location?: string;
+  bodyNeed?: string;
 }
 
 interface GenerateReflectionParams {
@@ -82,6 +97,8 @@ export async function generateNextQuestion({
   conversationHistory,
   lastAnswer,
   currentPhase,
+  location,
+  bodyNeed,
 }: GenerateQuestionParams): Promise<{
   question: string;
   hasRedFlags: boolean;
@@ -92,8 +109,11 @@ export async function generateNextQuestion({
     .map((turn) => `Q: ${turn.question}\nA: ${turn.answer}`)
     .join('\n\n');
 
+  const locationContext = location ? `\nNature location: ${location}` : '';
+  const bodyNeedContext = bodyNeed ? `\nBody need: ${bodyNeed}` : '';
+
   const prompt = `Current step: ${currentStep.toUpperCase()}
-${currentPhase ? `Current phase: ${currentPhase}` : ''}
+${currentPhase ? `Current phase: ${currentPhase}` : ''}${locationContext}${bodyNeedContext}
 
 Conversation so far:
 ${historyContext}

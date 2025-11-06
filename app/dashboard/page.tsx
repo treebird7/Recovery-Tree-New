@@ -105,6 +105,34 @@ export default async function DashboardPage() {
             </Link>
           </div>
 
+          {/* Outside Walkabout */}
+          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+            <div className="mb-4">
+              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                <svg
+                  className="w-6 h-6 text-emerald-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Outside Walkabout</h3>
+            <p className="text-gray-600 mb-4">Ground yourself through nature and movement</p>
+            <Link href="/walkabout">
+              <button className="w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700 transition">
+                Take a Walkabout
+              </button>
+            </Link>
+          </div>
+
           <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
             <div className="mb-4">
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">

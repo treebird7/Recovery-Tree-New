@@ -14,6 +14,8 @@ export default function UrgePage() {
   const [elderResponse, setElderResponse] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [timerDuration, setTimerDuration] = useState<number | null>(null); // in minutes, null = indefinite
+  const [customMinutes, setCustomMinutes] = useState<string>(''); // for custom input
+  const [showCustomInput, setShowCustomInput] = useState(false);
 
   useEffect(() => {
     // Get current time
@@ -250,11 +252,11 @@ export default function UrgePage() {
             {/* Timer Duration Selector */}
             <div className="bg-gray-800 rounded-2xl shadow-2xl p-6 mb-6 border border-gray-700">
               <h3 className="text-white font-semibold mb-4 text-lg">How long do you want to rest?</h3>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3 mb-3">
                 <button
-                  onClick={() => setTimerDuration(null)}
+                  onClick={() => { setTimerDuration(null); setShowCustomInput(false); }}
                   className={`py-3 px-4 rounded-lg font-semibold transition-all ${
-                    timerDuration === null
+                    timerDuration === null && !showCustomInput
                       ? 'bg-green-600 text-white'
                       : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                   }`}
@@ -262,9 +264,9 @@ export default function UrgePage() {
                   Until morning
                 </button>
                 <button
-                  onClick={() => setTimerDuration(30)}
+                  onClick={() => { setTimerDuration(30); setShowCustomInput(false); }}
                   className={`py-3 px-4 rounded-lg font-semibold transition-all ${
-                    timerDuration === 30
+                    timerDuration === 30 && !showCustomInput
                       ? 'bg-green-600 text-white'
                       : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                   }`}
@@ -272,9 +274,9 @@ export default function UrgePage() {
                   30 minutes
                 </button>
                 <button
-                  onClick={() => setTimerDuration(60)}
+                  onClick={() => { setTimerDuration(60); setShowCustomInput(false); }}
                   className={`py-3 px-4 rounded-lg font-semibold transition-all ${
-                    timerDuration === 60
+                    timerDuration === 60 && !showCustomInput
                       ? 'bg-green-600 text-white'
                       : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                   }`}
@@ -282,15 +284,50 @@ export default function UrgePage() {
                   1 hour
                 </button>
                 <button
-                  onClick={() => setTimerDuration(120)}
+                  onClick={() => { setTimerDuration(120); setShowCustomInput(false); }}
                   className={`py-3 px-4 rounded-lg font-semibold transition-all ${
-                    timerDuration === 120
+                    timerDuration === 120 && !showCustomInput
                       ? 'bg-green-600 text-white'
                       : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                   }`}
                 >
                   2 hours
                 </button>
+              </div>
+
+              {/* Custom Timer Input */}
+              <div className="border-t border-gray-700 pt-3">
+                <button
+                  onClick={() => { setShowCustomInput(!showCustomInput); if (!showCustomInput) setTimerDuration(null); }}
+                  className={`w-full py-2 px-4 rounded-lg font-semibold transition-all text-sm ${
+                    showCustomInput
+                      ? 'bg-green-600 text-white'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  {showCustomInput ? '✓ Custom Time' : '+ Set Custom Time'}
+                </button>
+
+                {showCustomInput && (
+                  <div className="mt-3 flex items-center gap-2">
+                    <input
+                      type="number"
+                      min="1"
+                      max="480"
+                      value={customMinutes}
+                      onChange={(e) => {
+                        setCustomMinutes(e.target.value);
+                        const minutes = parseInt(e.target.value);
+                        if (minutes > 0 && minutes <= 480) {
+                          setTimerDuration(minutes);
+                        }
+                      }}
+                      placeholder="Minutes"
+                      className="flex-1 bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:border-green-500 focus:outline-none"
+                    />
+                    <span className="text-gray-400 text-sm">minutes</span>
+                  </div>
+                )}
               </div>
               {timerDuration && (
                 <p className="text-gray-400 text-sm mt-3 text-center">
