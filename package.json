@@ -11,7 +11,8 @@
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report",
+    "coord": "node .coordination/coord-cli.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.27.0",

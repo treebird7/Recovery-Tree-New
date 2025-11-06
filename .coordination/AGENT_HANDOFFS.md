@@ -1,0 +1,270 @@
+# Agent Handoffs - Rooting Routine
+
+**Purpose**: Track integration points and dependencies between agents
+**Last Updated**: 2025-11-06
+
+---
+
+## 🔄 Active Handoffs
+
+### Handoff #1: Session History Feature
+
+**Flow**: DB Agent → Backend Agent → Frontend Agent → QA Agent
+
+**Current Stage**: Not started
+
+#### DB Agent → Backend Agent
+**Status**: ⏸️ Pending
+**Deliverable**: Query function for session history
+**Location**: `lib/queries/sessions.ts`
+**Interface**:
+```typescript
+async function getUserSessionHistory(
+  userId: string,
+  options: {
+    type?: 'walk' | 'mining' | 'inventory';
+    limit?: number;
+    offset?: number;
+    startDate?: Date;
+    endDate?: Date;
+  }
+): Promise<Session[]>
+```
+
+**Handoff Checklist**:
+- [ ] Function implemented and exported
+- [ ] Performance tested with 100+ records
+- [ ] Documentation added
+- [ ] Example usage provided
+- [ ] Backend Agent notified in WORK_QUEUE.md
+
+---
+
+#### Backend Agent → Frontend Agent
+**Status**: ⏸️ Pending
+**Deliverable**: REST API endpoint
+**Location**: `app/api/sessions/history/route.ts`
+**Interface**:
+```
+GET /api/sessions/history
+Query params: type, limit, offset, startDate, endDate
+Response: {sessions: [...], pagination: {...}}
+```
+
+**Handoff Checklist**:
+- [ ] Endpoint implemented
+- [ ] Tested with Postman/curl
+- [ ] Error cases handled
+- [ ] Documentation in API_ROUTES.md
+- [ ] Frontend Agent notified
+
+---
+
+#### Frontend Agent → QA Agent
+**Status**: ⏸️ Pending
+**Deliverable**: History page UI
+**Location**: `app/history/page.tsx`
+**URL**: `/history`
+
+**Handoff Checklist**:
+- [ ] Page accessible at /history
+- [ ] All features implemented
+- [ ] No console errors
+- [ ] Mobile tested in dev tools
+- [ ] QA Agent notified with test scenarios
+
+---
+
+#### QA Agent → Coordinator
+**Status**: ⏸️ Pending
+**Deliverable**: Test report
+**Location**: `.coordination/test-reports/session-history.md`
+
+**Handoff Checklist**:
+- [ ] All test scenarios passed
+- [ ] Edge cases verified
+- [ ] Performance acceptable
+- [ ] Issues logged if any
+- [ ] Feature marked complete in WORK_QUEUE.md
+
+---
+
+## 📦 Handoff Templates
+
+### Template: DB → Backend
+
+**What Backend Needs from DB**:
+- Function signature and location
+- Expected input/output types
+- Performance characteristics
+- Error cases to handle
+- Example usage
+
+**Format**:
+```markdown
+### [Feature Name] DB Handoff
+
+**Function**: `functionName` in `path/to/file.ts`
+**Purpose**: {What it does}
+**Parameters**: {List with types}
+**Returns**: {Type and shape}
+**Errors**: {Possible error cases}
+**Example**:
+```typescript
+const result = await functionName(params);
+```
+```
+
+---
+
+### Template: Backend → Frontend
+
+**What Frontend Needs from Backend**:
+- API endpoint URL and method
+- Request format (body, query, headers)
+- Response format (success and error)
+- Authentication requirements
+- Rate limits or constraints
+
+**Format**:
+```markdown
+### [Feature Name] API Handoff
+
+**Endpoint**: `METHOD /api/path`
+**Auth**: Required/Optional
+**Request**:
+```json
+{request format}
+```
+**Response**:
+```json
+{response format}
+```
+**Errors**: {Error codes and meanings}
+**Example**:
+```javascript
+const response = await fetch('/api/path', {options});
+```
+```
+
+---
+
+### Template: Frontend → QA
+
+**What QA Needs from Frontend**:
+- Feature URL or entry point
+- Test scenarios to verify
+- Known limitations
+- Required setup (auth, data, etc.)
+- Expected behaviors
+
+**Format**:
+```markdown
+### [Feature Name] QA Handoff
+
+**Entry Point**: URL or component path
+**Test Scenarios**:
+1. {Scenario description}
+   - Setup: {How to set up}
+   - Steps: {What to do}
+   - Expected: {What should happen}
+
+**Known Issues**: {Any known limitations}
+**Setup**: {Pre-requisites for testing}
+```
+
+---
+
+## 📋 Completed Handoffs
+
+*No completed handoffs yet - tracking starts now*
+
+---
+
+## 🚨 Blocked Handoffs
+
+**None currently**
+
+---
+
+## 💡 Handoff Best Practices
+
+**For Delivering Agent**:
+1. ✅ Complete your task fully before handing off
+2. ✅ Test your deliverable in isolation
+3. ✅ Document the interface clearly
+4. ✅ Provide examples
+5. ✅ Update this file with handoff details
+6. ✅ Notify receiving agent in WORK_QUEUE.md
+7. ✅ Be available for questions
+
+**For Receiving Agent**:
+1. ✅ Read handoff documentation before starting
+2. ✅ Test the deliverable you received
+3. ✅ Ask questions if interface unclear
+4. ✅ Report issues immediately
+5. ✅ Acknowledge receipt in WORK_QUEUE.md
+6. ✅ Update handoff status when you start
+
+**For All Agents**:
+- 🔍 Verify integration points work before moving on
+- 📝 Document assumptions and constraints
+- 🤝 Communicate blockers early
+- ✨ Keep interfaces clean and simple
+
+---
+
+## 🔗 Cross-Agent Dependencies
+
+### Current Dependencies Map
+
+```
+Task #3 (DB: History Query)
+    ↓
+Task #2 (Backend: History API)
+    ↓
+Task #4 (Frontend: History UI)
+    ↓
+Task #7 (Frontend: History Detail)
+
+Task #1 (DB: Inventory Migration)
+    ↓
+Task #8 (Frontend: Inventory History)
+
+Task #5 (Backend: Profile API)
+    ↓
+{No dependencies, standalone}
+
+Task #6 (AI: Image Generation)
+    ↓
+{No dependencies, fix existing}
+
+Task #9 (Pattern Recognition)
+    → DB Agent (table design)
+    → Backend Agent (analysis API)
+    → AI Agent (algorithm)
+    → Frontend Agent (UI display)
+```
+
+---
+
+## 📊 Integration Status
+
+**Healthy Integrations** ✅:
+- Auth system → All protected routes
+- Session service → Walk/Mining features
+- Coin service → Session completion
+- Supabase client → All API routes
+
+**Needs Attention** ⚠️:
+- Image generation → Session completion (failing)
+- Profile API → Urge landing page (404)
+
+**Not Yet Built** 🔨:
+- Session history → Dashboard
+- Inventory history → Inventory complete page
+- Pattern insights → Dashboard
+
+---
+
+**End of Handoffs Document**
