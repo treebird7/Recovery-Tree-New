@@ -78,6 +78,7 @@ export default function MiningTimerPage() {
       const response = await fetch('/api/mining/end', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}), // Send empty object to satisfy JSON parsing
       });
 
       if (!response.ok) {
