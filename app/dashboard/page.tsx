@@ -50,7 +50,7 @@ export default async function DashboardPage() {
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-green-900 mb-2">Welcome to Your Journey</h2>
           <p className="text-lg text-green-700">
-            Ready for today's recovery walk?
+            Ready for today&apos;s recovery walk?
           </p>
         </div>
 
@@ -97,7 +97,7 @@ export default async function DashboardPage() {
               </div>
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Need Help Now?</h3>
-            <p className="text-gray-600 mb-4">Talk to the Elder Tree about what's going on</p>
+            <p className="text-gray-600 mb-4">Talk to the Elder Tree about what&apos;s going on</p>
             <Link href="/urge">
               <button className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
                 I Need Support
@@ -124,7 +124,7 @@ export default async function DashboardPage() {
               </div>
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Start New Walk</h3>
-            <p className="text-gray-600 mb-4">Begin today's recovery walk with step work</p>
+            <p className="text-gray-600 mb-4">Begin today&apos;s recovery walk with step work</p>
             <Link href="/walk">
               <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
                 Begin Walk
@@ -156,7 +156,7 @@ export default async function DashboardPage() {
               <p className="text-gray-600 mb-4">Take a few minutes to reflect on your day</p>
               <Link href="/inventory">
                 <button className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
-                  Complete Today's Inventory
+                  Complete Today&apos;s Inventory
                 </button>
               </Link>
             </div>
