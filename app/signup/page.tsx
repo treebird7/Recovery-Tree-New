@@ -83,7 +83,7 @@ export default function SignupPage() {
           </div>
           <h2 className="text-2xl font-bold text-green-800 mb-4">Check Your Email</h2>
           <p className="text-gray-600 mb-6">
-            We've sent you a confirmation email. Please check your inbox and click the link to
+            We&apos;ve sent you a confirmation email. Please check your inbox and click the link to
             verify your account.
           </p>
           <a

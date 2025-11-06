@@ -73,7 +73,7 @@ export default function PreWalkCheckIn({ onComplete }: PreWalkCheckInProps) {
                   Step 1: Powerlessness & Unmanageability
                 </div>
                 <div className="text-sm text-gray-600 mt-1">
-                  Understanding where you've lost control
+                  Understanding where you&apos;ve lost control
                 </div>
               </button>
 
