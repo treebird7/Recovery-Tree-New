@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
+import OAuthButtons from '@/components/auth/OAuthButtons';
 
 export default function SignupPage() {
   const [email, setEmail] = useState('');
@@ -104,6 +105,9 @@ export default function SignupPage() {
           <h1 className="text-3xl font-bold text-green-800 mb-2">Start Your Journey</h1>
           <p className="text-green-600">Create an account to begin</p>
         </div>
+
+        {/* OAuth Buttons */}
+        <OAuthButtons mode="signup" redirectTo="/dashboard" />
 
         <form onSubmit={handleSignup} className="space-y-6">
           {error && (

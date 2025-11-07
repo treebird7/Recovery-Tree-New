@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import OAuthButtons from '@/components/auth/OAuthButtons';
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
@@ -44,6 +45,9 @@ export default function LoginPage() {
           <h1 className="text-3xl font-bold text-green-800 mb-2">Welcome Back</h1>
           <p className="text-green-600">Sign in to continue your recovery journey</p>
         </div>
+
+        {/* OAuth Buttons */}
+        <OAuthButtons mode="signin" redirectTo="/dashboard" />
 
         <form onSubmit={(e) => {
           console.log('📝 Form submitted!');
