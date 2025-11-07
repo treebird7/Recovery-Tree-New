@@ -10,7 +10,7 @@ import {
   generateEncouragement,
   extractInsights,
 } from '@/lib/services/anthropic';
-import { analyzeMood, getMoodDescription } from '@/lib/services/fal-ai';
+import { analyzeMood, getMoodDescription, generateNatureImage } from '@/lib/services/dalle-images';
 import { selectNatureImage } from '@/lib/services/unsplash-images';
 import { createFromSavedSession } from '@/lib/services/conversation-manager';
 import { awardCoins, getUserCoins } from '@/lib/services/mining';
@@ -85,10 +85,25 @@ export async function POST(request: NextRequest) {
     console.log('Extracting insights...');
     const insights = await extractInsights(session.step_responses);
 
-    // Determine mood and select nature image
+    // Determine mood and generate nature image with DALL-E 3
     const mood = analyzeMood(session.step_responses);
-    console.log(`Selecting nature image for mood: ${mood}`);
-    const imageUrl = selectNatureImage(mood);
+    console.log(`Generating nature image with DALL-E 3 for mood: ${mood}`);
+
+    // Try DALL-E first, fallback to Unsplash if it fails
+    const { imageUrl: dalleImageUrl, error: dalleError } = await generateNatureImage(
+      session.step_responses,
+      session.pre_walk_mood || undefined
+    );
+
+    let imageUrl: string;
+    if (dalleImageUrl) {
+      imageUrl = dalleImageUrl;
+      console.log('Using DALL-E generated image');
+    } else {
+      console.log('DALL-E failed, falling back to Unsplash:', dalleError);
+      imageUrl = selectNatureImage(mood);
+      console.log('Using Unsplash fallback image');
+    }
 
     // Complete session in database
     const { error: completeError } = await completeSession(

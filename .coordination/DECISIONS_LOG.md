@@ -49,53 +49,7 @@ What should the session history page look like?
 
 ---
 
-### PD-002: Image Generation Strategy
-**Date Raised**: 2025-11-06
-**Category**: Technical / Cost
-**Owner**: Product Owner + AI Agent
-**Priority**: Medium
-
-**Question**:
-Should we fix FAL.ai integration or switch to alternative?
-
-**Context**:
-- FAL.ai currently failing (no images generated)
-- Unsplash working well as fallback
-- Session completion works without generated images
-
-**Options**:
-1. **Fix FAL.ai**
-   - Pros: Custom AI-generated imagery, mood-specific
-   - Cons: Debugging time, potential ongoing reliability issues
-   - Cost: $0.05-0.15 per image
-
-2. **Stick with Unsplash Only**
-   - Pros: Free, reliable, beautiful nature photos
-   - Cons: Not mood-personalized, stock photos
-   - Cost: Free
-
-3. **Try DALL-E 3 (OpenAI)**
-   - Pros: Very reliable, high quality, good API
-   - Cons: More expensive
-   - Cost: $0.04-0.08 per image (1024x1024)
-
-4. **Try Stability AI**
-   - Pros: Good quality, decent pricing
-   - Cons: Another integration to build
-   - Cost: ~$0.05 per image
-
-5. **Make Generated Images Optional/Premium**
-   - Pros: Reduces cost, still available
-   - Cons: Feature gating complexity
-   - Implementation: Coin spending mechanic?
-
-**Recommendation**: Stick with Unsplash for MVP, revisit for v1.1
-
-**Decision**: *Awaiting product owner input*
-
----
-
-### PD-003: Coin Economy Purpose
+### PD-002: Coin Economy Purpose
 **Date Raised**: 2025-11-06
 **Category**: Game Design / Monetization
 **Owner**: Product Owner
@@ -150,6 +104,34 @@ What can users do with their coins?
 ---
 
 ## ✅ Decided
+
+### DEC-004: Switch to DALL-E 3 for Image Generation
+**Date**: 2025-11-06
+**Category**: Technical / Cost
+**Decision**: Use OpenAI DALL-E 3 instead of FAL.ai, with Unsplash as fallback
+
+**Rationale**:
+- FAL.ai unreliable (no images generated)
+- Product owner suggested using OpenAI
+- DALL-E 3 is more reliable and well-documented
+- Mood-specific AI-generated images improve user experience
+- Reasonable cost (~$0.04-0.08 per image)
+- Unsplash fallback ensures always have image
+
+**Impact**:
+- Installed OpenAI SDK
+- Created `lib/services/dalle-images.ts`
+- Updated session completion to use DALL-E first, Unsplash fallback
+- Need `OPENAI_API_KEY` environment variable
+
+**Alternatives Considered**:
+- Fix FAL.ai - reliability concerns
+- Unsplash only - not mood-personalized
+- Stability AI - another integration to build
+
+**Status**: ✅ Implemented
+
+---
 
 ### DEC-003: Multi-Agent Orchestration
 **Date**: 2025-11-06
