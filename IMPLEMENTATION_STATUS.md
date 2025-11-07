@@ -143,18 +143,12 @@
 - Session completion still works (graceful degradation)
 - **Needs**: Debug FAL.ai API integration
 
-### 2. **Missing Profile API**
-- **Error**: `GET /api/user/profile 404`
-- Used by `/urge` page to get username
-- Falls back to "friend" when missing
-- **Needs**: Create `/api/user/profile/route.ts`
-
-### 3. **Session History Not Implemented**
+### 2. **Session History Not Implemented**
 - Dashboard shows "Coming Soon" button
 - `/history` route returns 404
 - **Needs**: Build session history page
 
-### 4. **Mining Page 404 (First Load)**
+### 3. **Mining Page 404 (First Load)**
 - `/urge/mining` shows 404 on first navigation
 - Works after Next.js compiles the route
 - Not a bug, just cold start behavior

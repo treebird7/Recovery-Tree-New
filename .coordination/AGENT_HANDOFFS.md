@@ -177,7 +177,45 @@ const response = await fetch('/api/path', {options});
 
 ## 📋 Completed Handoffs
 
-*No completed handoffs yet - tracking starts now*
+### Backend Agent → Frontend: User Profile API
+
+**Status**: ✅ Complete (existed from initial commit)
+**Deliverable**: User profile endpoint
+**Location**: `app/api/user/profile/route.ts`
+
+**Endpoint**: `GET /api/user/profile`
+**Auth**: Required (returns 401 if not logged in)
+
+**Response**:
+```json
+{
+  "id": "uuid",
+  "email": "user@example.com",
+  "displayName": "user",
+  "createdAt": "2025-11-01T12:00:00Z"
+}
+```
+
+**Error Responses**:
+- 401: Unauthorized (not logged in)
+- 500: Internal server error
+
+**Usage Example**:
+```typescript
+// In a React component
+const response = await fetch('/api/user/profile');
+if (response.ok) {
+  const profile = await response.json();
+  console.log(`Hello ${profile.displayName}!`);
+}
+```
+
+**Notes**:
+- Display name automatically extracted from email (before @ symbol)
+- Falls back to "friend" if email unavailable
+- Used by urge landing page to personalize greeting
+
+**Verified**: 2025-11-06
 
 ---
 
@@ -258,7 +296,6 @@ Task #9 (Pattern Recognition)
 
 **Needs Attention** ⚠️:
 - Image generation → Session completion (failing)
-- Profile API → Urge landing page (404)
 
 **Not Yet Built** 🔨:
 - Session history → Dashboard

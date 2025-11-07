@@ -181,7 +181,7 @@ Create the session history page showing user's past walks, mining sessions, and 
 
 ### Task #5: Create User Profile API
 **Agent**: Backend Agent
-**Status**: 🟢 Ready
+**Status**: ✅ Completed on 2025-11-06 (Already existed)
 **Priority**: P1 (High)
 **ETA**: 30 minutes
 **Dependencies**: None
@@ -189,11 +189,13 @@ Create the session history page showing user's past walks, mining sessions, and 
 **Description**:
 Create missing `/api/user/profile` endpoint used by urge landing page.
 
+**Resolution**: API endpoint already existed from initial commit at `app/api/user/profile/route.ts`. Verified implementation is correct and documented in AGENT_HANDOFFS.md.
+
 **Acceptance Criteria**:
-- [ ] Endpoint: `GET /api/user/profile`
-- [ ] Returns user email and created_at
-- [ ] Requires authentication
-- [ ] Error handling for unauthenticated users
+- [x] Endpoint: `GET /api/user/profile`
+- [x] Returns user email and created_at
+- [x] Requires authentication
+- [x] Error handling for unauthenticated users
 
 **API Response**:
 ```json
