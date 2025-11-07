@@ -189,7 +189,7 @@ export default async function DashboardPage() {
             </div>
           )}
 
-          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition opacity-50 cursor-not-allowed">
+          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
             <div className="mb-4">
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                 <svg
@@ -209,9 +209,11 @@ export default async function DashboardPage() {
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Session History</h3>
             <p className="text-gray-600 mb-4">Review your past walks and reflections</p>
-            <button disabled className="w-full bg-gray-300 text-white py-2 rounded-lg cursor-not-allowed">
-              Coming Soon
-            </button>
+            <Link href="/history">
+              <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                View History
+              </button>
+            </Link>
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition opacity-50 cursor-not-allowed">
