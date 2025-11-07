@@ -1,6 +1,6 @@
 # Rooting Routine - Coordinator Context
 
-**Last Updated**: 2025-11-06
+**Last Updated**: 2025-11-07
 **Coordinator**: The Elder Architect
 **Project Phase**: MVP Enhancement → Launch Ready
 
@@ -27,6 +27,8 @@
 - Daily Inventory: ⚠️ Needs DB migration
 - Coin Economy: ✅ Working
 - Dashboard: ✅ Working
+- Image Generation: ✅ Working (DALL-E 3)
+- Session History API: ✅ Working
 
 **Blockers**: None critical
 **Risk Level**: Low
@@ -36,10 +38,14 @@
 ## 🚧 Active Work Streams
 
 ### Stream A: Session History (Priority: HIGH)
-- **Status**: Not started
-- **Owner**: Frontend Agent + Backend Agent
-- **ETA**: 3-4 hours
-- **Dependencies**: None
+- **Status**: Backend complete, Frontend ready to start
+- **Owner**: Frontend Agent (Next)
+- **Progress**:
+  - ✅ Task #3: DB queries complete (2025-11-06)
+  - ✅ Task #2: API endpoint complete (2025-11-07)
+  - 🟢 Task #4: UI implementation ready
+- **ETA**: 2 hours (UI only)
+- **Dependencies**: None (unblocked)
 - **Blocker**: None
 
 ### Stream B: Inventory Migration (Priority: HIGH)
@@ -50,12 +56,12 @@
 - **Blocker**: None
 
 ### Stream C: Bug Fixes (Priority: MEDIUM)
-- **Status**: Not started
+- **Status**: ✅ Complete
 - **Owner**: Backend Agent + AI Agent
-- **ETA**: 2-3 hours
-- **Issues**:
-  - Image generation (FAL.ai failing)
-  - Missing /api/user/profile endpoint
+- **Completed**:
+  - ✅ Task #5: User Profile API (already existed, verified 2025-11-06)
+  - ✅ Task #6: Image generation (switched to DALL-E 3, 2025-11-06)
+- **Notes**: All critical bugs resolved
 
 ---
 
@@ -66,12 +72,10 @@
   - **Recommendation**: Timeline (most recent first) with type filters
   - **Needs**: User approval
 
-- [ ] **Image Generation**: Stick with FAL.ai or switch to alternative?
-  - **Options**:
-    - Fix FAL.ai debugging
-    - Switch to Unsplash only
-    - Try DALL-E or Stability AI
-  - **Needs**: Cost/quality analysis
+- [x] **Image Generation**: ✅ Decided - Switched to DALL-E 3
+  - **Decision**: Use OpenAI DALL-E 3 with Unsplash fallback
+  - **Rationale**: More reliable than FAL.ai, product owner approved
+  - **Status**: Implemented (2025-11-06)
 
 ### Medium Priority
 - [ ] **Coin Economy**: What can users spend coins on?
@@ -108,7 +112,20 @@
 
 ## 🔄 Recent Decisions (Changelog)
 
+### 2025-11-07
+- **Decision**: Completed Session History API (Task #2)
+  - **Owner**: Backend Agent
+  - **Details**: Full REST API with filtering, pagination, validation
+  - **Impact**: Frontend Agent unblocked for Task #4 (UI implementation)
+  - **Status**: ✅ Completed
+
 ### 2025-11-06
+- **Decision**: Switched to DALL-E 3 for image generation (Task #6)
+  - **Rationale**: More reliable than FAL.ai, product owner approved
+  - **Impact**: Updated session completion flow with Unsplash fallback
+  - **Cost**: ~$0.04-0.08 per image
+  - **Status**: ✅ Completed
+
 - **Decision**: Implement multi-agent orchestration system
   - **Rationale**: Accelerate development, improve parallelization
   - **Impact**: Work breakdown structure, new coordination files

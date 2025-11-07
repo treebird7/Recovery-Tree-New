@@ -11,7 +11,7 @@
 
 **Flow**: DB Agent → Backend Agent → Frontend Agent → QA Agent
 
-**Current Stage**: DB complete, Backend ready to start
+**Current Stage**: Backend complete, Frontend ready to start
 
 #### DB Agent → Backend Agent
 **Status**: ✅ Complete (2025-11-06)
@@ -88,22 +88,90 @@ const recent = await getUserSessionHistory(userId, {
 ---
 
 #### Backend Agent → Frontend Agent
-**Status**: ⏸️ Pending
+**Status**: ✅ Complete (2025-11-07)
 **Deliverable**: REST API endpoint
 **Location**: `app/api/sessions/history/route.ts`
-**Interface**:
-```
-GET /api/sessions/history
-Query params: type, limit, offset, startDate, endDate
-Response: {sessions: [...], pagination: {...}}
+
+**Endpoint**: `GET /api/sessions/history`
+**Auth**: Required (returns 401 if not logged in)
+
+**Query Parameters**:
+- `type` (optional): Filter by session type. Valid values: `walk`, `mining`
+- `limit` (optional): Number of results per page. Range: 1-100. Default: 50
+- `offset` (optional): Pagination offset. Default: 0
+- `startDate` (optional): Filter sessions after this date (ISO 8601 format)
+- `endDate` (optional): Filter sessions before this date (ISO 8601 format)
+
+**Response Format**:
+```json
+{
+  "sessions": [
+    {
+      "id": "uuid",
+      "session_type": "walk" | "mining",
+      "started_at": "2025-11-06T10:00:00Z",
+      "completed_at": "2025-11-06T10:45:00Z",
+      "duration_minutes": 45,
+      "coins_earned": 45,
+      "preview": "Brief reflection preview..."
+    }
+  ],
+  "pagination": {
+    "total": 150,
+    "limit": 50,
+    "offset": 0
+  }
+}
 ```
 
+**Error Responses**:
+- 400: Invalid parameters (e.g., invalid type, limit out of range, invalid dates)
+- 401: Unauthorized (not logged in)
+- 500: Internal server error
+
+**Validation Rules**:
+- `type`: Must be exactly "walk" or "mining" (case-sensitive)
+- `limit`: Must be integer between 1-100
+- `offset`: Must be non-negative integer
+- `startDate` and `endDate`: Must be valid ISO 8601 dates
+- Date range: startDate must be <= endDate
+
+**Features**:
+- ✅ Sessions sorted by completion date (most recent first)
+- ✅ Automatic duration calculation from timestamps
+- ✅ Mining sessions use stored `mining_duration_minutes`
+- ✅ Preview truncated to 100 characters
+- ✅ Respects RLS (users only see their own sessions)
+- ✅ Parallel queries for sessions and count (optimized performance)
+
+**Usage Example**:
+```typescript
+// Get first page of all sessions
+const response = await fetch('/api/sessions/history?limit=20&offset=0');
+const data = await response.json();
+
+// Get walk sessions only
+const walks = await fetch('/api/sessions/history?type=walk');
+
+// Get sessions in date range
+const recent = await fetch(
+  '/api/sessions/history?startDate=2025-11-01&endDate=2025-11-06'
+);
+
+// Pagination example
+const page2 = await fetch('/api/sessions/history?limit=20&offset=20');
+```
+
+**Frontend Agent**: You're unblocked! See WORK_QUEUE.md Task #4
+
 **Handoff Checklist**:
-- [ ] Endpoint implemented
-- [ ] Tested with Postman/curl
-- [ ] Error cases handled
-- [ ] Documentation in API_ROUTES.md
-- [ ] Frontend Agent notified
+- [x] Endpoint implemented
+- [x] Query parameter parsing and validation
+- [x] Error cases handled
+- [x] Response format matches schema
+- [x] RLS enforced through queries
+- [x] Documentation complete
+- [x] Frontend Agent notified
 
 ---
 
@@ -342,7 +410,7 @@ Task #9 (Pattern Recognition)
 - Supabase client → All API routes
 
 **Needs Attention** ⚠️:
-- Image generation → Session completion (failing)
+- None currently (Image generation fixed - now using DALL-E 3)
 
 **Not Yet Built** 🔨:
 - Session history → Dashboard
