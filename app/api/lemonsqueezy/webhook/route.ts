@@ -2,13 +2,21 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { createClient } from '@supabase/supabase-js';
 
-// Create Supabase admin client for webhook operations
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
+// Lazy-load Supabase admin client to avoid build-time initialization
+let supabaseAdmin: ReturnType<typeof createClient> | null = null;
+
+function getSupabaseAdmin() {
+  if (!supabaseAdmin) {
+    supabaseAdmin = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_KEY!
+    );
+  }
+  return supabaseAdmin;
+}
 
 export async function POST(req: NextRequest) {
+  const supabase = getSupabaseAdmin();
   try {
     const body = await req.text();
     const signature = req.headers.get('x-signature');
@@ -102,7 +110,7 @@ async function handleSubscriptionCreated(event: any) {
   }
 
   // Upsert subscription in database
-  await supabaseAdmin.from('subscriptions').upsert({
+  await (getSupabaseAdmin().from('subscriptions') as any).upsert({
     user_id: userId,
     lemonsqueezy_customer_id: attributes.customer_id.toString(),
     lemonsqueezy_subscription_id: data.id,
@@ -127,8 +135,7 @@ async function handleSubscriptionUpdated(event: any) {
     return;
   }
 
-  await supabaseAdmin
-    .from('subscriptions')
+  await (getSupabaseAdmin().from('subscriptions') as any)
     .update({
       status: attributes.status,
       lemonsqueezy_variant_id: attributes.variant_id.toString(),
@@ -145,8 +152,7 @@ async function handleSubscriptionUpdated(event: any) {
 async function handleSubscriptionCancelled(event: any) {
   const { data } = event;
 
-  await supabaseAdmin
-    .from('subscriptions')
+  await (getSupabaseAdmin().from('subscriptions') as any)
     .update({
       status: 'cancelled',
       cancel_at_period_end: true,
@@ -161,8 +167,7 @@ async function handleSubscriptionResumed(event: any) {
   const { data } = event;
   const attributes = data.attributes;
 
-  await supabaseAdmin
-    .from('subscriptions')
+  await (getSupabaseAdmin().from('subscriptions') as any)
     .update({
       status: attributes.status,
       cancel_at_period_end: false,
@@ -181,8 +186,7 @@ async function handlePaymentSuccess(event: any) {
 async function handlePaymentFailed(event: any) {
   const { data } = event;
 
-  await supabaseAdmin
-    .from('subscriptions')
+  await (getSupabaseAdmin().from('subscriptions') as any)
     .update({
       status: 'past_due',
       updated_at: new Date().toISOString(),
