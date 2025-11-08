@@ -114,12 +114,19 @@
 ## 🔄 Recent Decisions (Changelog)
 
 ### 2025-11-07
+- **Decision**: Completed Session History Detail View (Task #7)
+  - **Owner**: Frontend + Backend Agents
+  - **Details**: Full conversation history, pre-walk check-in, images, insights
+  - **Features**: Conversation bubbles, breakthrough highlighting, responsive design
+  - **Impact**: Users can now see complete Elder Tree conversations from past sessions
+  - **Status**: ✅ Completed
+
 - **Decision**: Completed Session History UI (Task #4)
   - **Owner**: Frontend Agent
   - **Details**: Full history page with filtering, pagination, detail views
   - **Impact**: Users can now view all past walks and mining sessions
   - **Features**: Timeline view, All/Walk/Mining filters, responsive design
-  - **Status**: ✅ Completed, ready for QA
+  - **Status**: ✅ Completed
 
 - **Decision**: Completed Session History API (Task #2)
   - **Owner**: Backend Agent
