@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-function MiningTimerPageContent() {
+function MiningContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');
@@ -265,7 +265,7 @@ export default function MiningTimerPage() {
         </div>
       </div>
     }>
-      <MiningTimerPageContent />
+      <MiningContent />
     </Suspense>
   );
 }
