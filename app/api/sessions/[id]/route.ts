@@ -22,7 +22,7 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Get authenticated user
@@ -36,7 +36,7 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const sessionId = params.id;
+    const sessionId = (await params).id;
 
     // Fetch full session details
     const { data: session, error } = await supabase
