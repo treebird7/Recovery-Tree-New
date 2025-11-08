@@ -25,12 +25,12 @@ This registry prevents:
 
 ## 📊 QUICK STATS
 
-**Total Branches:** 6 (1 main + 5 feature branches)
-**Ready to Merge:** 3 branches
+**Total Branches:** 5 (1 main + 4 feature branches)
+**Ready to Merge:** 2 branches
 **Needs Review:** 2 branches
-**In Active Development:** 1 branch (includes merged P1: debug-error)
+**In Active Development:** 1 branch (includes merged P1 & P2)
 **Last Branch Activity:** 2025-11-08
-**Last Merge:** 2025-11-08 (P1: debug-error → orchestrate)
+**Last Merge:** 2025-11-08 (P1: debug-error + P2: fix-eslint → orchestrate)
 
 ---
 
@@ -120,36 +120,7 @@ Multi-agent orchestration system + Complete Session History feature + P1 technic
 
 ## 🟢 READY TO MERGE
 
-### 1. `claude/fix-eslint-errors-011CUppBPUjLRv2fFeZ67EJ6`
-**Status:** 🟢 Ready
-**Latest:** `5a34518` Fix ESLint errors: escape quotes and apostrophes
-**Created:** 2025-11-05
-**Updated:** 2025-11-05
-**Commits:** 3 total
-
-**Purpose:**
-Code quality improvements - ESLint compliance
-
-**What's In This Branch:**
-- ✅ Fixed JSX quote/apostrophe escaping issues
-- ✅ ESLint error cleanup
-
-**Files Changed:** ~5 files
-**Impact:** Cleaner codebase, fewer lint warnings
-
-**Testing Status:** ✅ Linter passes
-
-**Merge Priority:** P2 (Code quality)
-
-**Conflicts Expected:** None
-
-**Risk Level:** Very Low (cosmetic fixes)
-
-**Decision Needed:** None - safe to merge
-
----
-
-### 2. `claude/install-dependencies-011CUtekkH9ivreP8n4yscks`
+### 1. `claude/install-dependencies-011CUtekkH9ivreP8n4yscks`
 **Status:** 🟢 Ready
 **Latest:** `b501a3c` Add comprehensive E2E test suite with Playwright
 **Created:** 2025-11-06
@@ -267,6 +238,21 @@ Mobile app foundation with Capacitor for iOS/Android
 
 ---
 
+### `claude/fix-eslint-errors-011CUppBPUjLRv2fFeZ67EJ6`
+**Merged:** 2025-11-08 (via P1 debug-error merge)
+**Into:** `claude/orchestrate-building-agents-011CUsMwp4CCXAumEK3iixhK`
+**Merge Commit:** Already included in `23b2378` (P1 merge)
+**Purpose:** Code quality improvements - ESLint compliance
+**Key Changes:**
+- Fixed JSX quote/apostrophe escaping issues
+- ESLint error cleanup across multiple pages
+- All unescaped entity errors resolved
+**Deleted:** No (branch still exists on remote for reference)
+**Impact:** Clean builds with no ESLint errors (only 3 minor React Hook warnings remain)
+**Note:** This branch was already merged into debug-error before P1 merge, so it came through automatically
+
+---
+
 ## ❌ ABANDONED BRANCHES
 
 *None yet - no branches abandoned*
@@ -287,9 +273,9 @@ Mobile app foundation with Capacitor for iOS/Android
 **Recommended Order:**
 
 1. ✅ **P1: `debug-error`** ← **MERGED 2025-11-08** (into orchestrate branch)
-2. **P2: `fix-eslint`** ← **NEXT** - Code quality (safe, no conflicts)
-3. **P3: `install-dependencies`** ← Testing infrastructure
-4. **P4: `orchestrate`** ← Session History feature (after P1 to avoid conflict)
+2. ✅ **P2: `fix-eslint`** ← **MERGED 2025-11-08** (came through P1 merge)
+3. **P3: `install-dependencies`** ← **NEXT** - Testing infrastructure
+4. **P4: `orchestrate`** ← Session History feature (after P1/P2/P3)
 5. **P5: Review Required**
    - `terminal-communication` - Fritz decides on walkabout feature
    - `setup-capacitor` - Fritz decides on mobile timing
