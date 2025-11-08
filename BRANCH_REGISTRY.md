@@ -25,12 +25,12 @@ This registry prevents:
 
 ## 📊 QUICK STATS
 
-**Total Branches:** 5 (1 main + 4 feature branches)
-**Ready to Merge:** 2 branches
+**Total Branches:** 4 (1 main + 3 feature branches)
+**Ready to Merge:** 1 branch (orchestrate - ready for P4)
 **Needs Review:** 2 branches
-**In Active Development:** 1 branch (includes merged P1 & P2)
+**In Active Development:** 1 branch (includes merged P1, P2, P3)
 **Last Branch Activity:** 2025-11-08
-**Last Merge:** 2025-11-08 (P1: debug-error + P2: fix-eslint → orchestrate)
+**Last Merge:** 2025-11-08 (P3: install-dependencies → orchestrate)
 
 ---
 
@@ -69,14 +69,14 @@ Production-ready baseline with full coordination system documentation.
 ## 🔵 ACTIVE DEVELOPMENT
 
 ### `claude/orchestrate-building-agents-011CUsMwp4CCXAumEK3iixhK`
-**Status:** 🟢 Ready - Includes P1 merge
-**Latest:** `dff440c` Fix module-level OpenAI client instantiation
+**Status:** 🟢 Ready for P4 - Includes P1, P2, P3 merges
+**Latest:** (will update after P3 merge commit)
 **Created:** 2025-11-08
 **Updated:** 2025-11-08
-**Commits:** 13 total (including P1 debug-error merge)
+**Commits:** 18+ total (including all merges)
 
 **Purpose:**
-Multi-agent orchestration system + Complete Session History feature + P1 technical debt fixes
+Multi-agent orchestration + Session History + All bug fixes + E2E testing infrastructure
 
 **What's In This Branch:**
 - ✅ `.coordination/` folder with multi-agent orchestration system
@@ -84,27 +84,32 @@ Multi-agent orchestration system + Complete Session History feature + P1 technic
 - ✅ Session History UI with timeline view and filters
 - ✅ Session Detail View with full Elder Tree conversation replay
 - ✅ Code quality audit with JSDoc documentation (7 routes)
-- ✅ Technical debt report (TECHNICAL_DEBT_AUDIT.md)
 - ✅ Branch consolidation infrastructure (BRANCH_REGISTRY, MERGE_PROTOCOL, SESSION_LOG)
-- ✅ **MERGED P1:** debug-error branch (Capacitor mobile, walkabout, module-level client fixes)
+- ✅ **MERGED P1:** debug-error (Capacitor mobile, walkabout, module-level client fixes)
+- ✅ **MERGED P2:** fix-eslint (all ESLint errors resolved)
+- ✅ **MERGED P3:** install-dependencies (Playwright E2E tests, 126 tests, 2774 lines)
 - ✅ Fixed module-level OpenAI client (DALL-E images)
-- ✅ Fixed Next.js 15 async params in session detail route
+- ✅ Fixed Next.js 15 async params
+- ✅ Context7 documentation tooling
 
-**Files Changed:** 100+ files (including P1 merge)
-**Lines Changed:** ~5000+ additions (including P1 merge)
+**Files Changed:** 110+ files (including all merges)
+**Lines Changed:** ~8000+ additions (including all merges)
 
 **Testing Status:**
-- ✅ Build passes (verified after P1 merge)
+- ✅ Build passes (verified after P3 merge)
 - ✅ All module-level client issues resolved
+- ✅ All ESLint errors resolved
+- ✅ Playwright E2E infrastructure ready (126 tests available)
 - ✅ Documentation complete
-- 🟡 Needs Fritz to test in browser
-- 🟡 Needs verification no regressions
+- 🟡 Needs Fritz to test Session History in browser
+- 🟡 E2E tests written but not yet run
 
 **Merge Dependencies:**
-- ✅ P1 debug-error merged successfully into this branch
-- 🟡 P2 fix-eslint ready to merge next (will fix remaining ESLint warnings)
+- ✅ P1 debug-error merged
+- ✅ P2 fix-eslint merged (via P1)
+- ✅ P3 install-dependencies merged
 
-**Merge Priority:** P4 (After P2 and P3)
+**Merge Priority:** P4 - Ready for final merge to main
 
 **Conflicts Expected:**
 - **With debug-error:** Both touch API routes
@@ -120,33 +125,7 @@ Multi-agent orchestration system + Complete Session History feature + P1 technic
 
 ## 🟢 READY TO MERGE
 
-### 1. `claude/install-dependencies-011CUtekkH9ivreP8n4yscks`
-**Status:** 🟢 Ready
-**Latest:** `b501a3c` Add comprehensive E2E test suite with Playwright
-**Created:** 2025-11-06
-**Updated:** 2025-11-06
-**Commits:** 3 total
-
-**Purpose:**
-Add testing infrastructure and documentation tooling
-
-**What's In This Branch:**
-- ✅ Playwright E2E test suite installed
-- ✅ context7 documentation packages
-- ✅ Merged previous capacitor-mobile work (PR #3)
-
-**Files Changed:** package.json, test files, config
-**Impact:** Testing infrastructure for QA
-
-**Testing Status:** ✅ Dependencies install successfully
-
-**Merge Priority:** P3 (Testing infrastructure)
-
-**Conflicts Expected:** None
-
-**Risk Level:** Low (additive only)
-
-**Decision Needed:** Does Fritz want E2E tests now or later?
+*All priority merges (P1-P3) complete! Orchestrate branch ready for P4 final merge to main.*
 
 ---
 
@@ -253,6 +232,28 @@ Mobile app foundation with Capacitor for iOS/Android
 
 ---
 
+### `claude/install-dependencies-011CUtekkH9ivreP8n4yscks`
+**Merged:** 2025-11-08
+**Into:** `claude/orchestrate-building-agents-011CUsMwp4CCXAumEK3iixhK`
+**Merge Commit:** (auto-generated P3 merge)
+**Purpose:** E2E testing infrastructure and documentation tooling
+**Key Changes:**
+- Added Playwright E2E test suite (126 tests across 4 test files)
+- Test utilities: helpers.ts, mocks.ts, fixtures.ts
+- Tests cover: walk sessions, urge support, daily inventory, dashboard/walkabout
+- Added context7 documentation tooling (v1.0.3)
+- Total: 2774 lines of test code + utilities
+**Deleted:** No (branch still exists on remote for reference)
+**Impact:** Complete E2E testing infrastructure ready for QA validation
+**Test Coverage:**
+- 22 walk session tests
+- 35 urge support tests
+- 43 daily inventory tests
+- 26 dashboard/walkabout tests
+- Cross-browser: Chromium, Firefox, WebKit, Mobile Chrome, Mobile Safari
+
+---
+
 ## ❌ ABANDONED BRANCHES
 
 *None yet - no branches abandoned*
@@ -274,8 +275,8 @@ Mobile app foundation with Capacitor for iOS/Android
 
 1. ✅ **P1: `debug-error`** ← **MERGED 2025-11-08** (into orchestrate branch)
 2. ✅ **P2: `fix-eslint`** ← **MERGED 2025-11-08** (came through P1 merge)
-3. **P3: `install-dependencies`** ← **NEXT** - Testing infrastructure
-4. **P4: `orchestrate`** ← Session History feature (after P1/P2/P3)
+3. ✅ **P3: `install-dependencies`** ← **MERGED 2025-11-08** (E2E testing + 108 deps)
+4. **P4: `orchestrate`** ← **NEXT** - Ready for final merge to main!
 5. **P5: Review Required**
    - `terminal-communication` - Fritz decides on walkabout feature
    - `setup-capacitor` - Fritz decides on mobile timing
