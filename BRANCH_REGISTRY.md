@@ -25,11 +25,12 @@ This registry prevents:
 
 ## 📊 QUICK STATS
 
-**Total Branches:** 7 (1 main + 6 feature branches)
-**Ready to Merge:** 4 branches
+**Total Branches:** 6 (1 main + 5 feature branches)
+**Ready to Merge:** 3 branches
 **Needs Review:** 2 branches
-**In Active Development:** 1 branch
+**In Active Development:** 1 branch (includes merged P1: debug-error)
 **Last Branch Activity:** 2025-11-08
+**Last Merge:** 2025-11-08 (P1: debug-error → orchestrate)
 
 ---
 
@@ -68,14 +69,14 @@ Production-ready baseline with full coordination system documentation.
 ## 🔵 ACTIVE DEVELOPMENT
 
 ### `claude/orchestrate-building-agents-011CUsMwp4CCXAumEK3iixhK`
-**Status:** 🟡 Testing Required
-**Latest:** `ed110e5` Add comprehensive branch summary report
+**Status:** 🟢 Ready - Includes P1 merge
+**Latest:** `dff440c` Fix module-level OpenAI client instantiation
 **Created:** 2025-11-08
 **Updated:** 2025-11-08
-**Commits:** 9 total
+**Commits:** 13 total (including P1 debug-error merge)
 
 **Purpose:**
-Multi-agent orchestration system + Complete Session History feature
+Multi-agent orchestration system + Complete Session History feature + P1 technical debt fixes
 
 **What's In This Branch:**
 - ✅ `.coordination/` folder with multi-agent orchestration system
@@ -84,21 +85,26 @@ Multi-agent orchestration system + Complete Session History feature
 - ✅ Session Detail View with full Elder Tree conversation replay
 - ✅ Code quality audit with JSDoc documentation (7 routes)
 - ✅ Technical debt report (TECHNICAL_DEBT_AUDIT.md)
-- ✅ Branch analysis report (BRANCH_SUMMARY_REPORT.md)
+- ✅ Branch consolidation infrastructure (BRANCH_REGISTRY, MERGE_PROTOCOL, SESSION_LOG)
+- ✅ **MERGED P1:** debug-error branch (Capacitor mobile, walkabout, module-level client fixes)
+- ✅ Fixed module-level OpenAI client (DALL-E images)
+- ✅ Fixed Next.js 15 async params in session detail route
 
-**Files Changed:** 50+ files
-**Lines Changed:** ~3000+ additions
+**Files Changed:** 100+ files (including P1 merge)
+**Lines Changed:** ~5000+ additions (including P1 merge)
 
 **Testing Status:**
-- ✅ All features built and committed
+- ✅ Build passes (verified after P1 merge)
+- ✅ All module-level client issues resolved
 - ✅ Documentation complete
 - 🟡 Needs Fritz to test in browser
 - 🟡 Needs verification no regressions
 
 **Merge Dependencies:**
-- ⚠️ Should merge AFTER `debug-error` branch (avoids technical debt conflict)
+- ✅ P1 debug-error merged successfully into this branch
+- 🟡 P2 fix-eslint ready to merge next (will fix remaining ESLint warnings)
 
-**Merge Priority:** P4 (After critical fixes)
+**Merge Priority:** P4 (After P2 and P3)
 
 **Conflicts Expected:**
 - **With debug-error:** Both touch API routes
@@ -114,40 +120,7 @@ Multi-agent orchestration system + Complete Session History feature
 
 ## 🟢 READY TO MERGE
 
-### 1. `claude/debug-error-011CUppBPUjLRv2fFeZ67EJ6`
-**Status:** 🟢 Ready - MERGE FIRST
-**Latest:** `c77ebaa` Fix signup page: move Supabase client creation
-**Created:** 2025-11-05
-**Updated:** 2025-11-05
-**Commits:** 3 total
-
-**Purpose:**
-Critical bug fixes for build errors and module-level client issues
-
-**What's In This Branch:**
-- ✅ Fixed Supabase client module-level instantiation → moved to event handlers
-- ✅ Added Suspense boundaries for Next.js 15 `useSearchParams` compatibility
-- ✅ Fixed TypeScript build errors
-
-**Critical Note:**
-This branch FIXES the exact technical debt issue Sancho identified in the code quality audit! Module-level clients are moved inside functions.
-
-**Files Changed:** ~10 files
-**Impact:** Prevents future build-time errors
-
-**Testing Status:** ✅ Build tested, no errors
-
-**Merge Priority:** **P1 - HIGHEST** (Fixes critical technical debt)
-
-**Conflicts Expected:** Medium with orchestrate (both touch API routes)
-
-**Risk Level:** Low (focused bug fixes)
-
-**Decision Needed:** None - merge immediately
-
----
-
-### 2. `claude/fix-eslint-errors-011CUppBPUjLRv2fFeZ67EJ6`
+### 1. `claude/fix-eslint-errors-011CUppBPUjLRv2fFeZ67EJ6`
 **Status:** 🟢 Ready
 **Latest:** `5a34518` Fix ESLint errors: escape quotes and apostrophes
 **Created:** 2025-11-05
@@ -176,7 +149,7 @@ Code quality improvements - ESLint compliance
 
 ---
 
-### 3. `claude/install-dependencies-011CUtekkH9ivreP8n4yscks`
+### 2. `claude/install-dependencies-011CUtekkH9ivreP8n4yscks`
 **Status:** 🟢 Ready
 **Latest:** `b501a3c` Add comprehensive E2E test suite with Playwright
 **Created:** 2025-11-06
@@ -276,16 +249,21 @@ Mobile app foundation with Capacitor for iOS/Android
 
 ## 🗂️ MERGED BRANCHES
 
-*None yet - first merge session upcoming*
-
-**Template for merged branches:**
-```
-### branch-name
-**Merged:** YYYY-MM-DD
-**Into:** main
-**Purpose:** What it did
-**Deleted:** Yes/No
-```
+### `claude/debug-error-011CUppBPUjLRv2fFeZ67EJ6`
+**Merged:** 2025-11-08
+**Into:** `claude/orchestrate-building-agents-011CUsMwp4CCXAumEK3iixhK`
+**Merge Commit:** `23b2378`
+**Purpose:** Critical bug fixes - module-level client instantiation and build errors
+**Key Changes:**
+- Fixed module-level Supabase client → moved to event handlers
+- Added Suspense boundaries for Next.js 15 compatibility
+- Fixed TypeScript build errors
+- Added Capacitor mobile infrastructure (iOS/Android)
+- Added walkabout session type
+- Disabled LemonSqueezy endpoints
+**Deleted:** No (branch still exists on remote for reference)
+**Impact:** Resolved critical technical debt identified in code quality audit
+**Follow-up:** Fixed additional module-level OpenAI client in subsequent commit
 
 ---
 
@@ -308,8 +286,8 @@ Mobile app foundation with Capacitor for iOS/Android
 
 **Recommended Order:**
 
-1. **P1: `debug-error`** ← Merge FIRST (fixes critical technical debt)
-2. **P2: `fix-eslint`** ← Code quality (safe, no conflicts)
+1. ✅ **P1: `debug-error`** ← **MERGED 2025-11-08** (into orchestrate branch)
+2. **P2: `fix-eslint`** ← **NEXT** - Code quality (safe, no conflicts)
 3. **P3: `install-dependencies`** ← Testing infrastructure
 4. **P4: `orchestrate`** ← Session History feature (after P1 to avoid conflict)
 5. **P5: Review Required**
