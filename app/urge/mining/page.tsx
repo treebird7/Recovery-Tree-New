@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
+// Prevent static generation due to useSearchParams
+export const dynamic = 'force-dynamic';
+
 export default function MiningTimerPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
