@@ -3,6 +3,25 @@ import { createClient } from '@/lib/supabase/server';
 import { getSession, updateSessionResponses } from '@/lib/services/session';
 import { ConversationManager, createFromSavedSession } from '@/lib/services/conversation-manager';
 
+/**
+ * POST /api/session/question
+ *
+ * Processes user's answer to Elder Tree question and generates next question.
+ * Tracks conversation history, breakthrough moments, and red flags.
+ *
+ * @param request.body.sessionId - The active session ID
+ * @param request.body.answer - User's answer to current question
+ *
+ * @returns nextQuestion - Elder Tree's next question
+ * @returns hasRedFlags - Whether answer triggered vagueness detection
+ * @returns isBreakthrough - Whether answer showed insight/progress
+ * @returns shouldComplete - Whether session should be completed
+ * @returns analytics - Current session stats
+ * @returns 401 if not authenticated
+ * @returns 403 if session doesn't belong to user
+ * @returns 404 if session not found
+ * @returns 500 if update fails
+ */
 export async function POST(request: NextRequest) {
   try {
     // Get authenticated user

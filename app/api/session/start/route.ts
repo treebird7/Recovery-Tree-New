@@ -3,6 +3,22 @@ import { createClient } from '@/lib/supabase/server';
 import { createSession, getIncompleteSession } from '@/lib/services/session';
 import { ConversationManager } from '@/lib/services/conversation-manager';
 
+/**
+ * POST /api/session/start
+ *
+ * Creates a new recovery walk session or resumes an existing incomplete session.
+ * Initializes conversation with Elder Tree for the specified step.
+ *
+ * @param request.body.step - The step to work on: 'step1' | 'step2' | 'step3'
+ * @param request.body.preWalkMood - Optional pre-walk mood check-in
+ * @param request.body.preWalkIntention - Optional pre-walk intention
+ * @param request.body.resumeSession - Whether to resume incomplete session if exists
+ *
+ * @returns Session data with initial question from Elder Tree
+ * @returns 401 if not authenticated
+ * @returns 400 if invalid step
+ * @returns 500 if session creation fails
+ */
 export async function POST(request: NextRequest) {
   try {
     // Get authenticated user
@@ -94,6 +110,16 @@ export async function POST(request: NextRequest) {
   }
 }
 
+/**
+ * GET /api/session/start
+ *
+ * Checks if user has an incomplete session that can be resumed.
+ * Used to prevent users from starting multiple concurrent sessions.
+ *
+ * @returns hasIncompleteSession - Boolean indicating if incomplete session exists
+ * @returns session - The incomplete session data if found
+ * @returns 401 if not authenticated
+ */
 export async function GET(request: NextRequest) {
   try {
     // Get authenticated user
