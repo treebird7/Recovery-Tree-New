@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+
 export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,7 +14,6 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
-  const supabase = createClient();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +31,8 @@ export default function SignupPage() {
       setLoading(false);
       return;
     }
+
+    const supabase = createClient();
 
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -83,7 +86,7 @@ export default function SignupPage() {
           </div>
           <h2 className="text-2xl font-bold text-green-800 mb-4">Check Your Email</h2>
           <p className="text-gray-600 mb-6">
-            We've sent you a confirmation email. Please check your inbox and click the link to
+            We&apos;ve sent you a confirmation email. Please check your inbox and click the link to
             verify your account.
           </p>
           <a

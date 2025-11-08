@@ -8,6 +8,9 @@ export interface Session {
   completed_at: string | null;
   pre_walk_mood: string | null;
   pre_walk_intention: string | null;
+  location: string | null;
+  body_need: string | null;
+  session_type: string | null;
   current_step: 'step1' | 'step2' | 'step3';
   step_responses: ConversationTurn[];
   final_reflection: string | null;
@@ -31,13 +34,15 @@ export interface SessionAnalytics {
 }
 
 /**
- * Create a new walk session
+ * Create a new nature therapy session
  */
 export async function createSession(
   userId: string,
   step: 'step1' | 'step2' | 'step3',
   preWalkMood?: string,
-  preWalkIntention?: string
+  preWalkIntention?: string,
+  location?: string,
+  bodyNeed?: string
 ): Promise<{ data: Session | null; error: any }> {
   const supabase = await createClient();
 
@@ -48,6 +53,8 @@ export async function createSession(
       current_step: step,
       pre_walk_mood: preWalkMood || null,
       pre_walk_intention: preWalkIntention || null,
+      location: location || null,
+      body_need: bodyNeed || null,
       step_responses: [],
     })
     .select()

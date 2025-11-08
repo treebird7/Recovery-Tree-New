@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { createClient } from '@supabase/supabase-js';
 
-// Create Supabase admin client for webhook operations
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
+export const dynamic = 'force-dynamic';
+
+// Lazy initialization of Supabase admin client
+function getSupabaseAdmin() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_KEY!
+  );
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -102,7 +106,7 @@ async function handleSubscriptionCreated(event: any) {
   }
 
   // Upsert subscription in database
-  await supabaseAdmin.from('subscriptions').upsert({
+  await getSupabaseAdmin().from('subscriptions').upsert({
     user_id: userId,
     lemonsqueezy_customer_id: attributes.customer_id.toString(),
     lemonsqueezy_subscription_id: data.id,
@@ -127,7 +131,7 @@ async function handleSubscriptionUpdated(event: any) {
     return;
   }
 
-  await supabaseAdmin
+  await getSupabaseAdmin()
     .from('subscriptions')
     .update({
       status: attributes.status,
@@ -145,7 +149,7 @@ async function handleSubscriptionUpdated(event: any) {
 async function handleSubscriptionCancelled(event: any) {
   const { data } = event;
 
-  await supabaseAdmin
+  await getSupabaseAdmin()
     .from('subscriptions')
     .update({
       status: 'cancelled',
@@ -161,7 +165,7 @@ async function handleSubscriptionResumed(event: any) {
   const { data } = event;
   const attributes = data.attributes;
 
-  await supabaseAdmin
+  await getSupabaseAdmin()
     .from('subscriptions')
     .update({
       status: attributes.status,
@@ -181,7 +185,7 @@ async function handlePaymentSuccess(event: any) {
 async function handlePaymentFailed(event: any) {
   const { data } = event;
 
-  await supabaseAdmin
+  await getSupabaseAdmin()
     .from('subscriptions')
     .update({
       status: 'past_due',

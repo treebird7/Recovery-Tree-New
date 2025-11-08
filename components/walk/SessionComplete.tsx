@@ -12,6 +12,8 @@ interface SessionCompleteProps {
   moodDescription: string;
   coinsEarned?: number;
   totalCoins?: number;
+  location?: string;
+  bodyNeed?: string;
   analytics: {
     questionsCompleted: number;
     breakthroughMoments: number;
@@ -30,11 +32,29 @@ export default function SessionComplete({
   moodDescription,
   coinsEarned,
   totalCoins,
+  location,
+  bodyNeed,
   analytics,
   onNewWalk,
   onViewHistory,
 }: SessionCompleteProps) {
   const [imageError, setImageError] = useState(false);
+
+  const locationLabels: Record<string, { label: string; icon: string }> = {
+    park: { label: 'Park / Forest', icon: '🌲' },
+    water: { label: 'Water', icon: '🌊' },
+    garden: { label: 'Garden', icon: '🌻' },
+    urban: { label: 'Urban nature', icon: '🏙️' },
+    mountains: { label: 'Mountains', icon: '⛰️' },
+    outside: { label: 'Just outside', icon: '🚪' },
+  };
+
+  const bodyNeedLabels: Record<string, string> = {
+    movement: 'Movement',
+    stillness: 'Stillness',
+    both: 'Both movement & stillness',
+    unsure: 'Following my body',
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -62,10 +82,39 @@ export default function SessionComplete({
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-800 mb-2">
-          🌿 Walk Complete
+          🌿 Nature Session Complete
         </h1>
         <p className="text-lg text-gray-600">{moodDescription}</p>
       </div>
+
+      {/* Nature Session Summary */}
+      {(location || bodyNeed) && (
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-2xl p-6 mb-8">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">
+            Your Nature Session
+          </h3>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            {location && locationLabels[location] && (
+              <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg">
+                <span className="text-2xl">{locationLabels[location].icon}</span>
+                <div>
+                  <div className="text-xs text-gray-500">Location</div>
+                  <div className="font-medium text-gray-800">{locationLabels[location].label}</div>
+                </div>
+              </div>
+            )}
+            {bodyNeed && bodyNeedLabels[bodyNeed] && (
+              <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg">
+                <span className="text-2xl">🧘</span>
+                <div>
+                  <div className="text-xs text-gray-500">Your body needed</div>
+                  <div className="font-medium text-gray-800">{bodyNeedLabels[bodyNeed]}</div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Generated Image */}
       {imageUrl && !imageError && (
@@ -84,7 +133,7 @@ export default function SessionComplete({
 
       {/* Encouragement */}
       <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg mb-8">
-        <p className="text-lg text-gray-800 italic">"{encouragement}"</p>
+        <p className="text-lg text-gray-800 italic">&quot;{encouragement}&quot;</p>
       </div>
 
       {/* Coins Earned */}
@@ -95,7 +144,7 @@ export default function SessionComplete({
             +{coinsEarned} Coins
           </div>
           <p className="text-gray-600">
-            {coinsEarned} minute{coinsEarned !== 1 ? 's' : ''} of walking
+            {coinsEarned} minute{coinsEarned !== 1 ? 's' : ''} in nature
           </p>
           <p className="text-gray-500 text-sm mt-1">
             Total: {totalCoins || coinsEarned} coins
@@ -128,7 +177,7 @@ export default function SessionComplete({
 
       {/* Analytics */}
       <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">Walk Stats</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Session Stats</h2>
         <div className="grid grid-cols-3 gap-6">
           <div className="text-center">
             <div className="text-3xl font-bold text-green-600">
@@ -157,7 +206,7 @@ export default function SessionComplete({
           onClick={onNewWalk}
           className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors shadow-lg"
         >
-          Start New Walk
+          Start New Session
         </button>
         <button
           onClick={onViewHistory}

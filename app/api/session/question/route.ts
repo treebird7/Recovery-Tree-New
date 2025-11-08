@@ -67,7 +67,10 @@ export async function POST(request: NextRequest) {
     // Recreate conversation manager from saved state
     const manager = createFromSavedSession(
       session.current_step,
-      session.step_responses
+      session.step_responses,
+      undefined,
+      session.location || undefined,
+      session.body_need || undefined
     );
 
     // Process answer and get next question

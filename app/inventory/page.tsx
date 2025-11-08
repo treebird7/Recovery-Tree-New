@@ -99,7 +99,7 @@ export default function InventoryPage() {
               Already Complete
             </h1>
             <p className="text-gray-600 mb-6">
-              You've already completed today's inventory. Come back tomorrow!
+              You&apos;ve already completed today&apos;s inventory. Come back tomorrow!
             </p>
             <div className="flex flex-col gap-3">
               <button

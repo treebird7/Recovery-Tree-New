@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
   const [verifying, setVerifying] = useState(true);
@@ -97,7 +97,7 @@ export default function SuccessPage() {
 
         {/* What's Next */}
         <div className="bg-green-50 rounded-lg p-4 mb-6 text-left">
-          <h2 className="font-semibold text-gray-900 mb-2">What's next?</h2>
+          <h2 className="font-semibold text-gray-900 mb-2">What&apos;s next?</h2>
           <ul className="space-y-2 text-sm text-gray-700">
             <li className="flex items-start">
               <svg
@@ -172,5 +172,20 @@ export default function SuccessPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-b from-green-50 to-white flex items-center justify-center px-4">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <SuccessContent />
+    </Suspense>
   );
 }

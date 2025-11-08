@@ -60,7 +60,9 @@ export default function WalkPage() {
   const handleCheckInComplete = async (
     selectedStep: 'step1' | 'step2' | 'step3',
     mood?: string,
-    intention?: string
+    intention?: string,
+    location?: string,
+    bodyNeed?: string
   ) => {
     try {
       // Start new session
@@ -71,6 +73,8 @@ export default function WalkPage() {
           step: selectedStep,
           preWalkMood: mood,
           preWalkIntention: intention,
+          location,
+          bodyNeed,
         }),
       });
 
@@ -130,6 +134,8 @@ export default function WalkPage() {
           moodDescription={completionData.moodDescription}
           coinsEarned={completionData.coinsEarned}
           totalCoins={completionData.totalCoins}
+          location={completionData.location}
+          bodyNeed={completionData.bodyNeed}
           analytics={completionData.analytics}
           onNewWalk={handleNewWalk}
           onViewHistory={handleViewHistory}

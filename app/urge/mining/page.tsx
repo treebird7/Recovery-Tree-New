@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function MiningTimerPage() {
+function MiningContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');
@@ -78,6 +78,7 @@ export default function MiningTimerPage() {
       const response = await fetch('/api/mining/end', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}), // Send empty object to satisfy JSON parsing
       });
 
       if (!response.ok) {
@@ -196,7 +197,7 @@ export default function MiningTimerPage() {
               Your tree is mining coins right now.
             </p>
             <p className="text-gray-300">
-              Every minute you're not acting out = 1 coin earned.
+              Every minute you&apos;re not acting out = 1 coin earned.
             </p>
           </div>
 
@@ -212,10 +213,10 @@ export default function MiningTimerPage() {
 
           <div className="bg-green-900/20 rounded-xl p-6 border border-green-800">
             <p className="text-green-200">
-              You don't have to sleep. Just rest.
+              You don&apos;t have to sleep. Just rest.
             </p>
             <p className="text-green-300 mt-3 text-lg">
-              Even lying there awake counts. You're not acting out. That's what matters.
+              Even lying there awake counts. You&apos;re not acting out. That&apos;s what matters.
             </p>
           </div>
 
@@ -251,5 +252,20 @@ export default function MiningTimerPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function MiningTimerPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-b from-purple-900 to-indigo-900 flex items-center justify-center px-4">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-300 mb-4"></div>
+          <p className="text-purple-100">Loading...</p>
+        </div>
+      </div>
+    }>
+      <MiningContent />
+    </Suspense>
   );
 }

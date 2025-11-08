@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         sessionId: existingSession.id,
         startedAt: existingSession.mining_started_at,
-        durationMinutes: existingSession.duration_minutes || null,
+        durationMinutes: existingSession.mining_duration_minutes || null,
         message: 'Mining session already active',
         isExisting: true,
       });

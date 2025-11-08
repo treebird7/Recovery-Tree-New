@@ -12,10 +12,18 @@
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report",
-    "coord": "node .coordination/coord-cli.js"
+    "coord": "node .coordination/coord-cli.js",
+    "build:mobile": "./scripts/build-mobile.sh",
+    "cap:sync": "cap sync",
+    "cap:ios": "cap open ios",
+    "cap:android": "cap open android"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.27.0",
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/cli": "^7.4.4",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/ios": "^7.4.4",
     "@fal-ai/serverless-client": "^0.14.0",
     "@lemonsqueezy/lemonsqueezy.js": "^4.0.0",
     "@supabase/ssr": "^0.7.0",
