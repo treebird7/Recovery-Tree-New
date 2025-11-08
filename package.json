@@ -28,6 +28,7 @@
     "@lemonsqueezy/lemonsqueezy.js": "^4.0.0",
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.39.0",
+    "context7": "^1.0.3",
     "next": "^15.0.0",
     "openai": "^6.8.1",
     "react": "^18.3.1",
