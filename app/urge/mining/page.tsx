@@ -1,12 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-// Prevent static generation due to useSearchParams
-export const dynamic = 'force-dynamic';
-
-export default function MiningTimerPage() {
+function MiningContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');
@@ -254,5 +251,13 @@ export default function MiningTimerPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function MiningTimerPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white flex items-center justify-center"><div className="text-gray-400">Loading...</div></div>}>
+      <MiningContent />
+    </Suspense>
   );
 }
