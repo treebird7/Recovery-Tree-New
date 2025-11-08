@@ -2,6 +2,31 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { getUserSessionHistory, getUserSessionCount } from '@/lib/queries/sessions';
 
+/**
+ * GET /api/sessions/history
+ *
+ * Fetches user's session history with filtering, pagination, and sorting.
+ * Returns list of completed sessions with preview and stats.
+ *
+ * @param request.query.type - Optional filter: 'walk' or 'mining'
+ * @param request.query.limit - Results per page (1-100, default 50)
+ * @param request.query.offset - Pagination offset (default 0)
+ * @param request.query.startDate - Filter sessions after this date (ISO 8601)
+ * @param request.query.endDate - Filter sessions before this date (ISO 8601)
+ *
+ * @returns sessions - Array of session summaries with preview
+ * @returns pagination - Total count, limit, offset
+ * @returns 401 if not authenticated
+ * @returns 400 if invalid parameters (type, limit, dates)
+ * @returns 500 if database query fails
+ *
+ * Features:
+ * - Sorted by completion date (most recent first)
+ * - Preview truncated to 100 characters
+ * - Duration calculated from timestamps
+ * - RLS enforced (users only see own sessions)
+ * - Parallel queries for performance
+ */
 export async function GET(request: NextRequest) {
   try {
     // Get authenticated user

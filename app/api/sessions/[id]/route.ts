@@ -1,6 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
+/**
+ * GET /api/sessions/[id]
+ *
+ * Fetches complete details for a specific session including full conversation history.
+ * Used by session history detail view to show entire Elder Tree conversation.
+ *
+ * @param params.id - Session UUID
+ *
+ * @returns Complete session data including:
+ *   - session_type, started_at, completed_at, duration_minutes, coins_earned
+ *   - pre_walk_mood, pre_walk_intention (pre-session data)
+ *   - step_responses (full conversation: questions, answers, timestamps, breakthroughs)
+ *   - current_step (which step was worked on)
+ *   - final_reflection, generated_image_url, encouragement_message, insights (post-session)
+ *
+ * @returns 401 if not authenticated
+ * @returns 404 if session not found or doesn't belong to user (RLS)
+ * @returns 500 if database query fails
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
