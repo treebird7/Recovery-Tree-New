@@ -8,11 +8,6 @@
 import OpenAI from 'openai';
 import { ConversationTurn } from './conversation-manager';
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export type Mood = 'hopeful' | 'struggling' | 'breakthrough' | 'peaceful' | 'reflective';
 
 /**
@@ -95,6 +90,11 @@ export async function generateNatureImage(
   preWalkMood?: string
 ): Promise<{ imageUrl: string | null; error: string | null }> {
   try {
+    // Initialize OpenAI client (must be inside function, not module-level - FUCKBOARD lesson #2)
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     // Analyze mood from conversation
     const mood = analyzeMood(conversationHistory);
     const prompt = buildNaturePrompt(mood);
@@ -112,7 +112,7 @@ export async function generateNatureImage(
     });
 
     // Extract image URL from response
-    const imageUrl = response.data[0]?.url;
+    const imageUrl = response.data?.[0]?.url;
 
     if (imageUrl) {
       console.log('Image generated successfully with DALL-E 3');
@@ -149,6 +149,11 @@ export async function generateCustomNatureImage(
   customPrompt: string
 ): Promise<{ imageUrl: string | null; error: string | null }> {
   try {
+    // Initialize OpenAI client (must be inside function, not module-level - FUCKBOARD lesson #2)
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const fullPrompt = `A photorealistic nature scene: ${customPrompt}. High quality landscape photography style with beautiful natural lighting.`;
 
     const response = await openai.images.generate({
@@ -160,7 +165,7 @@ export async function generateCustomNatureImage(
       style: 'natural',
     });
 
-    const imageUrl = response.data[0]?.url;
+    const imageUrl = response.data?.[0]?.url;
 
     if (imageUrl) {
       return { imageUrl, error: null };
