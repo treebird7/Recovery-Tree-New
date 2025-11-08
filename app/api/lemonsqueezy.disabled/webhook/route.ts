@@ -2,13 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { createClient } from '@supabase/supabase-js';
 
-// Create Supabase admin client for webhook operations
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
+  // Create Supabase admin client INSIDE the function
+  const supabaseAdmin = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_KEY!
+  );
+
   try {
     const body = await req.text();
     const signature = req.headers.get('x-signature');
@@ -38,24 +40,24 @@ export async function POST(req: NextRequest) {
     // Handle different event types
     switch (eventName) {
       case 'order_created':
-        await handleOrderCreated(event);
+        await handleOrderCreated(event, supabaseAdmin);
         break;
 
       case 'subscription_created':
-        await handleSubscriptionCreated(event);
+        await handleSubscriptionCreated(event, supabaseAdmin);
         break;
 
       case 'subscription_updated':
-        await handleSubscriptionUpdated(event);
+        await handleSubscriptionUpdated(event, supabaseAdmin);
         break;
 
       case 'subscription_cancelled':
       case 'subscription_expired':
-        await handleSubscriptionCancelled(event);
+        await handleSubscriptionCancelled(event, supabaseAdmin);
         break;
 
       case 'subscription_resumed':
-        await handleSubscriptionResumed(event);
+        await handleSubscriptionResumed(event, supabaseAdmin);
         break;
 
       case 'subscription_payment_success':
@@ -63,7 +65,7 @@ export async function POST(req: NextRequest) {
         break;
 
       case 'subscription_payment_failed':
-        await handlePaymentFailed(event);
+        await handlePaymentFailed(event, supabaseAdmin);
         break;
 
       default:
@@ -80,7 +82,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-async function handleOrderCreated(event: any) {
+async function handleOrderCreated(event: any, supabaseAdmin: any) {
   const { data, meta } = event;
   const userId = data.attributes.custom_data?.user_id;
 
@@ -92,7 +94,7 @@ async function handleOrderCreated(event: any) {
   console.log(`Order created for user ${userId}`);
 }
 
-async function handleSubscriptionCreated(event: any) {
+async function handleSubscriptionCreated(event: any, supabaseAdmin: any) {
   const { data } = event;
   const attributes = data.attributes;
   const userId = attributes.custom_data?.user_id;
@@ -117,7 +119,7 @@ async function handleSubscriptionCreated(event: any) {
   console.log(`Subscription created for user ${userId}`);
 }
 
-async function handleSubscriptionUpdated(event: any) {
+async function handleSubscriptionUpdated(event: any, supabaseAdmin: any) {
   const { data } = event;
   const attributes = data.attributes;
   const userId = attributes.custom_data?.user_id;
@@ -142,7 +144,7 @@ async function handleSubscriptionUpdated(event: any) {
   console.log(`Subscription updated for user ${userId}`);
 }
 
-async function handleSubscriptionCancelled(event: any) {
+async function handleSubscriptionCancelled(event: any, supabaseAdmin: any) {
   const { data } = event;
 
   await supabaseAdmin
@@ -157,7 +159,7 @@ async function handleSubscriptionCancelled(event: any) {
   console.log(`Subscription cancelled: ${data.id}`);
 }
 
-async function handleSubscriptionResumed(event: any) {
+async function handleSubscriptionResumed(event: any, supabaseAdmin: any) {
   const { data } = event;
   const attributes = data.attributes;
 
@@ -178,7 +180,7 @@ async function handlePaymentSuccess(event: any) {
   console.log(`Payment succeeded for subscription ${data.id}`);
 }
 
-async function handlePaymentFailed(event: any) {
+async function handlePaymentFailed(event: any, supabaseAdmin: any) {
   const { data } = event;
 
   await supabaseAdmin
