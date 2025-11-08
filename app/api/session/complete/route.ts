@@ -15,6 +15,38 @@ import { selectNatureImage } from '@/lib/services/unsplash-images';
 import { createFromSavedSession } from '@/lib/services/conversation-manager';
 import { awardCoins, getUserCoins } from '@/lib/services/mining';
 
+/**
+ * POST /api/session/complete
+ *
+ * Completes a walk session by generating AI reflection, encouragement, insights, and nature image.
+ * Awards coins based on walk duration and creates analytics record.
+ *
+ * This is the most complex endpoint - it orchestrates multiple AI generation steps:
+ * 1. Generate reflection from Elder Tree (Anthropic Claude)
+ * 2. Generate encouragement message
+ * 3. Extract key insights from conversation
+ * 4. Analyze mood from responses
+ * 5. Generate nature image (DALL-E 3 with Unsplash fallback)
+ * 6. Award coins (1 coin per minute walked)
+ * 7. Create session analytics
+ *
+ * @param request.body.sessionId - The session to complete
+ * @param request.body.walkDuration - Optional walk duration in minutes for coin calculation
+ *
+ * @returns reflection - Elder Tree's final reflection on the session
+ * @returns encouragement - Encouraging message from Elder Tree
+ * @returns imageUrl - Generated nature image URL
+ * @returns insights - Array of key insights extracted
+ * @returns mood - Analyzed mood from responses
+ * @returns moodDescription - Human-readable mood description
+ * @returns coinsEarned - Coins awarded for this session
+ * @returns totalCoins - User's updated total coins
+ * @returns analytics - Session completion stats
+ * @returns 401 if not authenticated
+ * @returns 403 if session doesn't belong to user
+ * @returns 404 if session not found
+ * @returns 500 if AI generation or completion fails
+ */
 export async function POST(request: NextRequest) {
   try {
     // Get authenticated user
