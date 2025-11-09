@@ -24,8 +24,10 @@ export async function POST(request: NextRequest) {
       .insert({
         user_id: user.id,
         session_type: 'walkabout',
+        current_step: 'step1', // Required field, but not used for walkabout
         location,
         body_need: bodyNeed,
+        step_responses: [], // Initialize empty conversation array
         started_at: new Date().toISOString(),
       })
       .select()

@@ -72,17 +72,26 @@ function MiningContent() {
     const confirmed = confirm('Ready to finish mining and collect your coins?');
     if (!confirmed) return;
 
+    if (!sessionId) {
+      alert('No active session found. Please start a new mining session.');
+      return;
+    }
+
     setIsEnding(true);
 
     try {
       const response = await fetch('/api/mining/end', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({}), // Send empty object to satisfy JSON parsing
+        body: JSON.stringify({
+          sessionId: sessionId,
+          userState: 'stable'
+        }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to end mining');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to end mining');
       }
 
       // Redirect to reveal page
