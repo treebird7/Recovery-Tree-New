@@ -6,8 +6,7 @@ import { getTotalCompletedSessions, getUserStreak } from '@/lib/services/session
 import { getActiveMiningSession, getUserCoins } from '@/lib/services/mining';
 import { getTodaysInventory, getInventoryStreak } from '@/lib/services/inventory';
 
-export const dynamic = 'force-static';
-export const dynamicParams = false;
+export const dynamic = 'force-dynamic';
 
 export default async function DashboardPage() {
   const supabase = await createClient();
