@@ -68,7 +68,7 @@ function MiningContent() {
     router.push('/urge');
   };
 
-  const handleFinishMining = async () => {
+  const handleFinishMining = () => {
     const confirmed = confirm('Ready to finish mining and collect your coins?');
     if (!confirmed) return;
 
@@ -77,30 +77,9 @@ function MiningContent() {
       return;
     }
 
-    setIsEnding(true);
-
-    try {
-      const response = await fetch('/api/mining/end', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          sessionId: sessionId,
-          userState: 'stable'
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to end mining');
-      }
-
-      // Redirect to reveal page
-      router.push('/urge/reveal');
-    } catch (err) {
-      console.error('Error ending mining:', err);
-      alert('Failed to end mining session. Please try again.');
-      setIsEnding(false);
-    }
+    // Don't call end API here - the reveal page will handle that
+    // Just redirect to reveal page to show stats
+    router.push('/urge/reveal');
   };
 
   const formatTime = (seconds: number) => {

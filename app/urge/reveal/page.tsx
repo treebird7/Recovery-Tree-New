@@ -120,26 +120,35 @@ export default function MiningRevealPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
       <div className="container mx-auto px-6 py-12 max-w-2xl">
-        {/* Back to Dashboard */}
-        <button
-          onClick={() => router.push('/dashboard')}
-          className="mb-6 flex items-center gap-2 text-gray-400 hover:text-gray-200 transition"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        {/* Back to Dashboard - Only show before state question */}
+        {!showStateQuestion && (
+          <button
+            onClick={async () => {
+              // Complete session with default 'stable' state
+              if (stats) {
+                await handleStateSelection('stable');
+              } else {
+                router.push('/dashboard');
+              }
+            }}
+            className="mb-6 flex items-center gap-2 text-gray-400 hover:text-gray-200 transition"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          Back to Dashboard
-        </button>
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            Back to Dashboard
+          </button>
+        )}
 
         {/* Header */}
         <div className="text-center mb-8">
