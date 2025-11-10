@@ -24,9 +24,13 @@ export async function POST(request: NextRequest) {
     const {
       userInput,
       urgeStrength,
+      conversationHistory = [],
+      conversationCount = 0,
     }: {
       userInput: string;
       urgeStrength: number;
+      conversationHistory?: Array<{ role: 'user' | 'assistant'; content: string }>;
+      conversationCount?: number;
     } = body;
 
     if (!userInput || urgeStrength === undefined) {
@@ -99,35 +103,59 @@ Format:
     const userPrompt = `User said: "${userInput}"
 
 Urge strength: ${urgeStrength}/10
+Conversation exchanges so far: ${conversationCount}
 
 Respond as the Elder Tree. First, determine if you understand what they actually need:
 - If CLEAR: Validate what they shared, meet them where they are, and end with "So let me offer you something different."
-- If UNCLEAR: Ask 1-2 clarifying questions to understand before offering solutions
+- If UNCLEAR AND conversationCount < 5: Ask 1-2 clarifying questions to understand before offering solutions
+- If conversationCount >= 5: Proceed with offering guidance even if some clarity is missing
+
+The user seems ${conversationCount >= 3 ? 'engaged in conversation - consider if they need more questions or if they\'re ready for guidance' : 'ready to open up - verify what they actually need'}
 
 Keep it under 150 words. Be conversational and direct.`;
 
     let elderResponse = '';
+    let readyForSolution = false;
 
     try {
+      // Build messages array from conversation history
+      const messages = conversationHistory.length > 0
+        ? [
+            ...conversationHistory.map(msg => ({
+              role: msg.role as 'user' | 'assistant',
+              content: msg.content,
+            }))
+          ]
+        : [
+            {
+              role: 'user' as const,
+              content: userPrompt,
+            },
+          ];
+
       const response = await anthropic.messages.create({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 300,
         temperature: 0.7,
         system: systemPrompt,
-        messages: [
-          {
-            role: 'user',
-            content: userPrompt,
-          },
-        ],
+        messages,
       });
 
       elderResponse = response.content[0].type === 'text'
         ? response.content[0].text
         : '';
+
+      // Determine if ready for solution
+      // Ready if: conversation limit reached OR response indicates readiness
+      readyForSolution =
+        conversationCount >= 5 ||
+        elderResponse.includes('So let me offer you something different') ||
+        elderResponse.includes('so let me offer you something different');
     } catch (aiError) {
       console.error('Anthropic API error:', aiError);
       // Provide fallback response based on urge strength
+      // All fallback responses are ready for solution
+      readyForSolution = true;
       if (urgeStrength >= 9) {
         elderResponse = `I hear you. The obsession is loud right now, isn't it?\n\nYou reached out. That's the important part. You're not white-knuckling this alone anymore.\n\nSo let me offer you something different.`;
       } else if (urgeStrength >= 6) {
@@ -141,6 +169,7 @@ Keep it under 150 words. Be conversational and direct.`;
 
     return NextResponse.json({
       response: elderResponse,
+      readyForSolution,
     });
   } catch (error) {
     console.error('Error generating urge response:', error);

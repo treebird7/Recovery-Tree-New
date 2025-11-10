@@ -8,6 +8,7 @@ function MiningContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');
   const durationMinutes = searchParams.get('duration') ? parseInt(searchParams.get('duration')!) : null;
+  const miningIntent = searchParams.get('intent') as 'sleep' | 'screen' | null;
 
   const [startedAt, setStartedAt] = useState<string>('');
   const [startTime, setStartTime] = useState<Date | null>(null);
@@ -201,21 +202,43 @@ function MiningContent() {
 
           <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
             <p className="font-semibold text-white mb-3">What to do:</p>
-            <ol className="space-y-3 text-gray-300">
-              <li>1. Put your phone down</li>
-              <li>2. Lie in the dark</li>
-              <li>3. Close your eyes</li>
-              <li>4. Just breathe</li>
-            </ol>
+            {miningIntent === 'screen' ? (
+              <ol className="space-y-3 text-gray-300">
+                <li>1. Put your phone down</li>
+                <li>2. Step away from the screen</li>
+                <li>3. Move to a different room if you can</li>
+                <li>4. Do something with your hands</li>
+              </ol>
+            ) : (
+              <ol className="space-y-3 text-gray-300">
+                <li>1. Put your phone down</li>
+                <li>2. Lie in the dark</li>
+                <li>3. Close your eyes</li>
+                <li>4. Just breathe</li>
+              </ol>
+            )}
           </div>
 
           <div className="bg-green-900/20 rounded-xl p-6 border border-green-800">
-            <p className="text-green-200">
-              You don&apos;t have to sleep. Just rest.
-            </p>
-            <p className="text-green-300 mt-3 text-lg">
-              Even lying there awake counts. You&apos;re not acting out. That&apos;s what matters.
-            </p>
+            {miningIntent === 'screen' ? (
+              <>
+                <p className="text-green-200">
+                  You don&apos;t have to be productive. Just disconnect.
+                </p>
+                <p className="text-green-300 mt-3 text-lg">
+                  Walk around. Drink water. Look out a window. You&apos;re not acting out. That&apos;s what matters.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-green-200">
+                  You don&apos;t have to sleep. Just rest.
+                </p>
+                <p className="text-green-300 mt-3 text-lg">
+                  Even lying there awake counts. You&apos;re not acting out. That&apos;s what matters.
+                </p>
+              </>
+            )}
           </div>
 
           {/* Finish Mining Button */}
