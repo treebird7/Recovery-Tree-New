@@ -53,16 +53,10 @@ function MiningContent() {
     const interval = setInterval(() => {
       const elapsed = Math.floor((Date.now() - startTime.getTime()) / 1000);
       setElapsedSeconds(elapsed);
-
-      // Auto-end if duration reached
-      if (durationMinutes && elapsed >= durationMinutes * 60) {
-        clearInterval(interval);
-        handleFinishMining();
-      }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [startTime, durationMinutes]);
+  }, [startTime]);
 
   const handleGoBack = () => {
     router.push('/urge');
@@ -154,14 +148,30 @@ function MiningContent() {
 
           {/* Live Timer Display */}
           <div className="mt-6 bg-gray-900 rounded-2xl p-6 border border-gray-800">
-            {durationMinutes && remainingSeconds !== null ? (
+            {durationMinutes ? (
               <>
-                <div className="text-sm text-gray-400 mb-2">Time Remaining</div>
-                <div className="text-6xl font-mono font-bold text-white mb-2">
-                  {remainingSeconds > 0 ? formatTime(remainingSeconds) : '0m 0s'}
+                {/* Timer Duration (Set Time) */}
+                <div className="mb-4 pb-4 border-b border-gray-800">
+                  <div className="text-sm text-gray-400 mb-1">Timer Duration</div>
+                  <div className="text-3xl font-mono font-bold text-gray-300">
+                    {formatTime(durationMinutes * 60)}
+                  </div>
+                  <div className="text-gray-500 text-sm mt-1">
+                    Ends at {endTime}
+                  </div>
                 </div>
-                <div className="text-gray-400 text-sm mb-3">
-                  Ends at {endTime}
+
+                {/* Elapsed Time (Actual Time) */}
+                <div className="mb-4">
+                  <div className="text-sm text-gray-400 mb-1">Elapsed Time</div>
+                  <div className="text-6xl font-mono font-bold text-white mb-2">
+                    {formatTime(elapsedSeconds)}
+                  </div>
+                  {elapsedSeconds >= durationMinutes * 60 && (
+                    <div className="text-green-400 text-sm">
+                      Timer complete - coins still accumulating
+                    </div>
+                  )}
                 </div>
               </>
             ) : (
