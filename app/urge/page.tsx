@@ -282,6 +282,7 @@ export default function UrgePage() {
 
             {/* Timer Duration Selector - Only show after intent chosen */}
             {miningIntent && (
+            <>
             <div className="bg-gray-800 rounded-2xl shadow-2xl p-6 mb-6 border border-gray-700">
               <h3 className="text-white font-semibold mb-4 text-lg">How long do you want to rest?</h3>
               <div className="grid grid-cols-2 gap-3 mb-3">
@@ -399,8 +400,7 @@ export default function UrgePage() {
             <div className="mt-8 text-center text-gray-500 text-sm">
               <p>Every minute mining = 1 coin earned</p>
             </div>
-
-            {/* Close miningIntent conditional */}
+            </>
             )}
           </>
         )}
