@@ -16,6 +16,7 @@ export default function UrgePage() {
   const [timerDuration, setTimerDuration] = useState<number | null>(null); // in minutes, null = indefinite
   const [customMinutes, setCustomMinutes] = useState<string>(''); // for custom input
   const [showCustomInput, setShowCustomInput] = useState(false);
+  const [miningIntent, setMiningIntent] = useState<'sleep' | 'screen' | null>(null); // User's reason for mining
 
   useEffect(() => {
     // Get current time
@@ -249,7 +250,38 @@ export default function UrgePage() {
               </div>
             </div>
 
-            {/* Timer Duration Selector */}
+            {/* Intent Choice - What do you need help with? */}
+            {!miningIntent && (
+              <div className="bg-gray-800 rounded-2xl shadow-2xl p-6 mb-6 border border-gray-700">
+                <h3 className="text-white font-semibold mb-4 text-lg">What do you need help with?</h3>
+                <div className="space-y-3">
+                  <button
+                    onClick={() => setMiningIntent('sleep')}
+                    className="w-full py-6 px-6 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold transition-all text-left flex items-start gap-4"
+                  >
+                    <span className="text-3xl">😴</span>
+                    <div>
+                      <div className="text-lg mb-1">Help going to sleep</div>
+                      <div className="text-sm text-gray-400">Put your phone down, close your eyes, and rest</div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => setMiningIntent('screen')}
+                    className="w-full py-6 px-6 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold transition-all text-left flex items-start gap-4"
+                  >
+                    <span className="text-3xl">📵</span>
+                    <div>
+                      <div className="text-lg mb-1">Help putting the screen down</div>
+                      <div className="text-sm text-gray-400">Step away from the device and be present</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Timer Duration Selector - Only show after intent chosen */}
+            {miningIntent && (
             <div className="bg-gray-800 rounded-2xl shadow-2xl p-6 mb-6 border border-gray-700">
               <h3 className="text-white font-semibold mb-4 text-lg">How long do you want to rest?</h3>
               <div className="grid grid-cols-2 gap-3 mb-3">
@@ -347,7 +379,12 @@ export default function UrgePage() {
                 disabled={isStarting}
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-6 px-8 rounded-xl transition-all shadow-2xl disabled:bg-gray-600 disabled:cursor-not-allowed text-xl"
               >
-                {isStarting ? 'Starting Timer...' : '🌳 Start Sleep Mining Timer'}
+                {isStarting
+                  ? 'Starting Timer...'
+                  : miningIntent === 'sleep'
+                    ? '🌳 Start Sleep Mining Timer'
+                    : '🌳 Start Mining Timer'
+                }
               </button>
 
               <button
@@ -362,6 +399,9 @@ export default function UrgePage() {
             <div className="mt-8 text-center text-gray-500 text-sm">
               <p>Every minute mining = 1 coin earned</p>
             </div>
+
+            {/* Close miningIntent conditional */}
+            )}
           </>
         )}
       </div>
