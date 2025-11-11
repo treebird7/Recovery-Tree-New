@@ -254,7 +254,8 @@ export default function UrgePage() {
             </div>
 
             {/* Follow-up input OR Listen button */}
-            {!isReadyForSolution && conversationCount < 5 ? (
+            {/* Show follow-up input only if explicitly needed, otherwise show Willing button */}
+            {conversationCount > 1 && !isReadyForSolution && conversationCount < 5 ? (
               <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 mb-6 border border-gray-700">
                 <form onSubmit={handleUserSubmit}>
                   <textarea
@@ -274,7 +275,7 @@ export default function UrgePage() {
                 </form>
               </div>
             ) : (
-              /* Listen Button - Show when ready for solution or hit max exchanges */
+              /* Listen Button - Show by default after first response (backward compatible) */
               <button
                 onClick={() => setStage('solution')}
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-6 px-8 rounded-xl transition-all shadow-2xl text-xl"
