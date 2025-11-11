@@ -130,18 +130,18 @@ test.describe('Walkabout Flow', () => {
     await page.goto('/walkabout');
 
     // Select options if available
-    const locationButton = page.locator('button:has-text("Park"), button:has-text("Trail")').first();
+    const locationButton = page.locator('button:has-text("Park / Forest"), button:has-text("Water")').first();
     if (await locationButton.isVisible()) {
       await locationButton.click();
     }
 
-    const bodyNeedButton = page.locator('button:has-text("Movement"), button:has-text("Rest")').first();
+    const bodyNeedButton = page.locator('button:has-text("Movement"), button:has-text("Stillness")').first();
     if (await bodyNeedButton.isVisible()) {
       await bodyNeedButton.click();
     }
 
     // Start walkabout
-    const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")');
+    const startButton = page.locator('button:has-text("START WALK")');
     if (await startButton.isVisible()) {
       await startButton.click();
 
@@ -166,8 +166,12 @@ test.describe('Walkabout Flow', () => {
 
     await page.goto('/walkabout');
 
+    // Select location and body need first
+    await page.locator('button:has-text("Park / Forest")').click();
+    await page.locator('button:has-text("Movement")').click();
+
     // Start walkabout
-    const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")');
+    const startButton = page.locator('button:has-text("START WALK")');
     if (await startButton.isVisible()) {
       await startButton.click();
 
@@ -191,13 +195,17 @@ test.describe('Walkabout Flow', () => {
 
     await page.goto('/walkabout');
 
-    const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")');
+    // Select location and body need first
+    await page.locator('button:has-text("Park / Forest")').click();
+    await page.locator('button:has-text("Movement")').click();
+
+    const startButton = page.locator('button:has-text("START WALK")');
     if (await startButton.isVisible()) {
       await startButton.click();
       await page.waitForTimeout(1000);
 
-      // Look for end/finish button
-      const endButton = page.locator('button:has-text("End"), button:has-text("Finish"), button:has-text("Complete")');
+      // Look for end button
+      const endButton = page.locator('button:has-text("End Walk")');
       await expect(endButton).toBeVisible();
     }
   });
@@ -228,12 +236,16 @@ test.describe('Walkabout Flow', () => {
 
     await page.goto('/walkabout');
 
-    const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")');
+    // Select location and body need first
+    await page.locator('button:has-text("Park / Forest")').click();
+    await page.locator('button:has-text("Movement")').click();
+
+    const startButton = page.locator('button:has-text("START WALK")');
     if (await startButton.isVisible()) {
       await startButton.click();
       await page.waitForTimeout(1000);
 
-      const endButton = page.locator('button:has-text("End"), button:has-text("Finish"), button:has-text("Complete")').first();
+      const endButton = page.locator('button:has-text("End Walk")');
       if (await endButton.isVisible()) {
         await endButton.click();
 
@@ -246,7 +258,7 @@ test.describe('Walkabout Flow', () => {
   test('should navigate back to dashboard from walkabout', async ({ page }) => {
     await page.goto('/walkabout');
 
-    const backButton = page.locator('button:has-text("Back"), button:has-text("Dashboard")');
+    const backButton = page.locator('button:has-text("Back to Dashboard")');
     if (await backButton.isVisible()) {
       await backButton.click();
       await expect(page).toHaveURL(/\/dashboard/);
