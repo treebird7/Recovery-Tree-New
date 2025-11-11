@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-function SuccessPageContent() {
+function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
   const [verifying, setVerifying] = useState(true);
@@ -185,7 +185,7 @@ export default function SuccessPage() {
         </div>
       </div>
     }>
-      <SuccessPageContent />
+      <SuccessContent />
     </Suspense>
   );
 }

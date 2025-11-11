@@ -7,10 +7,23 @@ import {
 } from '@/lib/services/inventory';
 import Anthropic from '@anthropic-ai/sdk';
 
+// TODO: TECHNICAL DEBT - Move this inside POST handler
+// Module-level client instantiation violates FUCKBOARD lesson #2
+// This should be created inside the function, not at module level
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
 });
 
+/**
+ * GET /api/inventory/today
+ *
+ * Checks if user has completed their daily inventory today.
+ *
+ * @returns hasInventory - Boolean indicating if today's inventory exists
+ * @returns inventory - The inventory data if found
+ * @returns 401 if not authenticated
+ * @returns 500 if database query fails
+ */
 export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient();
@@ -46,6 +59,24 @@ export async function GET(request: NextRequest) {
   }
 }
 
+/**
+ * POST /api/inventory/today
+ *
+ * Creates today's daily inventory with Elder Tree reflection.
+ * Users can only create one inventory per day.
+ *
+ * @param request.body.whatWentWell - What went well today (required)
+ * @param request.body.strugglesToday - Today's struggles (required)
+ * @param request.body.gratitude - What user is grateful for (required)
+ * @param request.body.tomorrowIntention - Intention for tomorrow (required)
+ * @param request.body.additionalNotes - Optional additional notes
+ *
+ * @returns inventory - Created inventory with Elder Tree reflection
+ * @returns message - Success message
+ * @returns 401 if not authenticated
+ * @returns 400 if missing required fields or already completed today
+ * @returns 500 if creation fails or AI generation fails
+ */
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient();
@@ -121,6 +152,21 @@ export async function POST(request: NextRequest) {
   }
 }
 
+/**
+ * Generates Elder Tree's end-of-day reflection based on user's daily inventory.
+ *
+ * Uses Anthropic Claude to create a brief, compassionate reflection that:
+ * - Acknowledges user's honesty
+ * - Recognizes what went well
+ * - Offers gentle guidance on struggles
+ * - Encourages for tomorrow
+ *
+ * @param responses - User's daily inventory responses
+ * @returns Elder Tree's reflection message (3-4 sentences, under 100 words)
+ * @returns Fallback message if AI generation fails
+ *
+ * @internal This is a private helper function for the POST endpoint
+ */
 async function generateInventoryReflection(
   responses: InventoryResponses
 ): Promise<string> {
