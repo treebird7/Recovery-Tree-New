@@ -214,7 +214,7 @@ test.describe('Walk Session Flow', () => {
       await responseInput.fill(walkResponses.step1[0]);
 
       // Submit response
-      const submitButton = page.locator('button[type="submit"], button:has-text("Send")').first();
+      const submitButton = page.locator('button[type="submit"]').first();
       await submitButton.click();
 
       // Check for loading indicator (briefly)
@@ -230,7 +230,7 @@ test.describe('Walk Session Flow', () => {
       // First response
       let responseInput = page.locator('textarea, input[type="text"]').first();
       await responseInput.fill(walkResponses.step1[0]);
-      await page.locator('button[type="submit"], button:has-text("Send")').first().click();
+      await page.locator('button[type="submit"]').first().click();
       await waitForElderTreeResponse(page);
 
       // Second response
@@ -238,7 +238,7 @@ test.describe('Walk Session Flow', () => {
       await expect(responseInput).toBeVisible();
       await expect(responseInput).toBeEmpty();
       await responseInput.fill(walkResponses.step1[1]);
-      await page.locator('button[type="submit"], button:has-text("Send")').first().click();
+      await page.locator('button[type="submit"]').first().click();
       await waitForElderTreeResponse(page);
 
       // Should continue the conversation
@@ -265,12 +265,12 @@ test.describe('Walk Session Flow', () => {
       for (let i = 0; i < 2; i++) {
         const responseInput = page.locator('textarea, input[type="text"]').first();
         await responseInput.fill(walkResponses.step1[i]);
-        await page.locator('button[type="submit"], button:has-text("Send")').first().click();
+        await page.locator('button[type="submit"]').first().click();
         await waitForElderTreeResponse(page);
       }
 
       // Look for complete button
-      const completeButton = page.locator('button:has-text("Complete"), button:has-text("End Session")');
+      const completeButton = page.locator('button:has-text("Complete Walk")');
       if (await completeButton.isVisible()) {
         await completeButton.click();
         await waitForElderTreeResponse(page, 10000);
@@ -290,12 +290,12 @@ test.describe('Walk Session Flow', () => {
       for (let i = 0; i < 3; i++) {
         const responseInput = page.locator('textarea, input[type="text"]').first();
         await responseInput.fill(walkResponses.step1[i]);
-        await page.locator('button[type="submit"], button:has-text("Send")').first().click();
+        await page.locator('button[type="submit"]').first().click();
         await waitForElderTreeResponse(page);
       }
 
       // Trigger completion
-      const completeButton = page.locator('button:has-text("Complete"), button:has-text("End")');
+      const completeButton = page.locator('button:has-text("Complete Walk")');
       if (await completeButton.isVisible()) {
         await completeButton.click();
         await waitForElderTreeResponse(page, 10000);
@@ -321,11 +321,11 @@ test.describe('Walk Session Flow', () => {
       for (let i = 0; i < 3; i++) {
         const responseInput = page.locator('textarea, input[type="text"]').first();
         await responseInput.fill(walkResponses.honest[i % walkResponses.honest.length]);
-        await page.locator('button[type="submit"], button:has-text("Send")').first().click();
+        await page.locator('button[type="submit"]').first().click();
         await waitForElderTreeResponse(page);
       }
 
-      const completeButton = page.locator('button:has-text("Complete"), button:has-text("End")');
+      const completeButton = page.locator('button:has-text("Complete Walk")');
       if (await completeButton.isVisible()) {
         await completeButton.click();
         await waitForElderTreeResponse(page, 10000);
@@ -346,10 +346,10 @@ test.describe('Walk Session Flow', () => {
       // Complete session
       const responseInput = page.locator('textarea, input[type="text"]').first();
       await responseInput.fill('Test response');
-      await page.locator('button[type="submit"], button:has-text("Send")').first().click();
+      await page.locator('button[type="submit"]').first().click();
       await waitForElderTreeResponse(page);
 
-      const completeButton = page.locator('button:has-text("Complete"), button:has-text("End")');
+      const completeButton = page.locator('button:has-text("Complete Walk")');
       if (await completeButton.isVisible()) {
         await completeButton.click();
         await waitForElderTreeResponse(page, 10000);
@@ -369,10 +369,10 @@ test.describe('Walk Session Flow', () => {
       // Complete session
       const responseInput = page.locator('textarea, input[type="text"]').first();
       await responseInput.fill('Test response');
-      await page.locator('button[type="submit"], button:has-text("Send")').first().click();
+      await page.locator('button[type="submit"]').first().click();
       await waitForElderTreeResponse(page);
 
-      const completeButton = page.locator('button:has-text("Complete"), button:has-text("End")');
+      const completeButton = page.locator('button:has-text("Complete Walk")');
       if (await completeButton.isVisible()) {
         await completeButton.click();
         await waitForElderTreeResponse(page, 10000);
@@ -395,10 +395,10 @@ test.describe('Walk Session Flow', () => {
       // Quick completion
       const responseInput = page.locator('textarea, input[type="text"]').first();
       await responseInput.fill('Test response');
-      await page.locator('button[type="submit"], button:has-text("Send")').first().click();
+      await page.locator('button[type="submit"]').first().click();
       await waitForElderTreeResponse(page);
 
-      const completeButton = page.locator('button:has-text("Complete"), button:has-text("End")');
+      const completeButton = page.locator('button:has-text("Complete Walk")');
       if (await completeButton.isVisible()) {
         await completeButton.click();
         await waitForElderTreeResponse(page, 10000);
@@ -424,10 +424,10 @@ test.describe('Walk Session Flow', () => {
       // Complete session
       const responseInput = page.locator('textarea, input[type="text"]').first();
       await responseInput.fill(walkResponses.honest[0]);
-      await page.locator('button[type="submit"], button:has-text("Send")').first().click();
+      await page.locator('button[type="submit"]').first().click();
       await waitForElderTreeResponse(page);
 
-      const completeButton = page.locator('button:has-text("Complete"), button:has-text("End")');
+      const completeButton = page.locator('button:has-text("Complete Walk")');
       if (await completeButton.isVisible()) {
         await completeButton.click();
         await waitForElderTreeResponse(page, 10000);
@@ -451,7 +451,7 @@ test.describe('Walk Session Flow', () => {
       for (let i = 0; i < 2; i++) {
         const responseInput = page.locator('textarea, input[type="text"]').first();
         await responseInput.fill(walkResponses.step1[i]);
-        await page.locator('button[type="submit"], button:has-text("Send")').first().click();
+        await page.locator('button[type="submit"]').first().click();
         await waitForElderTreeResponse(page);
       }
 
@@ -471,7 +471,7 @@ test.describe('Walk Session Flow', () => {
       for (let i = 0; i < 2; i++) {
         const responseInput = page.locator('textarea, input[type="text"]').first();
         await responseInput.fill(walkResponses.step2[i]);
-        await page.locator('button[type="submit"], button:has-text("Send")').first().click();
+        await page.locator('button[type="submit"]').first().click();
         await waitForElderTreeResponse(page);
       }
 
@@ -491,7 +491,7 @@ test.describe('Walk Session Flow', () => {
       for (let i = 0; i < 2; i++) {
         const responseInput = page.locator('textarea, input[type="text"]').first();
         await responseInput.fill(walkResponses.step3[i]);
-        await page.locator('button[type="submit"], button:has-text("Send")').first().click();
+        await page.locator('button[type="submit"]').first().click();
         await waitForElderTreeResponse(page);
       }
 

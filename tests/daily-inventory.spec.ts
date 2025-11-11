@@ -171,8 +171,8 @@ test.describe('Daily Inventory Flow', () => {
       // Answer first question
       await page.fill('textarea', inventoryResponses.positive.wentWell);
 
-      // Click Next
-      await page.click('button:has-text("Next"), button:has-text("Continue")');
+      // Click Continue
+      await page.click('button:has-text("Continue")');
 
       // Should move to question 2
       await expect(page.locator('text=Question 2 of 4')).toBeVisible();
@@ -186,17 +186,17 @@ test.describe('Daily Inventory Flow', () => {
       // Question 1: What went well
       await expect(page.locator('text=What went well today')).toBeVisible();
       await page.fill('textarea', inventoryResponses.positive.wentWell);
-      await page.click('button:has-text("Next"), button:has-text("Continue")');
+      await page.click('button:has-text("Continue")');
 
       // Question 2: Struggles
       await expect(page.locator('text=What was hard today')).toBeVisible();
       await page.fill('textarea', inventoryResponses.positive.struggles);
-      await page.click('button:has-text("Next"), button:has-text("Continue")');
+      await page.click('button:has-text("Continue")');
 
       // Question 3: Gratitude
       await expect(page.locator('text=What are you grateful for')).toBeVisible();
       await page.fill('textarea', inventoryResponses.positive.gratitude);
-      await page.click('button:has-text("Next"), button:has-text("Continue")');
+      await page.click('button:has-text("Continue")');
 
       // Question 4: Tomorrow's intention
       await expect(page.locator('text=/What.*one thing.*tomorrow/i')).toBeVisible();
@@ -210,7 +210,7 @@ test.describe('Daily Inventory Flow', () => {
       // Answer first question
       const answer1 = 'My first answer';
       await page.fill('textarea', answer1);
-      await page.click('button:has-text("Next"), button:has-text("Continue")');
+      await page.click('button:has-text("Continue")');
 
       // Now at question 2
       await expect(page.locator('text=Question 2 of 4')).toBeVisible();
@@ -238,7 +238,7 @@ test.describe('Daily Inventory Flow', () => {
       // Answer first 3 questions
       for (let i = 0; i < 3; i++) {
         await page.fill('textarea', answers[i]);
-        await page.click('button:has-text("Next"), button:has-text("Continue")');
+        await page.click('button:has-text("Continue")');
       }
 
       // Now at question 4, go back
@@ -261,11 +261,11 @@ test.describe('Daily Inventory Flow', () => {
       // Navigate to last question
       for (let i = 0; i < 3; i++) {
         await page.fill('textarea', `Answer ${i + 1}`);
-        await page.click('button:has-text("Next"), button:has-text("Continue")');
+        await page.click('button:has-text("Continue")');
       }
 
       // Should show submit/complete button
-      const submitButton = page.locator('button:has-text("Submit"), button:has-text("Complete"), button:has-text("Finish")');
+      const submitButton = page.locator('button:has-text("Complete Inventory")');
       await expect(submitButton).toBeVisible();
     });
 
@@ -278,19 +278,19 @@ test.describe('Daily Inventory Flow', () => {
 
       // Move to next questions
       await page.fill('textarea', 'Test');
-      await page.click('button:has-text("Next")');
+      await page.click('button:has-text("Continue")');
 
       // Question 2 help text
       await expect(page.locator('text=/Be honest about what was difficult/i')).toBeVisible();
 
       await page.fill('textarea', 'Test');
-      await page.click('button:has-text("Next")');
+      await page.click('button:has-text("Continue")');
 
       // Question 3 help text
       await expect(page.locator('text=/Keep it real/i')).toBeVisible();
 
       await page.fill('textarea', 'Test');
-      await page.click('button:has-text("Next")');
+      await page.click('button:has-text("Continue")');
 
       // Question 4 help text
       await expect(page.locator('text=/specific action/i')).toBeVisible();
@@ -355,7 +355,7 @@ test.describe('Daily Inventory Flow', () => {
       for (let i = 0; i < answers.length; i++) {
         await page.fill('textarea', answers[i]);
         if (i < answers.length - 1) {
-          await page.click('button:has-text("Next"), button:has-text("Continue")');
+          await page.click('button:has-text("Continue")');
         }
       }
 
@@ -366,7 +366,7 @@ test.describe('Daily Inventory Flow', () => {
       await completeInventory(page, inventoryResponses.positive);
 
       // Submit
-      await page.click('button:has-text("Submit"), button:has-text("Complete"), button:has-text("Finish")');
+      await page.click('button:has-text("Complete Inventory")');
 
       // Should show loading/generating state
       await expect(page.locator('text=/Generating reflection|Loading/i')).toBeVisible();
@@ -374,7 +374,7 @@ test.describe('Daily Inventory Flow', () => {
 
     test('should display Elder Tree reflection after submission', async ({ page }) => {
       await completeInventory(page, inventoryResponses.positive);
-      await page.click('button:has-text("Submit"), button:has-text("Complete"), button:has-text("Finish")');
+      await page.click('button:has-text("Complete Inventory")');
 
       // Wait for reflection to load
       await page.waitForTimeout(2000);
@@ -385,7 +385,7 @@ test.describe('Daily Inventory Flow', () => {
 
     test('should show completion confirmation', async ({ page }) => {
       await completeInventory(page, inventoryResponses.positive);
-      await page.click('button:has-text("Submit"), button:has-text("Complete"), button:has-text("Finish")');
+      await page.click('button:has-text("Complete Inventory")');
 
       await page.waitForTimeout(2000);
 
@@ -396,7 +396,7 @@ test.describe('Daily Inventory Flow', () => {
 
     test('should work with struggling responses', async ({ page }) => {
       await completeInventory(page, inventoryResponses.struggling);
-      await page.click('button:has-text("Submit"), button:has-text("Complete"), button:has-text("Finish")');
+      await page.click('button:has-text("Complete Inventory")');
 
       await page.waitForTimeout(2000);
 
@@ -406,7 +406,7 @@ test.describe('Daily Inventory Flow', () => {
 
     test('should work with hopeful responses', async ({ page }) => {
       await completeInventory(page, inventoryResponses.hopeful);
-      await page.click('button:has-text("Submit"), button:has-text("Complete"), button:has-text("Finish")');
+      await page.click('button:has-text("Complete Inventory")');
 
       await page.waitForTimeout(2000);
 
@@ -416,7 +416,7 @@ test.describe('Daily Inventory Flow', () => {
 
     test('should display all user responses on completion', async ({ page }) => {
       const responses = await completeInventory(page, inventoryResponses.positive);
-      await page.click('button:has-text("Submit"), button:has-text("Complete"), button:has-text("Finish")');
+      await page.click('button:has-text("Complete Inventory")');
 
       await page.waitForTimeout(2000);
 
@@ -428,7 +428,7 @@ test.describe('Daily Inventory Flow', () => {
 
     test('should allow navigating after completion', async ({ page }) => {
       await completeInventory(page, inventoryResponses.positive);
-      await page.click('button:has-text("Submit"), button:has-text("Complete"), button:has-text("Finish")');
+      await page.click('button:has-text("Complete Inventory")');
 
       await page.waitForTimeout(2000);
 
@@ -598,12 +598,12 @@ test.describe('Daily Inventory Flow', () => {
       for (let i = 0; i < 4; i++) {
         await page.fill('textarea', `Test answer ${i + 1}`);
         if (i < 3) {
-          await page.click('button:has-text("Next")');
+          await page.click('button:has-text("Continue")');
         }
       }
 
       // Try to submit
-      await page.click('button:has-text("Submit"), button:has-text("Complete"), button:has-text("Finish")');
+      await page.click('button:has-text("Complete Inventory")');
 
       // Should return to form (not crash)
       await page.waitForTimeout(500);
@@ -632,7 +632,7 @@ test.describe('Daily Inventory Flow', () => {
 
       // Should be able to answer
       await page.fill('textarea', 'Mobile test answer');
-      await page.click('button:has-text("Next")');
+      await page.click('button:has-text("Continue")');
 
       // Should progress to next question
       await expect(page.locator('text=Question 2 of 4')).toBeVisible();
