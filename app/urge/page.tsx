@@ -21,7 +21,7 @@ export default function UrgePage() {
   const [timerDuration, setTimerDuration] = useState<number | null>(null); // in minutes, null = indefinite
   const [customMinutes, setCustomMinutes] = useState<string>(''); // for custom input
   const [showCustomInput, setShowCustomInput] = useState(false);
-  const [miningIntent, setMiningIntent] = useState<'sleep' | 'screen' | null>(null); // User's reason for mining
+  const [miningIntent, setMiningIntent] = useState<'sleep' | 'screen'>('sleep'); // User's reason for mining
   const [conversationHistory, setConversationHistory] = useState<ConversationMessage[]>([]);
   const [conversationCount, setConversationCount] = useState(0);
   const [isReadyForSolution, setIsReadyForSolution] = useState(false);
@@ -313,38 +313,34 @@ export default function UrgePage() {
             </div>
 
             {/* Intent Choice - What do you need help with? */}
-            {!miningIntent && (
-              <div className="bg-gray-800 rounded-2xl shadow-2xl p-6 mb-6 border border-gray-700">
-                <h3 className="text-white font-semibold mb-4 text-lg">What do you need help with?</h3>
-                <div className="space-y-3">
-                  <button
-                    onClick={() => setMiningIntent('sleep')}
-                    className="w-full py-6 px-6 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold transition-all text-left flex items-start gap-4"
-                  >
-                    <span className="text-3xl">😴</span>
-                    <div>
-                      <div className="text-lg mb-1">Help going to sleep</div>
-                      <div className="text-sm text-gray-400">Put your phone down, close your eyes, and rest</div>
-                    </div>
-                  </button>
+            <div className="bg-gray-800 rounded-2xl shadow-2xl p-6 mb-6 border border-gray-700">
+              <h3 className="text-white font-semibold mb-4 text-lg">What do you need help with?</h3>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => setMiningIntent('sleep')}
+                  className={`py-4 px-4 rounded-lg font-semibold transition-all ${
+                    miningIntent === 'sleep'
+                      ? 'bg-green-600 text-white'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  😴 Going to sleep
+                </button>
 
-                  <button
-                    onClick={() => setMiningIntent('screen')}
-                    className="w-full py-6 px-6 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold transition-all text-left flex items-start gap-4"
-                  >
-                    <span className="text-3xl">📵</span>
-                    <div>
-                      <div className="text-lg mb-1">Help putting the screen down</div>
-                      <div className="text-sm text-gray-400">Step away from the device and be present</div>
-                    </div>
-                  </button>
-                </div>
+                <button
+                  onClick={() => setMiningIntent('screen')}
+                  className={`py-4 px-4 rounded-lg font-semibold transition-all ${
+                    miningIntent === 'screen'
+                      ? 'bg-green-600 text-white'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  📵 Putting screen down
+                </button>
               </div>
-            )}
+            </div>
 
-            {/* Timer Duration Selector - Only show after intent chosen */}
-            {miningIntent && (
-            <>
+            {/* Timer Duration Selector */}
             <div className="bg-gray-800 rounded-2xl shadow-2xl p-6 mb-6 border border-gray-700">
               <h3 className="text-white font-semibold mb-4 text-lg">How long do you want to rest?</h3>
               <div className="grid grid-cols-2 gap-3 mb-3">
@@ -462,8 +458,6 @@ export default function UrgePage() {
             <div className="mt-8 text-center text-gray-500 text-sm">
               <p>Every minute mining = 1 coin earned</p>
             </div>
-            </>
-            )}
           </>
         )}
       </div>
