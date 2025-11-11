@@ -90,27 +90,30 @@ export async function mockInventoryReflection(page: Page) {
  * Mock Anthropic API for urge response
  */
 export async function mockUrgeResponse(page: Page, intensity?: number) {
-  await page.route('**/api/urge/respond**', async (route: Route) => {
+  await page.route('**/api/urge/response**', async (route: Route) => {
     const requestBody = route.request().postDataJSON();
-    const urgeIntensity = intensity || requestBody?.intensity || 5;
+    const urgeIntensity = intensity || requestBody?.urgeStrength || 5;
 
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     let response = '';
     if (urgeIntensity >= 9) {
-      response = "Hey, I hear you. What you're feeling right now - that pull, that urgency - it's real, and it's intense. But here's what I know: This feeling will pass. It always does. What won't pass is the regret if you act on it. You've got a window right here, right now, to let this wave break without you on it. Will you rest with me? Even just for a few hours?";
+      response = "Hey, I hear you. What you're feeling right now - that pull, that urgency - it's real, and it's intense. But here's what I know: This feeling will pass. It always does. What won't pass is the regret if you act on it. You've got a window right here, right now, to let this wave break without you on it. Will you rest with me? Even just for a few hours? So let me offer you something different.";
     } else if (urgeIntensity >= 7) {
-      response = "I'm glad you reached out. That took courage. This urge you're feeling - it wants you to believe it's the only option, that you need to act now. But you don't. You've got time, and you've got choices. Would you be willing to rest this out with me? Give it a few hours and see how you feel on the other side?";
+      response = "I'm glad you reached out. That took courage. This urge you're feeling - it wants you to believe it's the only option, that you need to act now. But you don't. You've got time, and you've got choices. Would you be willing to rest this out with me? Give it a few hours and see how you feel on the other side? So let me offer you something different.";
     } else if (urgeIntensity >= 4) {
-      response = "Thanks for being honest about where you're at. This discomfort you're feeling - it's temporary, even if it doesn't feel that way right now. You've got options here. You could take a walk, work through a step, or just rest with this feeling for a bit. What sounds doable to you?";
+      response = "Thanks for being honest about where you're at. This discomfort you're feeling - it's temporary, even if it doesn't feel that way right now. You've got options here. You could take a walk, work through a step, or just rest with this feeling for a bit. What sounds doable to you? So let me offer you something different.";
     } else {
-      response = "I appreciate you checking in. Sounds like you're managing this pretty well, but it's smart to stay ahead of it. Want to take a walk and talk through what's going on? Sometimes the best time to do step work is before things get harder.";
+      response = "I appreciate you checking in. Sounds like you're managing this pretty well, but it's smart to stay ahead of it. Want to take a walk and talk through what's going on? Sometimes the best time to do step work is before things get harder. So let me offer you something different.";
     }
 
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
-      body: JSON.stringify({ response }),
+      body: JSON.stringify({
+        response,
+        readyForSolution: true // Always ready after first response for tests
+      }),
     });
   });
 }
