@@ -47,8 +47,8 @@ export async function mockAnthropicAPI(page: Page, responses?: string[]) {
  * Mock Anthropic API for walk session completion
  */
 export async function mockWalkCompletion(page: Page) {
-  await page.route('**/api/walk/complete**', async (route: Route) => {
-    await new Promise(resolve => setTimeout(resolve, 1500));
+  await page.route('**/api/session/complete**', async (route: Route) => {
+    await new Promise(resolve => setTimeout(resolve, 500));
 
     await route.fulfill({
       status: 200,
@@ -73,16 +73,28 @@ export async function mockWalkCompletion(page: Page) {
  * Mock Anthropic API for inventory reflection
  */
 export async function mockInventoryReflection(page: Page) {
-  await page.route('**/api/inventory/reflect**', async (route: Route) => {
-    await new Promise(resolve => setTimeout(resolve, 1500));
+  await page.route('**/api/inventory/today**', async (route: Route) => {
+    if (route.request().method() === 'POST') {
+      await new Promise(resolve => setTimeout(resolve, 500));
 
-    await route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({
-        reflection: "I see you showing up for yourself today. There's real strength in taking this daily inventory - in naming both what went well and where you struggled. That gratitude you expressed? That's the soil recovery grows in. And tomorrow's intention shows you're thinking ahead, planning your day with care. Keep this practice going.",
-      }),
-    });
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          reflection: "I see you showing up for yourself today. There's real strength in taking this daily inventory - in naming both what went well and where you struggled. That gratitude you expressed? That's the soil recovery grows in. And tomorrow's intention shows you're thinking ahead, planning your day with care. Keep this practice going.",
+          coinsEarned: 10,
+        }),
+      });
+    } else {
+      // GET request - return hasInventory: false for tests
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          hasInventory: false,
+        }),
+      });
+    }
   });
 }
 
