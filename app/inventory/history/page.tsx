@@ -134,7 +134,7 @@ export default function InventoryHistoryPage() {
 
               <div>
                 <h3 className="text-sm font-semibold text-blue-700 mb-2">
-                  Tomorrow's intention
+                  Tomorrow&apos;s intention
                 </h3>
                 <p className="text-gray-800">{selectedInventory.tomorrow_intention}</p>
               </div>
@@ -199,7 +199,7 @@ export default function InventoryHistoryPage() {
               onClick={() => router.push('/inventory')}
               className="bg-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-purple-700 transition"
             >
-              Complete Today's Inventory
+              Complete Today&apos;s Inventory
             </button>
           </div>
         ) : (

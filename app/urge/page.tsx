@@ -3,6 +3,11 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+interface ConversationMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
 export default function UrgePage() {
   const router = useRouter();
   const [username, setUsername] = useState('friend');
@@ -16,6 +21,10 @@ export default function UrgePage() {
   const [timerDuration, setTimerDuration] = useState<number | null>(null); // in minutes, null = indefinite
   const [customMinutes, setCustomMinutes] = useState<string>(''); // for custom input
   const [showCustomInput, setShowCustomInput] = useState(false);
+  const [miningIntent, setMiningIntent] = useState<'sleep' | 'screen'>('sleep'); // User's reason for mining
+  const [conversationHistory, setConversationHistory] = useState<ConversationMessage[]>([]);
+  const [conversationCount, setConversationCount] = useState(0);
+  const [isReadyForSolution, setIsReadyForSolution] = useState(false);
 
   useEffect(() => {
     // Get current time
@@ -47,6 +56,13 @@ export default function UrgePage() {
     e.preventDefault();
     if (!userInput.trim()) return;
 
+    // Add user message to conversation history
+    const newHistory = [...conversationHistory, { role: 'user' as const, content: userInput }];
+    setConversationHistory(newHistory);
+    setConversationCount(conversationCount + 1);
+
+    const currentInput = userInput;
+    setUserInput(''); // Clear input field
     setIsGenerating(true);
 
     try {
@@ -54,8 +70,10 @@ export default function UrgePage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userInput,
+          userInput: currentInput,
           urgeStrength,
+          conversationHistory: newHistory,
+          conversationCount: conversationCount + 1,
         }),
       });
 
@@ -64,7 +82,14 @@ export default function UrgePage() {
       }
 
       const data = await response.json();
+
+      // Add Elder Tree response to conversation history
+      setConversationHistory([...newHistory, { role: 'assistant' as const, content: data.response }]);
       setElderResponse(data.response);
+
+      // Check if Elder Tree is ready to offer solution
+      setIsReadyForSolution(data.readyForSolution || false);
+
       setStage('response');
     } catch (error) {
       console.error('Error generating response:', error);
@@ -90,8 +115,8 @@ export default function UrgePage() {
 
       const data = await response.json();
 
-      // Navigate to timer activation screen with duration parameter
-      const url = `/urge/mining?sessionId=${data.sessionId}${timerDuration ? `&duration=${timerDuration}` : ''}`;
+      // Navigate to timer activation screen with duration and intent parameters
+      const url = `/urge/mining?sessionId=${data.sessionId}${timerDuration ? `&duration=${timerDuration}` : ''}${miningIntent ? `&intent=${miningIntent}` : ''}`;
       router.push(url);
     } catch (error) {
       console.error('Error starting mining:', error);
@@ -204,21 +229,60 @@ export default function UrgePage() {
         {/* Stage 2: Elder Tree Response */}
         {stage === 'response' && (
           <>
-            <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 mb-6 border border-gray-700">
-              <div className="space-y-4 text-lg leading-relaxed">
-                <div className="border-l-4 border-green-600 pl-4 py-2 bg-gray-900/50">
-                  <p className="text-gray-300 whitespace-pre-wrap">{elderResponse}</p>
+            {/* Conversation History */}
+            <div className="space-y-4 mb-6">
+              {conversationHistory.map((message, index) => (
+                <div
+                  key={index}
+                  className={`rounded-2xl shadow-2xl p-6 border ${
+                    message.role === 'user'
+                      ? 'bg-gray-700 border-gray-600 ml-8'
+                      : 'bg-gray-800 border-gray-700'
+                  }`}
+                >
+                  {message.role === 'user' ? (
+                    <p className="text-gray-200 text-base">{message.content}</p>
+                  ) : (
+                    <div className="border-l-4 border-green-600 pl-4 py-2 bg-gray-900/50">
+                      <p className="text-gray-300 whitespace-pre-wrap text-lg leading-relaxed">
+                        {message.content}
+                      </p>
+                    </div>
+                  )}
                 </div>
-              </div>
+              ))}
             </div>
 
-            {/* Listen Button */}
-            <button
-              onClick={() => setStage('solution')}
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-6 px-8 rounded-xl transition-all shadow-2xl text-xl"
-            >
-              I&apos;m Willing to Listen
-            </button>
+            {/* Follow-up input OR Listen button */}
+            {/* Show follow-up input only if explicitly needed, otherwise show Willing button */}
+            {conversationCount > 1 && !isReadyForSolution && conversationCount < 5 ? (
+              <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 mb-6 border border-gray-700">
+                <form onSubmit={handleUserSubmit}>
+                  <textarea
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                    placeholder="Continue the conversation..."
+                    rows={3}
+                    className="w-full px-4 py-3 border border-gray-600 bg-gray-900 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent mb-4 text-gray-100 placeholder:text-gray-500"
+                  />
+                  <button
+                    type="submit"
+                    disabled={!userInput.trim() || isGenerating}
+                    className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed"
+                  >
+                    {isGenerating ? 'Listening...' : 'Continue'}
+                  </button>
+                </form>
+              </div>
+            ) : (
+              /* Listen Button - Show by default after first response (backward compatible) */
+              <button
+                onClick={() => setStage('solution')}
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-6 px-8 rounded-xl transition-all shadow-2xl text-xl"
+              >
+                I&apos;m Willing to Listen
+              </button>
+            )}
           </>
         )}
 
@@ -246,6 +310,34 @@ export default function UrgePage() {
                 <p className="text-xl font-bold text-white mt-6">
                   What&apos;s it going to be, {username}?
                 </p>
+              </div>
+            </div>
+
+            {/* Intent Choice - What do you need help with? */}
+            <div className="bg-gray-800 rounded-2xl shadow-2xl p-6 mb-6 border border-gray-700">
+              <h3 className="text-white font-semibold mb-4 text-lg">What do you need help with?</h3>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => setMiningIntent('sleep')}
+                  className={`py-4 px-4 rounded-lg font-semibold transition-all ${
+                    miningIntent === 'sleep'
+                      ? 'bg-green-600 text-white'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  😴 Going to sleep
+                </button>
+
+                <button
+                  onClick={() => setMiningIntent('screen')}
+                  className={`py-4 px-4 rounded-lg font-semibold transition-all ${
+                    miningIntent === 'screen'
+                      ? 'bg-green-600 text-white'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  📵 Putting screen down
+                </button>
               </div>
             </div>
 
@@ -347,7 +439,12 @@ export default function UrgePage() {
                 disabled={isStarting}
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-6 px-8 rounded-xl transition-all shadow-2xl disabled:bg-gray-600 disabled:cursor-not-allowed text-xl"
               >
-                {isStarting ? 'Starting Timer...' : '🌳 Start Sleep Mining Timer'}
+                {isStarting
+                  ? 'Starting Timer...'
+                  : miningIntent === 'sleep'
+                    ? '🌳 Start Sleep Mining Timer'
+                    : '🌳 Start Mining Timer'
+                }
               </button>
 
               <button

@@ -27,6 +27,52 @@
 
 ---
 
+## 🌿 BRANCH STATUS
+
+*Live tracking of parallel development work*
+
+**Total Active Branches:** 7 (excluding main)
+**Ready to Merge:** 4
+**Needs Review:** 2
+**In Active Development:** 1
+**Last Updated:** 2025-11-08
+
+### Quick Actions
+- 📊 [Full Details](./BRANCH_REGISTRY.md)
+- 🔀 [Merge Protocol](./MERGE_PROTOCOL.md)
+- 📝 [Session Log](./SESSION_LOG.md)
+
+### ⚡ Priority Merges
+
+1. **claude/debug-error** - Fixes critical technical debt (module-level clients)
+   - Status: ✅ Ready to merge FIRST
+   - Risk: Low
+   - Impact: Prevents future build errors
+
+2. **claude/fix-eslint** - Code quality improvements
+   - Status: ✅ Ready to merge SECOND
+   - Risk: Low
+   - Impact: Cleaner codebase
+
+3. **claude/install-dependencies** - E2E testing infrastructure
+   - Status: ✅ Ready to merge THIRD
+   - Risk: Low
+   - Impact: Testing capability
+
+4. **claude/orchestrate-building-agents** - Session History feature
+   - Status: 🟡 Needs testing before merge
+   - Risk: Medium (merge conflicts expected with debug-error)
+   - Impact: High (major feature addition)
+
+### 🔍 Needs Decision
+
+- **claude/terminal-communication** - Walkabout feature (Fritz review needed)
+- **claude/setup-capacitor** - Mobile support (Defer to post-launch?)
+
+**See [BRANCH_REGISTRY.md](./BRANCH_REGISTRY.md) for complete branch map and merge strategy.**
+
+---
+
 ## 🎯 READY TO BUILD
 
 *Designed, approved, ready for Sancho to implement*

@@ -4,13 +4,15 @@ import { createClient } from '@supabase/supabase-js';
 
 export const dynamic = 'force-dynamic';
 
-export async function POST(req: NextRequest) {
-  // Create Supabase admin client INSIDE the function
-  const supabaseAdmin = createClient(
+// Lazy initialization of Supabase admin client
+function getSupabaseAdmin() {
+  return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_KEY!
   );
+}
 
+export async function POST(req: NextRequest) {
   try {
     const body = await req.text();
     const signature = req.headers.get('x-signature');
@@ -40,24 +42,24 @@ export async function POST(req: NextRequest) {
     // Handle different event types
     switch (eventName) {
       case 'order_created':
-        await handleOrderCreated(event, supabaseAdmin);
+        await handleOrderCreated(event);
         break;
 
       case 'subscription_created':
-        await handleSubscriptionCreated(event, supabaseAdmin);
+        await handleSubscriptionCreated(event);
         break;
 
       case 'subscription_updated':
-        await handleSubscriptionUpdated(event, supabaseAdmin);
+        await handleSubscriptionUpdated(event);
         break;
 
       case 'subscription_cancelled':
       case 'subscription_expired':
-        await handleSubscriptionCancelled(event, supabaseAdmin);
+        await handleSubscriptionCancelled(event);
         break;
 
       case 'subscription_resumed':
-        await handleSubscriptionResumed(event, supabaseAdmin);
+        await handleSubscriptionResumed(event);
         break;
 
       case 'subscription_payment_success':
@@ -65,7 +67,7 @@ export async function POST(req: NextRequest) {
         break;
 
       case 'subscription_payment_failed':
-        await handlePaymentFailed(event, supabaseAdmin);
+        await handlePaymentFailed(event);
         break;
 
       default:
@@ -82,7 +84,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-async function handleOrderCreated(event: any, supabaseAdmin: any) {
+async function handleOrderCreated(event: any) {
   const { data, meta } = event;
   const userId = data.attributes.custom_data?.user_id;
 
@@ -94,7 +96,7 @@ async function handleOrderCreated(event: any, supabaseAdmin: any) {
   console.log(`Order created for user ${userId}`);
 }
 
-async function handleSubscriptionCreated(event: any, supabaseAdmin: any) {
+async function handleSubscriptionCreated(event: any) {
   const { data } = event;
   const attributes = data.attributes;
   const userId = attributes.custom_data?.user_id;
@@ -104,7 +106,7 @@ async function handleSubscriptionCreated(event: any, supabaseAdmin: any) {
   }
 
   // Upsert subscription in database
-  await supabaseAdmin.from('subscriptions').upsert({
+  await getSupabaseAdmin().from('subscriptions').upsert({
     user_id: userId,
     lemonsqueezy_customer_id: attributes.customer_id.toString(),
     lemonsqueezy_subscription_id: data.id,
@@ -119,7 +121,7 @@ async function handleSubscriptionCreated(event: any, supabaseAdmin: any) {
   console.log(`Subscription created for user ${userId}`);
 }
 
-async function handleSubscriptionUpdated(event: any, supabaseAdmin: any) {
+async function handleSubscriptionUpdated(event: any) {
   const { data } = event;
   const attributes = data.attributes;
   const userId = attributes.custom_data?.user_id;
@@ -129,7 +131,7 @@ async function handleSubscriptionUpdated(event: any, supabaseAdmin: any) {
     return;
   }
 
-  await supabaseAdmin
+  await getSupabaseAdmin()
     .from('subscriptions')
     .update({
       status: attributes.status,
@@ -144,10 +146,10 @@ async function handleSubscriptionUpdated(event: any, supabaseAdmin: any) {
   console.log(`Subscription updated for user ${userId}`);
 }
 
-async function handleSubscriptionCancelled(event: any, supabaseAdmin: any) {
+async function handleSubscriptionCancelled(event: any) {
   const { data } = event;
 
-  await supabaseAdmin
+  await getSupabaseAdmin()
     .from('subscriptions')
     .update({
       status: 'cancelled',
@@ -159,11 +161,11 @@ async function handleSubscriptionCancelled(event: any, supabaseAdmin: any) {
   console.log(`Subscription cancelled: ${data.id}`);
 }
 
-async function handleSubscriptionResumed(event: any, supabaseAdmin: any) {
+async function handleSubscriptionResumed(event: any) {
   const { data } = event;
   const attributes = data.attributes;
 
-  await supabaseAdmin
+  await getSupabaseAdmin()
     .from('subscriptions')
     .update({
       status: attributes.status,
@@ -180,10 +182,10 @@ async function handlePaymentSuccess(event: any) {
   console.log(`Payment succeeded for subscription ${data.id}`);
 }
 
-async function handlePaymentFailed(event: any, supabaseAdmin: any) {
+async function handlePaymentFailed(event: any) {
   const { data } = event;
 
-  await supabaseAdmin
+  await getSupabaseAdmin()
     .from('subscriptions')
     .update({
       status: 'past_due',

@@ -118,9 +118,11 @@ export async function generateNatureImage(
     // Extract image URL from result
     console.log('FAL.ai result:', JSON.stringify(result, null, 2));
 
-    const resultData = result as any;
-    if (resultData.data && resultData.data.images && resultData.data.images.length > 0) {
-      const imageUrl = resultData.data.images[0].url;
+    // Type assertion for FAL.ai response
+    const typedResult = result as { data?: { images?: { url: string }[] } };
+
+    if (typedResult.data && typedResult.data.images && typedResult.data.images.length > 0) {
+      const imageUrl = typedResult.data.images[0].url;
       console.log('Image generated successfully:', imageUrl);
       return { imageUrl, error: null };
     }
@@ -160,9 +162,11 @@ export async function generateCustomNatureImage(
       },
     });
 
-    const resultData = result as any;
-    if (resultData.data && resultData.data.images && resultData.data.images.length > 0) {
-      return { imageUrl: resultData.data.images[0].url, error: null };
+    // Type assertion for FAL.ai response
+    const typedResult = result as { data?: { images?: { url: string }[] } };
+
+    if (typedResult.data && typedResult.data.images && typedResult.data.images.length > 0) {
+      return { imageUrl: typedResult.data.images[0].url, error: null };
     }
 
     return { imageUrl: null, error: 'No image generated' };

@@ -3,11 +3,12 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-function MiningTimerPageContent() {
+function MiningContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');
   const durationMinutes = searchParams.get('duration') ? parseInt(searchParams.get('duration')!) : null;
+  const miningIntent = searchParams.get('intent') as 'sleep' | 'screen' | null;
 
   const [startedAt, setStartedAt] = useState<string>('');
   const [startTime, setStartTime] = useState<Date | null>(null);
@@ -53,45 +54,27 @@ function MiningTimerPageContent() {
     const interval = setInterval(() => {
       const elapsed = Math.floor((Date.now() - startTime.getTime()) / 1000);
       setElapsedSeconds(elapsed);
-
-      // Auto-end if duration reached
-      if (durationMinutes && elapsed >= durationMinutes * 60) {
-        clearInterval(interval);
-        handleFinishMining();
-      }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [startTime, durationMinutes]);
+  }, [startTime]);
 
   const handleGoBack = () => {
     router.push('/urge');
   };
 
-  const handleFinishMining = async () => {
+  const handleFinishMining = () => {
     const confirmed = confirm('Ready to finish mining and collect your coins?');
     if (!confirmed) return;
 
-    setIsEnding(true);
-
-    try {
-      const response = await fetch('/api/mining/end', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({}), // Send empty object to satisfy JSON parsing
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to end mining');
-      }
-
-      // Redirect to reveal page
-      router.push('/urge/reveal');
-    } catch (err) {
-      console.error('Error ending mining:', err);
-      alert('Failed to end mining session. Please try again.');
-      setIsEnding(false);
+    if (!sessionId) {
+      alert('No active session found. Please start a new mining session.');
+      return;
     }
+
+    // Don't call end API here - the reveal page will handle that
+    // Just redirect to reveal page to show stats
+    router.push('/urge/reveal');
   };
 
   const formatTime = (seconds: number) => {
@@ -166,14 +149,30 @@ function MiningTimerPageContent() {
 
           {/* Live Timer Display */}
           <div className="mt-6 bg-gray-900 rounded-2xl p-6 border border-gray-800">
-            {durationMinutes && remainingSeconds !== null ? (
+            {durationMinutes ? (
               <>
-                <div className="text-sm text-gray-400 mb-2">Time Remaining</div>
-                <div className="text-6xl font-mono font-bold text-white mb-2">
-                  {remainingSeconds > 0 ? formatTime(remainingSeconds) : '0m 0s'}
+                {/* Timer Duration (Set Time) */}
+                <div className="mb-4 pb-4 border-b border-gray-800">
+                  <div className="text-sm text-gray-400 mb-1">Timer Duration</div>
+                  <div className="text-3xl font-mono font-bold text-gray-300">
+                    {formatTime(durationMinutes * 60)}
+                  </div>
+                  <div className="text-gray-500 text-sm mt-1">
+                    Ends at {endTime}
+                  </div>
                 </div>
-                <div className="text-gray-400 text-sm mb-3">
-                  Ends at {endTime}
+
+                {/* Elapsed Time (Actual Time) */}
+                <div className="mb-4">
+                  <div className="text-sm text-gray-400 mb-1">Elapsed Time</div>
+                  <div className="text-6xl font-mono font-bold text-white mb-2">
+                    {formatTime(elapsedSeconds)}
+                  </div>
+                  {elapsedSeconds >= durationMinutes * 60 && (
+                    <div className="text-green-400 text-sm">
+                      Timer complete - coins still accumulating
+                    </div>
+                  )}
                 </div>
               </>
             ) : (
@@ -203,21 +202,43 @@ function MiningTimerPageContent() {
 
           <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
             <p className="font-semibold text-white mb-3">What to do:</p>
-            <ol className="space-y-3 text-gray-300">
-              <li>1. Put your phone down</li>
-              <li>2. Lie in the dark</li>
-              <li>3. Close your eyes</li>
-              <li>4. Just breathe</li>
-            </ol>
+            {miningIntent === 'screen' ? (
+              <ol className="space-y-3 text-gray-300">
+                <li>1. Put your phone down</li>
+                <li>2. Step away from the screen</li>
+                <li>3. Move to a different room if you can</li>
+                <li>4. Do something with your hands</li>
+              </ol>
+            ) : (
+              <ol className="space-y-3 text-gray-300">
+                <li>1. Put your phone down</li>
+                <li>2. Lie in the dark</li>
+                <li>3. Close your eyes</li>
+                <li>4. Just breathe</li>
+              </ol>
+            )}
           </div>
 
           <div className="bg-green-900/20 rounded-xl p-6 border border-green-800">
-            <p className="text-green-200">
-              You don&apos;t have to sleep. Just rest.
-            </p>
-            <p className="text-green-300 mt-3 text-lg">
-              Even lying there awake counts. You&apos;re not acting out. That&apos;s what matters.
-            </p>
+            {miningIntent === 'screen' ? (
+              <>
+                <p className="text-green-200">
+                  You don&apos;t have to be productive. Just disconnect.
+                </p>
+                <p className="text-green-300 mt-3 text-lg">
+                  Walk around. Drink water. Look out a window. You&apos;re not acting out. That&apos;s what matters.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-green-200">
+                  You don&apos;t have to sleep. Just rest.
+                </p>
+                <p className="text-green-300 mt-3 text-lg">
+                  Even lying there awake counts. You&apos;re not acting out. That&apos;s what matters.
+                </p>
+              </>
+            )}
           </div>
 
           {/* Finish Mining Button */}
@@ -265,7 +286,7 @@ export default function MiningTimerPage() {
         </div>
       </div>
     }>
-      <MiningTimerPageContent />
+      <MiningContent />
     </Suspense>
   );
 }
