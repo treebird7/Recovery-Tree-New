@@ -189,8 +189,43 @@ export default function StepInPage() {
           </button>
         </div>
 
+        {/* Step 3 Prayer Protocol Link */}
+        <div className="mt-8 bg-purple-900/20 rounded-xl p-6 border border-purple-800">
+          <div className="flex items-start gap-4">
+            <div className="flex-shrink-0">
+              <div className="w-12 h-12 bg-purple-600/20 rounded-full flex items-center justify-center">
+                <svg
+                  className="w-6 h-6 text-purple-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-bold text-white mb-2">Ready for Step 3 Prayer?</h3>
+              <p className="text-gray-400 text-sm mb-4">
+                After completing your Step 3 questions, choose or create your commitment prayer.
+              </p>
+              <button
+                onClick={() => router.push('/prayers')}
+                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-6 rounded-lg transition"
+              >
+                Go to Prayer Protocol
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Info Box */}
-        <div className="mt-12 bg-gray-900/50 rounded-xl p-6 border border-gray-800">
+        <div className="mt-8 bg-gray-900/50 rounded-xl p-6 border border-gray-800">
           <p className="text-gray-400 text-sm leading-relaxed">
             <strong className="text-white">About Step In:</strong> This is your space for honest step work.
             Each question is designed to help you see clearly and find your own truth.

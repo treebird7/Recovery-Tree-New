@@ -246,6 +246,33 @@ export default async function DashboardPage() {
             </Link>
           </div>
 
+          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+            <div className="mb-4">
+              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                <svg
+                  className="w-6 h-6 text-purple-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">My Prayers</h3>
+            <p className="text-gray-600 mb-4">View and manage your Step 3 prayers</p>
+            <Link href="/my-prayers">
+              <button className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
+                View Prayers
+              </button>
+            </Link>
+          </div>
+
           <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition opacity-50 cursor-not-allowed">
             <div className="mb-4">
               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
