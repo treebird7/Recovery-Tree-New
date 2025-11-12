@@ -21,8 +21,9 @@ CREATE INDEX IF NOT EXISTS idx_sessions_type_date
   ON sessions(user_id, session_type, started_at DESC);
 
 -- Index for user streak calculations (daily queries)
+-- Note: Indexing on timestamp, date queries will use range conditions
 CREATE INDEX IF NOT EXISTS idx_sessions_user_date
-  ON sessions(user_id, DATE(started_at))
+  ON sessions(user_id, started_at DESC)
   WHERE completed_at IS NOT NULL;
 
 -- ============================================================================
@@ -69,8 +70,9 @@ CREATE INDEX IF NOT EXISTS idx_step_questions_phase
 -- ============================================================================
 
 -- Index for today's inventory check (most frequent query)
+-- Note: Indexing on timestamp, date queries will use range conditions
 CREATE INDEX IF NOT EXISTS idx_daily_inventories_user_date
-  ON daily_inventories(user_id, DATE(created_at) DESC);
+  ON daily_inventories(user_id, created_at DESC);
 
 -- Index for inventory streak calculation
 CREATE INDEX IF NOT EXISTS idx_daily_inventories_streak
