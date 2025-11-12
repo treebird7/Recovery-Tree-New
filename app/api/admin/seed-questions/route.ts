@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import questionsData from '@/20251112_Step_Questions_Database_Import.json';
 
 // Admin-only endpoint to seed step questions from JSON
 // WARNING: Run this ONCE after migration, then disable or protect
 export async function POST() {
   try {
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
     // TODO: Add admin authentication check here
     // For now, this is unprotected - only run locally
@@ -63,7 +63,7 @@ export async function POST() {
 // GET endpoint to check seed status
 export async function GET() {
   try {
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
     const { count, error } = await supabase
       .from('step_questions')
