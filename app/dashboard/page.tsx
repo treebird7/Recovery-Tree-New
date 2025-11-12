@@ -153,11 +153,11 @@ export default async function DashboardPage() {
                 </svg>
               </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Start New Walk</h3>
-            <p className="text-gray-600 mb-4">Begin today&apos;s recovery walk with step work</p>
-            <Link href="/walk">
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Step In</h3>
+            <p className="text-gray-600 mb-4">Work through your 12-step journal questions</p>
+            <Link href="/step-in">
               <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
-                Begin Walk
+                Step In
               </button>
             </Link>
           </div>
