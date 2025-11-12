@@ -15,6 +15,21 @@ interface Question {
   isFinal: boolean;
 }
 
+interface SessionAnswer {
+  question_id: string;
+  question_text: string;
+  answer_text: string;
+  phase: string;
+}
+
+interface EncouragementResponse {
+  message: string;
+  tone: string;
+  next_step_hint: string | null;
+  step_complete: boolean;
+  safety_flag?: boolean;
+}
+
 export default function StepInPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
@@ -30,6 +45,10 @@ export default function StepInPage() {
   const [sessionId] = useState<string>(() => crypto.randomUUID());
   const [stepComplete, setStepComplete] = useState(false);
   const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(false);
+  const [sessionAnswers, setSessionAnswers] = useState<SessionAnswer[]>([]);
+  const [showEncouragementModal, setShowEncouragementModal] = useState(false);
+  const [encouragement, setEncouragement] = useState<EncouragementResponse | null>(null);
+  const [isLoadingEncouragement, setIsLoadingEncouragement] = useState(false);
 
   // Timer effect
   useEffect(() => {
@@ -111,6 +130,19 @@ export default function StepInPage() {
 
       const data = await response.json();
 
+      // Track this answer in session
+      if (saveEntry) {
+        setSessionAnswers([
+          ...sessionAnswers,
+          {
+            question_id: currentQuestion.id,
+            question_text: currentQuestion.text,
+            answer_text: answer,
+            phase: currentQuestion.phase,
+          },
+        ]);
+      }
+
       // Clear the answer
       setAnswer('');
 
@@ -138,18 +170,61 @@ export default function StepInPage() {
     }
   };
 
-  const handleFinishedForToday = () => {
+  const handleFinishedForToday = async () => {
     const confirmed = confirm('Ready to finish for today?');
     if (!confirmed) return;
 
-    // TODO: Watson will add Elder Tree AI encouragement here
-    const encouragement = answeredCount > 0
-      ? `You answered ${answeredCount} question${answeredCount > 1 ? 's' : ''} today. You showed up and did the work. That's what matters. Rest well—you've earned it.`
-      : "You came here. That's the first step. Come back when you're ready to answer some questions.";
+    // If no answers were given, skip encouragement
+    if (answeredCount === 0 || sessionAnswers.length === 0) {
+      alert("You came here. That's the first step. Come back when you're ready to answer some questions.");
+      router.push('/dashboard');
+      return;
+    }
 
-    alert(encouragement);
+    // Show modal and fetch encouragement
+    setShowEncouragementModal(true);
+    setIsLoadingEncouragement(true);
 
-    // Return to dashboard
+    try {
+      // Calculate session duration
+      const durationMinutes = sessionStartTime
+        ? Math.floor((Date.now() - sessionStartTime.getTime()) / 60000)
+        : 0;
+
+      const response = await fetch('/api/step-in/encouragement', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: 'current_user', // Will be handled by API via auth
+          step_number: currentStep,
+          session_id: sessionId,
+          questions_answered: answeredCount,
+          session_duration_minutes: durationMinutes,
+          answers: sessionAnswers,
+          step_complete: stepComplete,
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to get encouragement');
+
+      const data: EncouragementResponse = await response.json();
+      setEncouragement(data);
+    } catch (error) {
+      console.error('Error getting encouragement:', error);
+      // Fallback encouragement
+      setEncouragement({
+        message: "You did work today. That counts. Come back when you're ready to continue.",
+        tone: 'acknowledgment',
+        next_step_hint: null,
+        step_complete: stepComplete,
+      });
+    } finally {
+      setIsLoadingEncouragement(false);
+    }
+  };
+
+  const handleCloseEncouragement = () => {
+    setShowEncouragementModal(false);
     router.push('/dashboard');
   };
 
@@ -408,6 +483,72 @@ export default function StepInPage() {
             Take your time—there's no rush. You move at your own pace through the steps.
           </p>
         </div>
+
+        {/* Encouragement Modal */}
+        {showEncouragementModal && (
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8 max-w-2xl w-full">
+              {isLoadingEncouragement ? (
+                <div className="text-center">
+                  <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-2 border-green-400 mb-6"></div>
+                  <p className="text-gray-300 text-lg">Elder Tree is reviewing your work...</p>
+                </div>
+              ) : encouragement ? (
+                <>
+                  <div className="mb-6">
+                    {encouragement.step_complete && (
+                      <div className="flex items-center gap-2 mb-4">
+                        <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                        <span className="text-green-400 font-semibold text-sm">
+                          STEP {currentStep} COMPLETE
+                        </span>
+                      </div>
+                    )}
+                    {encouragement.safety_flag && (
+                      <div className="bg-red-900/30 border border-red-800 rounded-lg p-4 mb-4">
+                        <p className="text-red-400 font-semibold text-sm">⚠️ Safety Check</p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="mb-8">
+                    <p className="text-white text-xl leading-relaxed whitespace-pre-wrap">
+                      {encouragement.message}
+                    </p>
+                  </div>
+
+                  {encouragement.next_step_hint && (
+                    <div className="mb-6 bg-gray-800/50 rounded-lg p-4 border border-gray-700">
+                      <p className="text-gray-400 text-sm mb-1">Next:</p>
+                      <p className="text-gray-200">{encouragement.next_step_hint}</p>
+                    </div>
+                  )}
+
+                  <div className="flex gap-4">
+                    {encouragement.step_complete && currentStep === 3 && (
+                      <button
+                        onClick={() => router.push('/prayers')}
+                        className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-xl transition-all"
+                      >
+                        Go to Prayer Protocol
+                      </button>
+                    )}
+                    <button
+                      onClick={handleCloseEncouragement}
+                      className="flex-1 bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 px-8 rounded-xl transition-all"
+                    >
+                      Return to Dashboard
+                    </button>
+                  </div>
+
+                  <p className="text-gray-500 text-xs text-center mt-4">
+                    — Elder Tree
+                  </p>
+                </>
+              ) : null}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
