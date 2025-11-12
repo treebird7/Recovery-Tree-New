@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/client';
 import { Capacitor } from '@capacitor/core';
-import { App } from '@capacitor/app';
 
 /**
  * Check if running on a mobile device (iOS or Android)
@@ -21,13 +20,15 @@ export function getOAuthRedirectUrl(redirectTo?: string): string {
   // Web redirect
   const baseUrl = typeof window !== 'undefined'
     ? window.location.origin
-    : process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    : process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
   return `${baseUrl}/auth/callback`;
 }
 
 /**
  * Sign in with OAuth provider (works on both web and mobile)
+ *
+ * Note: Mobile OAuth callback is handled by the global listener in useOAuthMobileListener hook
  */
 export async function signInWithOAuth(
   provider: 'google' | 'apple',
@@ -58,6 +59,7 @@ export async function signInWithOAuth(
     }
 
     // On mobile, manually open the OAuth URL in the system browser
+    // The callback will be handled by the global listener in useOAuthMobileListener
     if (isMobile() && data?.url) {
       console.log('Opening OAuth URL in system browser:', data.url);
 
@@ -65,44 +67,10 @@ export async function signInWithOAuth(
       const { Browser } = await import('@capacitor/browser');
       await Browser.open({ url: data.url });
 
-      // Listen for the app to come back from the browser
-      App.addListener('appUrlOpen', async (event) => {
-        console.log('App opened with URL:', event.url);
-
-        // Check if this is an OAuth callback
-        if (event.url.startsWith('com.recoverytree.app://auth/callback')) {
-          // Close the browser
-          await Browser.close();
-
-          // Extract the URL parameters
-          const url = new URL(event.url);
-          const access_token = url.searchParams.get('access_token');
-          const refresh_token = url.searchParams.get('refresh_token');
-
-          if (access_token && refresh_token) {
-            // Set the session
-            const { error: sessionError } = await supabase.auth.setSession({
-              access_token,
-              refresh_token,
-            });
-
-            if (sessionError) {
-              console.error('Error setting session:', sessionError);
-              return { error: sessionError.message };
-            }
-
-            // Redirect to the dashboard or specified page
-            if (typeof window !== 'undefined') {
-              window.location.href = redirectTo || '/dashboard';
-            }
-          }
-        }
-      });
-
       return { error: null };
     }
 
-    // On web, the user will be redirected automatically
+    // On web, the user will be redirected automatically by Supabase
     return { error: null };
   } catch (error) {
     console.error('OAuth sign in error:', error);

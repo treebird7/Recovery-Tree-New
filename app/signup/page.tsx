@@ -5,6 +5,9 @@ import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import OAuthButtons from '@/components/auth/OAuthButtons';
 
+// Force dynamic rendering to prevent build-time static generation errors
+export const dynamic = 'force-dynamic';
+
 export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,7 +16,6 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
-  const supabase = createClient();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,6 +35,7 @@ export default function SignupPage() {
     }
 
     try {
+      const supabase = createClient();
       const { data, error } = await supabase.auth.signUp({
         email,
         password,

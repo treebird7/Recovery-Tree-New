@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import OAuthButtons from '@/components/auth/OAuthButtons';
 
+// Force dynamic rendering to prevent build-time static generation errors
+export const dynamic = 'force-dynamic';
+
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);

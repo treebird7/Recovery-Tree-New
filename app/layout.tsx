@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { MobileOAuthProvider } from "./components/MobileOAuthProvider";
 
 export const metadata: Metadata = {
   title: "Rooting Routine - Recovery Walks",
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        {children}
+        <MobileOAuthProvider>
+          {children}
+        </MobileOAuthProvider>
       </body>
     </html>
   );
