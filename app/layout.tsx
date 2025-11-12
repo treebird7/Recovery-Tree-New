@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { MobileOAuthProvider } from "./components/MobileOAuthProvider";
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        {children}
+        <MobileOAuthProvider>
+          {children}
+        </MobileOAuthProvider>
       </body>
     </html>
   );
