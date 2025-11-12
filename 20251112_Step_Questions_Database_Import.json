@@ -1,0 +1,1112 @@
+{
+  "metadata": {
+    "created": "2025-11-12",
+    "purpose": "Structured questions for Steps 1-3 ready for Supabase import",
+    "source_documents": [
+      "Step1_Powerlessness_Unmanageability_Guide_v2.md",
+      "20251112_Step2_Hope_and_Higher_Power_Guide.md",
+      "20251112_Step3_Decision_and_Surrender_Guide.md"
+    ],
+    "total_questions": 65,
+    "notes": "Questions extracted maintaining Elder Tree voice and progression logic"
+  },
+  "step_1_questions": [
+    {
+      "id": "s1_p1_q1a",
+      "step_number": 1,
+      "phase": "recognition",
+      "phase_title": "Recognition - Surface Acknowledgment",
+      "question_order": 1,
+      "question_text": "First - what behaviors are we talking about? What does your addictive behavior include?\n\nFor some people it's porn. For some it's porn plus other things - sexting, tinder, online stalking, chat rooms, compulsive masturbation, fantasy obsession.\n\nWhat's yours? What behaviors are you powerless over?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "[Reflect back what they said]. That's what we're looking at. Your addictive behavior around [their behaviors].",
+      "data_logging": [
+        "behaviors_identified"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p1_q1b",
+      "step_number": 1,
+      "phase": "recognition",
+      "phase_title": "Recognition - Surface Acknowledgment",
+      "question_order": 2,
+      "question_text": "How long has this been going on?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "continuation",
+      "follow_up_text": "In that time, have you tried to stop or control your use?",
+      "data_logging": [
+        "duration",
+        "attempts_to_stop"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p1_q1c",
+      "step_number": 1,
+      "phase": "recognition",
+      "phase_title": "Recognition - Surface Acknowledgment",
+      "question_order": 3,
+      "question_text": "What happened when you tried?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "attempt_outcomes"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p1_q1d",
+      "step_number": 1,
+      "phase": "recognition",
+      "phase_title": "Recognition - Surface Acknowledgment",
+      "question_order": 4,
+      "question_text": "In the last month, how many times did you use when you hadn't planned to?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "unplanned_use_frequency"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p1_q1e",
+      "step_number": 1,
+      "phase": "recognition",
+      "phase_title": "Recognition - Surface Acknowledgment",
+      "question_order": 5,
+      "question_text": "How many times did you intend to use just briefly, but it went longer than you meant?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "exceeded_intended_duration"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p1_q1f",
+      "step_number": 1,
+      "phase": "recognition",
+      "phase_title": "Recognition - Surface Acknowledgment",
+      "question_order": 6,
+      "question_text": "How many times have you said 'this is the last time' - but it wasn't?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "So you're making promises you can't keep. You're not choosing to break them. You just can't stop.",
+      "data_logging": [
+        "broken_last_time_promises"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p2_q2a",
+      "step_number": 1,
+      "phase": "mental_obsession",
+      "phase_title": "Mental Obsession - How Your Mind Lies",
+      "question_order": 7,
+      "question_text": "Think about the last time you used. Before you used, what were you thinking? What was your mind telling you?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "pre_use_thoughts"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p2_q2b",
+      "step_number": 1,
+      "phase": "mental_obsession",
+      "phase_title": "Mental Obsession - How Your Mind Lies",
+      "question_order": 8,
+      "question_text": "When that thought came - 'just once' or 'I can handle it' or 'I deserve this' - did you believe it?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "That's the mental obsession. Your mind sets you up. It lies to get you to use.",
+      "data_logging": [
+        "believed_setup_thoughts"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p2_q2c",
+      "step_number": 1,
+      "phase": "mental_obsession",
+      "phase_title": "Mental Obsession - How Your Mind Lies",
+      "question_order": 9,
+      "question_text": "What's the ritual? What do you do to prepare? Lock doors, close tabs, clear history, set up playlists, get comfortable?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "ritual_preparation"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p2_q2d",
+      "step_number": 1,
+      "phase": "mental_obsession",
+      "phase_title": "Mental Obsession - How Your Mind Lies",
+      "question_order": 10,
+      "question_text": "After you used - was what your mind told you before true?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "Your mind lies to get you to use. Every time.",
+      "data_logging": [
+        "post_use_truth_check"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p2_q2e",
+      "step_number": 1,
+      "phase": "mental_obsession",
+      "phase_title": "Mental Obsession - How Your Mind Lies",
+      "question_order": 11,
+      "question_text": "What were you thinking right after? How did you feel?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "post_use_thoughts_feelings"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p3_q3a",
+      "step_number": 1,
+      "phase": "craving_compulsion",
+      "phase_title": "Craving/Compulsion - Why You Can't Stop",
+      "question_order": 12,
+      "question_text": "Think about when you've told yourself 'just one look' or 'just for a minute.' What happens next?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "just_one_look_results"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p3_q3b",
+      "step_number": 1,
+      "phase": "craving_compulsion",
+      "phase_title": "Craving/Compulsion - Why You Can't Stop",
+      "question_order": 13,
+      "question_text": "During a session, does it escalate? Do you start one place and end up somewhere else?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "conditional",
+      "conditional_follow_up": {
+        "if_yes": "Where do you start? Where do you end up? How does that progression happen?"
+      },
+      "data_logging": [
+        "escalation_during_session"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p3_q3c",
+      "step_number": 1,
+      "phase": "craving_compulsion",
+      "phase_title": "Craving/Compulsion - Why You Can't Stop",
+      "question_order": 14,
+      "question_text": "Have you ever wanted to stop in the middle of using - but couldn't?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "That's the craving. Once you start, something takes over. You can't stop.",
+      "data_logging": [
+        "unable_to_stop_mid_session"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p4_q4a",
+      "step_number": 1,
+      "phase": "powerlessness_evidence",
+      "phase_title": "Powerlessness Evidence - Attempts to Control",
+      "question_order": 15,
+      "question_text": "How many times have you tried to quit completely?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "continuation",
+      "follow_up_text": "What happened each time?",
+      "data_logging": [
+        "quit_attempts",
+        "quit_outcomes"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p4_q4b",
+      "step_number": 1,
+      "phase": "powerlessness_evidence",
+      "phase_title": "Powerlessness Evidence - Attempts to Control",
+      "question_order": 16,
+      "question_text": "What promises have you made to yourself? To stop, to control it, to only use certain kinds, to set limits?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "continuation",
+      "follow_up_text": "How many of those promises have you kept?",
+      "data_logging": [
+        "promises_made",
+        "promises_kept"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p4_q4c",
+      "step_number": 1,
+      "phase": "powerlessness_evidence",
+      "phase_title": "Powerlessness Evidence - Attempts to Control",
+      "question_order": 17,
+      "question_text": "Have you faced consequences - damaged relationships, work problems, health issues, legal trouble - and still gone back to using?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "conditional",
+      "conditional_follow_up": {
+        "if_yes": "What were the consequences? Did they stop you?"
+      },
+      "data_logging": [
+        "consequences_faced",
+        "consequences_stopped_use"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p4_q4d",
+      "step_number": 1,
+      "phase": "powerlessness_evidence",
+      "phase_title": "Powerlessness Evidence - Attempts to Control",
+      "question_order": 18,
+      "question_text": "Have you ever used against your will? Times when part of you absolutely didn't want to, but you did anyway?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "That's powerlessness. You're not choosing this. You can't stop.",
+      "data_logging": [
+        "used_against_will"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5a_q5a1",
+      "step_number": 1,
+      "phase": "unmanageability_physical",
+      "phase_title": "Unmanageability - Physical Harm",
+      "question_order": 19,
+      "question_text": "Have you put yourself in dangerous situations to act out? Public places, while driving, at work, around others?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "risky_situations"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5a_q5a2",
+      "step_number": 1,
+      "phase": "unmanageability_physical",
+      "phase_title": "Unmanageability - Physical Harm",
+      "question_order": 20,
+      "question_text": "Has your health suffered? Sleep loss, exhaustion, physical pain from prolonged use, neglecting exercise or medical care?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "health_neglected"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5a_q5a3",
+      "step_number": 1,
+      "phase": "unmanageability_physical",
+      "phase_title": "Unmanageability - Physical Harm",
+      "question_order": 21,
+      "question_text": "Have you engaged in risky sexual behavior because of your addiction?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "risky_sexual_behavior"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5b_q5b1",
+      "step_number": 1,
+      "phase": "unmanageability_legal",
+      "phase_title": "Unmanageability - Legal Consequences",
+      "question_order": 22,
+      "question_text": "Have you accessed illegal content? Even once?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "illegal_access"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5b_q5b2",
+      "step_number": 1,
+      "phase": "unmanageability_legal",
+      "phase_title": "Unmanageability - Legal Consequences",
+      "question_order": 23,
+      "question_text": "Have you been caught or nearly caught doing something illegal or inappropriate?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "caught_nearly_caught"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5b_q5b3",
+      "step_number": 1,
+      "phase": "unmanageability_legal",
+      "phase_title": "Unmanageability - Legal Consequences",
+      "question_order": 24,
+      "question_text": "Have you crossed boundaries you swore you never would? Things that violate your values or others' safety?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "crossed_boundaries"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5c_q5c1",
+      "step_number": 1,
+      "phase": "unmanageability_financial",
+      "phase_title": "Unmanageability - Financial Harm",
+      "question_order": 25,
+      "question_text": "How much money have you spent on your addiction? Subscriptions, cam sites, paid content, hotels, travel?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "continuation",
+      "follow_up_text": "Money you couldn't afford? Money that should have gone elsewhere?",
+      "data_logging": [
+        "money_spent",
+        "unaffordable_spending"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5c_q5c2",
+      "step_number": 1,
+      "phase": "unmanageability_financial",
+      "phase_title": "Unmanageability - Financial Harm",
+      "question_order": 26,
+      "question_text": "Have you neglected financial responsibilities because of porn? Bills unpaid, debt accumulated, work missed?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "financial_responsibilities_neglected"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5c_q5c3",
+      "step_number": 1,
+      "phase": "unmanageability_financial",
+      "phase_title": "Unmanageability - Financial Harm",
+      "question_order": 27,
+      "question_text": "Have you stolen money or lied to get money to support your addiction?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "stolen_lied_for_money"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5d_q5d1",
+      "step_number": 1,
+      "phase": "unmanageability_relational",
+      "phase_title": "Unmanageability - Relational Harm",
+      "question_order": 28,
+      "question_text": "Have you lied to people you care about to hide your addiction?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "lied_to_loved_ones"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5d_q5d2",
+      "step_number": 1,
+      "phase": "unmanageability_relational",
+      "phase_title": "Unmanageability - Relational Harm",
+      "question_order": 29,
+      "question_text": "Have you betrayed agreements in relationships? Promised to stop, promised fidelity, but broke those promises?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "betrayed_agreements"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5d_q5d3",
+      "step_number": 1,
+      "phase": "unmanageability_relational",
+      "phase_title": "Unmanageability - Relational Harm",
+      "question_order": 30,
+      "question_text": "Have you lost relationships because of your addiction? Breakups, divorces, friendships ended?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "lost_relationships"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5d_q5d4",
+      "step_number": 1,
+      "phase": "unmanageability_relational",
+      "phase_title": "Unmanageability - Relational Harm",
+      "question_order": 31,
+      "question_text": "Do you isolate? Withdraw from people, avoid social situations, prefer to be alone so you can use?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "isolation"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5d_q5d5",
+      "step_number": 1,
+      "phase": "unmanageability_relational",
+      "phase_title": "Unmanageability - Relational Harm",
+      "question_order": 32,
+      "question_text": "If you're in a relationship - can you connect sexually with your partner without using porn or fantasy?",
+      "question_type": "yes_no",
+      "is_required": false,
+      "follow_up_type": "none",
+      "data_logging": [
+        "sexual_connection_impaired"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5e_q5e1",
+      "step_number": 1,
+      "phase": "unmanageability_professional",
+      "phase_title": "Unmanageability - Professional/Educational",
+      "question_order": 33,
+      "question_text": "Have you acted out at work or school?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "acted_out_work_school"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5e_q5e2",
+      "step_number": 1,
+      "phase": "unmanageability_professional",
+      "phase_title": "Unmanageability - Professional/Educational",
+      "question_order": 34,
+      "question_text": "Have you missed work or school because of your addiction? Called in sick when you weren't, skipped classes, been late?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "missed_work_school"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5e_q5e3",
+      "step_number": 1,
+      "phase": "unmanageability_professional",
+      "phase_title": "Unmanageability - Professional/Educational",
+      "question_order": 35,
+      "question_text": "Have you lost or nearly lost jobs, educational opportunities, or professional advancement because of your addiction?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "lost_opportunities"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5e_q5e4",
+      "step_number": 1,
+      "phase": "unmanageability_professional",
+      "phase_title": "Unmanageability - Professional/Educational",
+      "question_order": 36,
+      "question_text": "Has your work or academic performance suffered because of your addiction? Unable to focus, tired, distracted?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "performance_suffered"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5f_q5f1",
+      "step_number": 1,
+      "phase": "unmanageability_emotional",
+      "phase_title": "Unmanageability - Emotional/Spiritual",
+      "question_order": 37,
+      "question_text": "Have you felt severely depressed or suicidal because of your addiction?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "conditional",
+      "conditional_follow_up": {
+        "if_yes": "Are you feeling that way now? Do you need immediate support?"
+      },
+      "safety_flag": true,
+      "data_logging": [
+        "depression_suicidal"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5f_q5f2",
+      "step_number": 1,
+      "phase": "unmanageability_emotional",
+      "phase_title": "Unmanageability - Emotional/Spiritual",
+      "question_order": 38,
+      "question_text": "How intense is the shame you carry about your addiction? How much do you hate yourself because of it?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "shame_level"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5f_q5f3",
+      "step_number": 1,
+      "phase": "unmanageability_emotional",
+      "phase_title": "Unmanageability - Emotional/Spiritual",
+      "question_order": 39,
+      "question_text": "Have you repeatedly violated your own values and beliefs through your addictive behavior?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "violated_values"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5f_q5f4",
+      "step_number": 1,
+      "phase": "unmanageability_emotional",
+      "phase_title": "Unmanageability - Emotional/Spiritual",
+      "question_order": 40,
+      "question_text": "If you have spiritual or religious beliefs, has your addiction created a barrier between you and your higher power?",
+      "question_type": "yes_no",
+      "is_required": false,
+      "follow_up_type": "none",
+      "data_logging": [
+        "spiritual_disconnection"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p5f_q5f5",
+      "step_number": 1,
+      "phase": "unmanageability_emotional",
+      "phase_title": "Unmanageability - Emotional/Spiritual",
+      "question_order": 41,
+      "question_text": "Do you feel like you've lost yourself to this addiction? Like you're not who you used to be or want to be?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "lost_sense_of_self"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p6_q6a",
+      "step_number": 1,
+      "phase": "integration",
+      "phase_title": "Integration - Seeing the Complete Picture",
+      "question_order": 42,
+      "question_text": "Based on everything you've looked at - can you control your addictive behavior on your own?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "conditional",
+      "conditional_follow_up": {
+        "if_yes": "What makes this time different from the other times you tried?",
+        "if_no": "That's Step 1. You're powerless."
+      },
+      "data_logging": [
+        "can_control_alone"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p6_q6b",
+      "step_number": 1,
+      "phase": "integration",
+      "phase_title": "Integration - Seeing the Complete Picture",
+      "question_order": 43,
+      "question_text": "Looking at all the consequences - physical, legal, financial, relational, professional, emotional, spiritual - is your life manageable?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "That's the second part of Step 1. Your life has become unmanageable.",
+      "data_logging": [
+        "life_manageable"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s1_p6_q6c",
+      "step_number": 1,
+      "phase": "integration",
+      "phase_title": "Integration - The Admission",
+      "question_order": 44,
+      "question_text": "Step 1 says: 'We admitted we were powerless over our addictive behavior and that our lives had become unmanageable.'\n\nCan you say that? Do you admit that?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "conditional",
+      "conditional_follow_up": {
+        "if_yes": "That's Step 1. That's the foundation. You can't manage this alone - and that's okay. That's why there are 11 more steps. That's why there's a program. That's why you're not doing this by yourself anymore.\n\nStep 2 is about finding out that help is available - that you don't have to do this on willpower. But first, you had to admit you need help.\n\nYou just did. That took courage.",
+        "if_no": "That's okay. This isn't about convincing you. Keep looking at your own experience. The evidence doesn't lie. When you're ready to admit powerlessness, Step 2 is waiting."
+      },
+      "completion_marker": true,
+      "data_logging": [
+        "admits_step_1"
+      ],
+      "is_active": true
+    }
+  ],
+  "step_2_questions": [
+    {
+      "id": "s2_p1_q1a",
+      "step_number": 2,
+      "phase": "defining_sanity",
+      "phase_title": "Defining Sanity - What Would Sane Look Like?",
+      "question_order": 1,
+      "question_text": "Start with where you are now. You've seen your addiction's insanity - the mental obsession, the compulsion, the consequences.\n\nWhat does the insanity of your addiction look like day to day?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "That's what you've been living in.",
+      "data_logging": [
+        "insanity_description"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s2_p1_q1b",
+      "step_number": 2,
+      "phase": "defining_sanity",
+      "phase_title": "Defining Sanity - What Would Sane Look Like?",
+      "question_order": 2,
+      "question_text": "Now imagine the opposite. If you were 'restored to sanity' - what would your daily life look like?\n\nNot perfect. Not problem-free. But sane. Free from the obsession and compulsion.",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "That's what Step 2 is asking about - could that be possible? Could you actually live that way?",
+      "data_logging": [
+        "sanity_vision"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s2_p2_q2a",
+      "step_number": 2,
+      "phase": "evidence_of_recovery",
+      "phase_title": "Evidence of Recovery - It's Real",
+      "question_order": 3,
+      "question_text": "People as hopeless as you have recovered. People who couldn't stop, who tried everything, who caused massive harm - they're sober now. Living sane lives.\n\nHave you seen this? Do you know anyone in recovery?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "conditional",
+      "conditional_follow_up": {
+        "if_yes": "What's different about them? What changed?",
+        "if_no": "That's okay. But think about this - there are millions of people in recovery programs worldwide. SAA, AA, SLAA meetings happen in every major city, every day. These aren't people pretending. They're living proof that what seems impossible to you happened for them. Does knowing that changes anything? Even a little?"
+      },
+      "data_logging": [
+        "knows_people_in_recovery"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s2_p2_q2b",
+      "step_number": 2,
+      "phase": "evidence_of_recovery",
+      "phase_title": "Evidence of Recovery - Help That Worked",
+      "question_order": 4,
+      "question_text": "Here's what people in recovery say: 'I couldn't do it alone. But I found help that worked.'\n\nThey didn't get more willpower. They didn't suddenly become stronger people. They found something outside themselves that could do what they couldn't.\n\nDoes that make sense? Have you ever experienced that in other areas of life - where you couldn't do something alone, but with help it became possible?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "experiences_of_help_working"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s2_p3_q3a",
+      "step_number": 2,
+      "phase": "higher_power_exploration",
+      "phase_title": "Your Higher Power - What Could Help?",
+      "question_order": 5,
+      "question_text": "If not your own willpower - what could help you recover?\n\nDon't overthink this. What comes to mind?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "[Reflect back what they said] - that's a power greater than yourself. That's Step 2.",
+      "data_logging": [
+        "higher_power_concept"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s2_p3_q3b",
+      "step_number": 2,
+      "phase": "higher_power_exploration",
+      "phase_title": "Your Higher Power - Where Have You Been Helped?",
+      "question_order": 6,
+      "question_text": "Think about times in your life when you were stuck - not addiction, anything. Times when you couldn't solve something alone.\n\nWhere did help come from? What got you through?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "So you've already experienced this - getting help from outside yourself. You know what that feels like.\n\nCould the same thing work for your addiction?",
+      "data_logging": [
+        "past_help_experiences"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s2_p3_q3c",
+      "step_number": 2,
+      "phase": "higher_power_exploration",
+      "phase_title": "Your Higher Power - What Are Your Fears?",
+      "question_order": 7,
+      "question_text": "When you think about relying on something other than yourself - what scares you about that?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "[Acknowledge their fear without dismissing it]\n\nThose fears make sense. But here's the question: Has relying on yourself alone been working?",
+      "data_logging": [
+        "fears_about_relying_on_help"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s2_p4_q4a",
+      "step_number": 2,
+      "phase": "coming_to_believe",
+      "phase_title": "Coming to Believe - Is Recovery Possible?",
+      "question_order": 8,
+      "question_text": "Based on everything we've talked about - other people recovering, times you've been helped before, what sanity would look like - is it possible that you could recover?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "conditional",
+      "conditional_follow_up": {
+        "if_yes": "That's Step 2. You believe recovery is possible. You believe help exists. You don't have to know how yet - just that it's possible.",
+        "if_uncertain": "That's okay. Step 2 is 'came to believe' - it's a process. You don't have to be certain. Just willing to consider it. Can you be willing to consider that recovery might be possible?",
+        "if_no": "What would have to change for you to believe it's possible?"
+      },
+      "data_logging": [
+        "recovery_possible"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s2_p4_q4b",
+      "step_number": 2,
+      "phase": "coming_to_believe",
+      "phase_title": "Coming to Believe - The Step 2 Admission",
+      "question_order": 9,
+      "question_text": "Step 2 says: 'We came to believe that a Power greater than ourselves could restore us to sanity.'\n\nCan you say that? Even if you're not totally sure yet - can you say you're willing to believe it?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "conditional",
+      "conditional_follow_up": {
+        "if_yes": "That's Step 2. You've moved from hopelessness to possibility. You believe recovery exists and help is available.\n\nStep 3 is about deciding to accept that help - to actually let something other than your willpower guide you. But first, you had to believe help was possible.\n\nYou just did.",
+        "if_no": "That's honest. Keep looking at the evidence. Talk to people in recovery. Watch what works. The belief will come when you're ready.\n\nStep 2 will be waiting when you get there."
+      },
+      "completion_marker": true,
+      "data_logging": [
+        "admits_step_2"
+      ],
+      "is_active": true
+    }
+  ],
+  "step_3_questions": [
+    {
+      "id": "s3_p1_q1a",
+      "step_number": 3,
+      "phase": "understanding_decision",
+      "phase_title": "Understanding the Decision - What Is Your Will?",
+      "question_order": 1,
+      "question_text": "'Your will' means how you want things to be. Your plans, your control, your way of managing life.\n\nThink about your addiction. How have you been trying to manage it with your own will?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "continuation",
+      "follow_up_text": "And how has that worked?",
+      "data_logging": [
+        "managing_with_will",
+        "will_effectiveness"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s3_p1_q1b",
+      "step_number": 3,
+      "phase": "understanding_decision",
+      "phase_title": "Understanding the Decision - What Is Your Life?",
+      "question_order": 2,
+      "question_text": "'Your life' means everything - not just the addiction. Your relationships, work, daily decisions, how you spend your time.\n\nThink about how you've been running your life. Making all the decisions. Trying to control all the outcomes.\n\nHow's that going? Where are you exhausted?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "'Turning over your life' means: Stop trying to control everything. Be willing to be guided instead.",
+      "data_logging": [
+        "exhaustion_from_control"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s3_p1_q1c",
+      "step_number": 3,
+      "phase": "understanding_decision",
+      "phase_title": "Understanding the Decision - What Does Turn Over Mean?",
+      "question_order": 3,
+      "question_text": "Here's what turning it over is NOT:\n- It's not giving up\n- It's not being passive\n- It's not 'God will fix everything'\n\nHere's what it IS:\n- Asking for guidance before acting\n- Being willing to do things differently than your instinct says\n- Trusting the process even when you can't see the outcome\n- Letting go of outcomes you can't control\n\nDoes that make sense?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "understands_surrender"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s3_p2_q2a",
+      "step_number": 3,
+      "phase": "examining_resistance",
+      "phase_title": "Examining Resistance - What Are You Afraid of Losing?",
+      "question_order": 4,
+      "question_text": "If you actually turned your will and life over - stopped trying to control everything - what are you afraid would happen?\n\nWhat would you lose?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "[Acknowledge fear]\n\nThose are real fears. But here's the question: Are you actually in control now? Or are you just exhausting yourself trying to be?",
+      "data_logging": [
+        "fears_about_letting_go"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s3_p2_q2b",
+      "step_number": 3,
+      "phase": "examining_resistance",
+      "phase_title": "Examining Resistance - What Has Control Cost?",
+      "question_order": 5,
+      "question_text": "Think about what trying to control everything has cost you:\n- Energy\n- Peace\n- Relationships\n- Sanity\n\nWhat has your need to be in control cost you?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "So the fear isn't really about losing control. It's about admitting you never had it in the first place.",
+      "data_logging": [
+        "cost_of_control"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s3_p2_q2c",
+      "step_number": 3,
+      "phase": "examining_resistance",
+      "phase_title": "Examining Resistance - What Would Change?",
+      "question_order": 6,
+      "question_text": "Imagine you actually did this. You woke up tomorrow and instead of trying to control everything, you asked for guidance. You were willing to be led.\n\nWhat would change? How would your day look different?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "That's what Step 3 is offering. Not perfection. Not no problems. But a different way of living.",
+      "data_logging": [
+        "life_if_surrendered"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s3_p3_q3a",
+      "step_number": 3,
+      "phase": "clarifying_higher_power",
+      "phase_title": "Clarifying Higher Power - What Is Your Higher Power?",
+      "question_order": 7,
+      "question_text": "In Step 2, you identified what 'power greater than yourself' could mean for you.\n\nWhat was that? What can help you that isn't just your own willpower?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "Okay. So that's what you're turning your will and life over to. [Their concept].\n\nCan you do that? Can you let [their Higher Power concept] guide you instead of trying to run everything yourself?",
+      "data_logging": [
+        "higher_power_identified"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s3_p3_q3b",
+      "step_number": 3,
+      "phase": "clarifying_higher_power",
+      "phase_title": "Clarifying Higher Power - How Do You Access It?",
+      "question_order": 8,
+      "question_text": "Practical question: How do you actually connect with [their Higher Power]?\n\n- If it's the program: How do you listen to it?\n- If it's collective wisdom: How do you access it?\n- If it's a spiritual power: How do you communicate with it?\n\nWhat's the actual practice?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "reflection",
+      "follow_up_text": "That's your Step 3 practice. That's how you 'turn it over' daily.",
+      "data_logging": [
+        "daily_practice_defined"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s3_p4_q4a",
+      "step_number": 3,
+      "phase": "making_decision",
+      "phase_title": "Making the Decision - Are You Ready?",
+      "question_order": 9,
+      "question_text": "This isn't about being perfect at it. You'll grab control back. You'll forget. You'll panic and try to manage things yourself.\n\nThat's normal. That's why it's a daily practice.\n\nThe question is: Are you willing to TRY living this way? Are you willing to make the decision?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "conditional",
+      "conditional_follow_up": {
+        "if_yes": "Continue to formal decision",
+        "if_uncertain": "What would make you ready? What do you need to know or understand?",
+        "if_no": "That's honest. What's stopping you? What needs to change?"
+      },
+      "data_logging": [
+        "ready_for_decision"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s3_p4_q4b",
+      "step_number": 3,
+      "phase": "making_decision",
+      "phase_title": "Making the Decision - The Step 3 Decision",
+      "question_order": 10,
+      "question_text": "Step 3 says: 'We made a decision to turn our will and our lives over to the care of God as we understood Him.'\n\nHere's how to say it in your words:\n\n'I can't control my addiction or my life alone. I'm willing to be guided by [their Higher Power]. I'm willing to stop running the show. I'm willing to ask for help and follow guidance, even when it's hard.'\n\nCan you say that? Can you make that decision?",
+      "question_type": "yes_no",
+      "is_required": true,
+      "follow_up_type": "conditional",
+      "conditional_follow_up": {
+        "if_yes": "That's Step 3. You've made the decision.\n\nThis is the foundation for everything else. Steps 4-12 are about HOW to live this out - how to remove the things that block you from your Higher Power, how to clean up the wreckage, how to stay connected.\n\nBut first you had to make the decision to try. You just did.\n\nThis doesn't mean you'll do it perfectly. It means you're willing to practice. And that changes everything.",
+        "if_no": "That's okay. The willingness will come. Keep thinking about what control has cost you and what surrender could give you.\n\nStep 3 will be here when you're ready."
+      },
+      "completion_marker": true,
+      "data_logging": [
+        "made_step_3_decision"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s3_p4_q4c",
+      "step_number": 3,
+      "phase": "making_decision",
+      "phase_title": "Making the Decision - Third Step Prayer (Optional)",
+      "question_order": 11,
+      "question_text": "The Big Book has a prayer for Step 3. You don't have to say it, but some people find it helpful:\n\n'God, I offer myself to Thee - to build with me and to do with me as Thou wilt. Relieve me of the bondage of self, that I may better do Thy will. Take away my difficulties, that victory over them may bear witness to those I would help of Thy Power, Thy Love, and Thy Way of life. May I do Thy will always!'\n\nDoes any of that resonate for you? Want to say it in your own words?",
+      "question_type": "open_ended",
+      "is_required": false,
+      "follow_up_type": "none",
+      "data_logging": [
+        "prayer_personalization"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "s3_p4_q4d",
+      "step_number": 3,
+      "phase": "making_decision",
+      "phase_title": "Making the Decision - Daily Remembering",
+      "question_order": 12,
+      "question_text": "How will you remember this decision daily? What will remind you to turn things over instead of grabbing control?",
+      "question_type": "open_ended",
+      "is_required": true,
+      "follow_up_type": "none",
+      "data_logging": [
+        "daily_reminder_practice"
+      ],
+      "is_active": true
+    }
+  ],
+  "completion_criteria": {
+    "step_1": {
+      "minimum_questions_required": 35,
+      "required_phases": [
+        "recognition",
+        "mental_obsession",
+        "craving_compulsion",
+        "powerlessness_evidence",
+        "integration"
+      ],
+      "completion_marker_question": "s1_p6_q6c",
+      "completion_criteria": "User must admit powerlessness (answer 'yes' to s1_p6_q6c)",
+      "notes": "At least 5 unmanageability questions from different categories (physical, legal, financial, relational, professional, emotional) must be answered. Integration phase is mandatory."
+    },
+    "step_2": {
+      "minimum_questions_required": 7,
+      "required_phases": [
+        "defining_sanity",
+        "evidence_of_recovery",
+        "higher_power_exploration",
+        "coming_to_believe"
+      ],
+      "completion_marker_question": "s2_p4_q4b",
+      "completion_criteria": "User must express belief or willingness to believe (answer 'yes' to s2_p4_q4b)",
+      "notes": "All phases required. Step 2 is bridge between powerlessness and decision."
+    },
+    "step_3": {
+      "minimum_questions_required": 10,
+      "required_phases": [
+        "understanding_decision",
+        "examining_resistance",
+        "clarifying_higher_power",
+        "making_decision"
+      ],
+      "completion_marker_question": "s3_p4_q4b",
+      "completion_criteria": "User must make the decision (answer 'yes' to s3_p4_q4b) AND complete Prayer Protocol",
+      "notes": "Step 3 completion requires both decision AND saving prayer in Prayer Protocol. The optional prayer personalization (s3_p4_q4c) is not required."
+    }
+  },
+  "implementation_notes": {
+    "question_cycling": "Questions should be presented one at a time in sequential order within their phase. User can pause between phases and resume later.",
+    "save_entry_toggle": "Users can choose whether to save answers to steps_journal table. If toggle OFF, answers are processed for context but not permanently logged.",
+    "safety_flags": "Question s1_p5f_q5f1 has safety_flag=true. If user indicates suicidal ideation, pause step work and offer crisis resources (988 hotline).",
+    "conditional_logic": "Follow-up text changes based on user's answer to certain questions. Implement conditional rendering for follow_up_type='conditional'.",
+    "phase_transitions": "Brief Elder Tree message between phases: 'You've looked at [phase summary]. Now let's look at [next phase].'"
+  }
+}
