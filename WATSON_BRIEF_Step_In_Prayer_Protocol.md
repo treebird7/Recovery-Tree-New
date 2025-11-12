@@ -1,14 +1,25 @@
 # WATSON BRIEF: Step In & Prayer Protocol Implementation
-**Date:** 2025-11-12
+**Date:** 2025-11-12 (Updated: Question cycling added)
 **Agent:** Sancho
 **Status:** Phase 1 Complete - Ready for Watson Integration
 **Branch:** `claude/review-sancho-prompt-step-in-011CV3v1SkALvum1ThUfk9WR`
 
 ---
 
+## UPDATE: Working Question Cycling Added
+
+**New:** Step In page now has working question cycling with placeholder questions!
+- Users can answer 4 questions per step (Step 1, 2, 3)
+- Questions progress on submit
+- Answers tracked (console logged)
+- Basic encouragement messages
+- **Watson's job:** Replace hardcoded questions with database queries and save answers to `steps_journal`
+
+---
+
 ## EXECUTIVE SUMMARY
 
-Sancho has completed the **Step In** base page (Phase 1) and **full Prayer Protocol** implementation (Phases 2-6). The UI is built, database schema is ready, APIs are functional, and prayer management is complete.
+Sancho has completed the **Step In** base page (Phase 1) with working question cycling and **full Prayer Protocol** implementation (Phases 2-6). The UI is fully functional, database schema is ready, APIs are functional, and prayer management is complete.
 
 **Watson's next tasks:**
 1. Upload Step 1-3 questions to Supabase
@@ -33,17 +44,28 @@ Sancho has completed the **Step In** base page (Phase 1) and **full Prayer Proto
 - Link to Prayer Protocol for Step 3
 - Fully responsive
 
+**What's Working (Temporary Placeholder Implementation):**
+- Question cycling with hardcoded questions (4 per step)
+- Step selector (Step 1/2/3 buttons)
+- Question progression on submit
+- Question counter display
+- Answer tracking (console logs)
+- Save toggle (UI only, not persisted)
+- Basic encouragement message with count
+
 **What's NOT Yet Implemented (Needs Watson):**
-- Question cycling from database
-- Save answers to `steps_journal` table
-- Elder Tree encouragement messages
-- Step completion detection
+- Question cycling from database (currently hardcoded)
+- Save answers to `steps_journal` table (currently console.log only)
+- Elder Tree AI encouragement messages (currently simple text)
+- Step completion detection based on quality/criteria
 - Progress tracking between sessions
+- User's actual current_step from database
 
 **Technical Notes:**
 - Located at: `app/step-in/page.tsx`
 - Client-side component
-- No backend integration yet (placeholder only)
+- Uses PLACEHOLDER_QUESTIONS object (temporary)
+- Watson should replace with database integration
 - TODO comments mark where Watson integration needed
 
 ---
