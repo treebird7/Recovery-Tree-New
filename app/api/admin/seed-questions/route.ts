@@ -4,12 +4,27 @@ import questionsData from '@/20251112_Step_Questions_Database_Import.json';
 
 // Admin-only endpoint to seed step questions from JSON
 // WARNING: Run this ONCE after migration, then disable or protect
-export async function POST() {
+export async function POST(request: Request) {
   try {
-    const supabase = createAdminClient();
+    // Admin authentication check
+    const adminSecret = request.headers.get('X-Admin-Secret');
+    const expectedSecret = process.env.ADMIN_SECRET_KEY;
 
-    // TODO: Add admin authentication check here
-    // For now, this is unprotected - only run locally
+    if (!expectedSecret) {
+      return NextResponse.json(
+        { error: 'Admin endpoint not configured. Set ADMIN_SECRET_KEY in environment.' },
+        { status: 503 }
+      );
+    }
+
+    if (adminSecret !== expectedSecret) {
+      return NextResponse.json(
+        { error: 'Unauthorized. Valid admin secret required.' },
+        { status: 401 }
+      );
+    }
+
+    const supabase = createAdminClient();
 
     const questions = [
       ...questionsData.step_1_questions,

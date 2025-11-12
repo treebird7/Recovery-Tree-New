@@ -25,12 +25,20 @@ export default async function DashboardPage() {
     redirect('/urge/reveal');
   }
 
-  // Get user stats
-  const { count: completedSessions } = await getTotalCompletedSessions(user.id);
-  const { streak } = await getUserStreak(user.id);
-  const { coins } = await getUserCoins(user.id);
-  const { data: todaysInventory } = await getTodaysInventory(user.id);
-  const { streak: inventoryStreak } = await getInventoryStreak(user.id);
+  // Get user stats in parallel for better performance
+  const [
+    { count: completedSessions },
+    { streak },
+    { coins },
+    { data: todaysInventory },
+    { streak: inventoryStreak },
+  ] = await Promise.all([
+    getTotalCompletedSessions(user.id),
+    getUserStreak(user.id),
+    getUserCoins(user.id),
+    getTodaysInventory(user.id),
+    getInventoryStreak(user.id),
+  ]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100">

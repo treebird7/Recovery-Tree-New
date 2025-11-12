@@ -33,9 +33,12 @@ export function isVulnerableHour(): boolean {
 
 /**
  * Start a new mining session
+ * @param userId - User ID
+ * @param durationMinutes - Optional timer duration in minutes (null = indefinite)
  */
 export async function startMiningSession(
-  userId: string
+  userId: string,
+  durationMinutes?: number | null
 ): Promise<{ data: MiningSession | null; error: any }> {
   const supabase = await createClient();
 
@@ -45,6 +48,7 @@ export async function startMiningSession(
       user_id: userId,
       session_type: 'mining',
       mining_started_at: new Date().toISOString(),
+      mining_duration_minutes: durationMinutes || null,
       current_step: 'step1', // Required field, but not used for mining
     })
     .select()
