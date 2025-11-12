@@ -3,13 +3,37 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+// Temporary placeholder questions until Watson implements database
+const PLACEHOLDER_QUESTIONS = {
+  step1: [
+    "Can you name a specific situation where you tried to control your addiction and failed?",
+    "What has your addiction cost you that you can't get back?",
+    "How has trying to manage your addiction on your own made your life unmanageable?",
+    "What's one area of your life where you've completely lost control?",
+  ],
+  step2: [
+    "What does 'Higher Power' mean to you right now?",
+    "Can you think of a time when something bigger than you helped you through a difficult moment?",
+    "What would it look like to trust something beyond yourself?",
+  ],
+  step3: [
+    "What's the one thing you're most ready to let go of right now?",
+    "If you were giving that over to your Higher Power, what specifically would you say?",
+    "What do you need from your Higher Power in exchange? Guidance? Peace? Strength?",
+    "How do you want to remember this commitment?",
+  ],
+};
+
 export default function StepInPage() {
   const router = useRouter();
+  const [currentStep, setCurrentStep] = useState<'step1' | 'step2' | 'step3'>('step1');
+  const [questionIndex, setQuestionIndex] = useState(0);
   const [answer, setAnswer] = useState('');
   const [saveEntry, setSaveEntry] = useState(true);
   const [timerEnabled, setTimerEnabled] = useState(false);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [sessionStartTime, setSessionStartTime] = useState<Date | null>(null);
+  const [answeredCount, setAnsweredCount] = useState(0);
 
   // Timer effect
   useEffect(() => {
@@ -34,32 +58,57 @@ export default function StepInPage() {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const getCurrentQuestion = () => {
+    const questions = PLACEHOLDER_QUESTIONS[currentStep];
+    if (questionIndex >= questions.length) {
+      return "You've completed all placeholder questions for this step. Click 'Finished for today' or switch steps.";
+    }
+    return questions[questionIndex];
+  };
+
   const handleSubmit = () => {
     if (!answer.trim()) {
       alert('Please enter a response before submitting.');
       return;
     }
 
-    // TODO Phase 3: Save to database if saveEntry is true
-    console.log('Answer submitted:', {
-      answer,
-      saveEntry,
-      timestamp: new Date().toISOString(),
-    });
+    // TODO: Watson will replace this with actual database save
+    if (saveEntry) {
+      console.log('Saving answer:', {
+        step: currentStep,
+        question: getCurrentQuestion(),
+        answer,
+        timestamp: new Date().toISOString(),
+      });
+    } else {
+      console.log('Answer not saved (toggle OFF):', answer);
+    }
 
-    // Clear the answer and show next question
+    // Clear the answer
     setAnswer('');
 
-    // TODO Phase 3: Load next question from database
-    // For now, just clear the input
+    // Move to next question
+    const questions = PLACEHOLDER_QUESTIONS[currentStep];
+    if (questionIndex < questions.length - 1) {
+      setQuestionIndex(questionIndex + 1);
+      setAnsweredCount(answeredCount + 1);
+    } else {
+      // At end of questions
+      setAnsweredCount(answeredCount + 1);
+      alert(`You've answered all ${questions.length} placeholder questions for ${currentStep.toUpperCase()}. In the full version, Watson will determine step completion and load more questions.`);
+    }
   };
 
   const handleFinishedForToday = () => {
     const confirmed = confirm('Ready to finish for today?');
     if (!confirmed) return;
 
-    // TODO Phase 4: Generate Elder Tree encouragement message
-    alert('Great work today. Rest well—you\'ve earned it.');
+    // TODO: Watson will replace this with actual Elder Tree encouragement
+    const encouragement = answeredCount > 0
+      ? `You answered ${answeredCount} question${answeredCount > 1 ? 's' : ''} today. You showed up and did the work. That's what matters. Rest well—you've earned it.`
+      : "You came here. That's the first step. Come back when you're ready to answer some questions.";
+
+    alert(encouragement);
 
     // Return to dashboard
     router.push('/dashboard');
@@ -122,14 +171,53 @@ export default function StepInPage() {
           </div>
         </div>
 
+        {/* Step Selector */}
+        <div className="mb-6 flex gap-3">
+          <button
+            onClick={() => { setCurrentStep('step1'); setQuestionIndex(0); setAnswer(''); }}
+            className={`px-4 py-2 rounded-lg font-semibold transition ${
+              currentStep === 'step1'
+                ? 'bg-green-600 text-white'
+                : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+            }`}
+          >
+            Step 1
+          </button>
+          <button
+            onClick={() => { setCurrentStep('step2'); setQuestionIndex(0); setAnswer(''); }}
+            className={`px-4 py-2 rounded-lg font-semibold transition ${
+              currentStep === 'step2'
+                ? 'bg-green-600 text-white'
+                : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+            }`}
+          >
+            Step 2
+          </button>
+          <button
+            onClick={() => { setCurrentStep('step3'); setQuestionIndex(0); setAnswer(''); }}
+            className={`px-4 py-2 rounded-lg font-semibold transition ${
+              currentStep === 'step3'
+                ? 'bg-green-600 text-white'
+                : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+            }`}
+          >
+            Step 3
+          </button>
+        </div>
+
         {/* Question Display Area */}
         <div className="mb-8">
           <div className="bg-gray-900 rounded-2xl p-8 border border-gray-800">
+            <div className="flex justify-between items-start mb-4">
+              <span className="text-sm text-green-400 font-semibold">
+                {currentStep.toUpperCase()} - Question {questionIndex + 1} of {PLACEHOLDER_QUESTIONS[currentStep].length}
+              </span>
+            </div>
             <h2 className="text-3xl font-bold text-white leading-relaxed">
-              What is your name?
+              {getCurrentQuestion()}
             </h2>
-            <p className="text-gray-400 mt-2 text-sm">
-              (Placeholder question - will be populated from database in Phase 2)
+            <p className="text-gray-400 mt-4 text-sm">
+              Note: These are temporary placeholder questions. Watson will implement the full question database and cycling logic.
             </p>
           </div>
         </div>
