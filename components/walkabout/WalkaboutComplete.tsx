@@ -5,16 +5,12 @@ import { useState } from 'react';
 interface WalkaboutCompleteProps {
   duration: number;
   coinsEarned: number;
-  location: string;
-  bodyNeed: string;
   onNextAction: (action: string) => void;
 }
 
 export default function WalkaboutComplete({
   duration,
   coinsEarned,
-  location,
-  bodyNeed,
   onNextAction,
 }: WalkaboutCompleteProps) {
   const [feeling, setFeeling] = useState('');
@@ -25,15 +21,6 @@ export default function WalkaboutComplete({
     if (feeling.trim()) {
       setShowNextSteps(true);
     }
-  };
-
-  const locationLabels: Record<string, string> = {
-    park: '🌲 Park/Forest',
-    water: '🌊 Water',
-    garden: '🌻 Garden',
-    urban: '🏙️ Urban nature',
-    mountains: '⛰️ Mountains',
-    outside: '🚪 Just outside',
   };
 
   return (
@@ -80,7 +67,7 @@ export default function WalkaboutComplete({
                 {feeling}
               </p>
               <p className="text-gray-800 leading-relaxed font-medium">
-                You went out when you were in crisis, and you came back more grounded.
+                You stepped outside when you were in crisis, and you came back more grounded.
                 That matters.
               </p>
             </div>
@@ -88,7 +75,7 @@ export default function WalkaboutComplete({
             {/* Walkabout Stats */}
             <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-2xl p-6 space-y-4">
               <h3 className="text-xl font-semibold text-gray-800 text-center">
-                ✨ Walkabout Complete
+                ✨ Walk Complete
               </h3>
 
               <div className="flex justify-center gap-8">
@@ -100,15 +87,6 @@ export default function WalkaboutComplete({
                   <div className="text-3xl font-bold text-yellow-600">🪙 {coinsEarned}</div>
                   <div className="text-sm text-gray-600">coins earned</div>
                 </div>
-              </div>
-
-              <div className="flex justify-center gap-4 text-sm">
-                <span className="bg-white px-3 py-1 rounded-lg">
-                  {locationLabels[location] || location}
-                </span>
-                <span className="bg-white px-3 py-1 rounded-lg capitalize">
-                  {bodyNeed}
-                </span>
               </div>
             </div>
 

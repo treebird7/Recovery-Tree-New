@@ -1,38 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-
 interface WalkaboutGuidanceProps {
-  onStartWalk: (location: string, bodyNeed: string) => void;
+  onStartWalk: () => void;
 }
 
 export default function WalkaboutGuidance({ onStartWalk }: WalkaboutGuidanceProps) {
-  const [location, setLocation] = useState('');
-  const [bodyNeed, setBodyNeed] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (location && bodyNeed) {
-      onStartWalk(location, bodyNeed);
-    }
-  };
-
-  const locations = [
-    { id: 'park', label: 'Park / Forest', icon: '🌲' },
-    { id: 'water', label: 'Water', icon: '🌊' },
-    { id: 'garden', label: 'Garden', icon: '🌻' },
-    { id: 'urban', label: 'Urban nature', icon: '🏙️' },
-    { id: 'mountains', label: 'Mountains', icon: '⛰️' },
-    { id: 'outside', label: 'Just outside', icon: '🚪' },
-  ];
-
-  const bodyNeeds = [
-    { id: 'movement', label: 'Movement', desc: 'walking, stretching' },
-    { id: 'stillness', label: 'Stillness', desc: 'sitting, being' },
-    { id: 'both', label: 'Both', desc: "I'll see what feels right" },
-    { id: 'unsure', label: 'Not sure yet', desc: "I'll follow my body" },
-  ];
-
   return (
     <div className="container mx-auto px-4 py-12 max-w-3xl">
       {/* Back to Dashboard */}
@@ -50,14 +22,14 @@ export default function WalkaboutGuidance({ onStartWalk }: WalkaboutGuidanceProp
         {/* Title */}
         <div className="text-center">
           <h1 className="text-4xl font-bold text-green-800 mb-2">
-            🌿 Outside Walkabout
+            🌿 Step Outside
           </h1>
         </div>
 
         {/* Elder Tree Grounding Guidance */}
         <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg space-y-4">
           <p className="text-gray-800 leading-relaxed">
-            You've chosen to take an Outside Walkabout. That's good.
+            You've chosen to step outside. That's good.
           </p>
 
           <p className="text-gray-800 leading-relaxed">
@@ -92,67 +64,13 @@ export default function WalkaboutGuidance({ onStartWalk }: WalkaboutGuidanceProp
           </div>
         </div>
 
-        {/* Location & Body Needs Selection */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Where will you go */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              Where will you go?
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              {locations.map((loc) => (
-                <button
-                  key={loc.id}
-                  type="button"
-                  onClick={() => setLocation(loc.id)}
-                  className={`p-3 rounded-lg border-2 text-left transition-all ${
-                    location === loc.id
-                      ? 'border-green-500 bg-green-50'
-                      : 'border-gray-200 hover:border-green-300'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl">{loc.icon}</span>
-                    <span className="text-sm font-medium text-gray-800">{loc.label}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* What does your body need */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              What does your body need today?
-            </label>
-            <div className="grid grid-cols-1 gap-3">
-              {bodyNeeds.map((need) => (
-                <button
-                  key={need.id}
-                  type="button"
-                  onClick={() => setBodyNeed(need.id)}
-                  className={`p-4 rounded-lg border-2 text-left transition-all ${
-                    bodyNeed === need.id
-                      ? 'border-green-500 bg-green-50'
-                      : 'border-gray-200 hover:border-green-300'
-                  }`}
-                >
-                  <div className="font-semibold text-gray-800">{need.label}</div>
-                  <div className="text-sm text-gray-600 mt-1">{need.desc}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Start Walk Button */}
-          <button
-            type="submit"
-            disabled={!location || !bodyNeed}
-            className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-lg transition-colors shadow-lg text-lg"
-          >
-            START WALK
-          </button>
-        </form>
+        {/* Start Walk Button */}
+        <button
+          onClick={onStartWalk}
+          className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors shadow-lg text-lg"
+        >
+          START WALK
+        </button>
       </div>
     </div>
   );

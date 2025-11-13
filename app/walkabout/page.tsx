@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import WalkaboutGuidance from '@/components/walkabout/WalkaboutGuidance';
 import WalkaboutTimer from '@/components/walkabout/WalkaboutTimer';
@@ -14,19 +14,14 @@ export default function WalkaboutPage() {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [walkDuration, setWalkDuration] = useState<number>(0);
   const [coinsEarned, setCoinsEarned] = useState<number>(0);
-  const [location, setLocation] = useState<string>('');
-  const [bodyNeed, setBodyNeed] = useState<string>('');
 
-  const handleStartWalk = async (selectedLocation: string, selectedBodyNeed: string) => {
+  const handleStartWalk = async () => {
     try {
       // Start walkabout session
       const response = await fetch('/api/walkabout/start', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          location: selectedLocation,
-          bodyNeed: selectedBodyNeed,
-        }),
+        body: JSON.stringify({}),
       });
 
       if (!response.ok) {
@@ -36,8 +31,6 @@ export default function WalkaboutPage() {
       const data = await response.json();
 
       setSessionId(data.sessionId);
-      setLocation(selectedLocation);
-      setBodyNeed(selectedBodyNeed);
       setStage('walking');
     } catch (error) {
       console.error('Error starting walkabout:', error);
@@ -87,7 +80,7 @@ export default function WalkaboutPage() {
         router.push('/dashboard');
         break;
       case 'step-work':
-        router.push('/walk');
+        router.push('/step-in');
         break;
       case 'dashboard':
         router.push('/dashboard');
@@ -111,8 +104,6 @@ export default function WalkaboutPage() {
         <WalkaboutComplete
           duration={walkDuration}
           coinsEarned={coinsEarned}
-          location={location}
-          bodyNeed={bodyNeed}
           onNextAction={handleNextAction}
         />
       )}
