@@ -9,6 +9,7 @@ interface WalkaboutTimerProps {
 export default function WalkaboutTimer({ onEndWalk }: WalkaboutTimerProps) {
   const [startTime] = useState(Date.now());
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [showTimer, setShowTimer] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,17 +32,34 @@ export default function WalkaboutTimer({ onEndWalk }: WalkaboutTimerProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-900 to-orange-800 flex flex-col items-center justify-center p-6 text-white">
+    <div className="min-h-screen bg-gradient-to-b from-amber-900 to-orange-800 flex flex-col items-center justify-center p-6 text-white relative">
+      {/* Timer Toggle - Top Right */}
+      <button
+        onClick={() => setShowTimer(!showTimer)}
+        className="absolute top-6 right-6 text-sm text-amber-200 hover:text-white transition-colors"
+      >
+        {showTimer ? 'Hide Timer' : 'Show Timer'}
+      </button>
+
       {/* Minimal Header */}
       <div className="text-center mb-12">
         <div className="text-6xl mb-4">🌿</div>
         <p className="text-xl font-light">Walking...</p>
       </div>
 
-      {/* Large Timer Display */}
-      <div className="text-8xl font-light mb-16 tracking-wider">
-        {formatTime(elapsedSeconds)}
-      </div>
+      {/* Conditional Display: Timer or Tree */}
+      {showTimer ? (
+        /* Timer Display */
+        <div className="text-8xl font-light mb-16 tracking-wider">
+          {formatTime(elapsedSeconds)}
+        </div>
+      ) : (
+        /* Beautiful Tree Image */
+        <div className="mb-16 flex flex-col items-center">
+          <div className="text-9xl mb-4 animate-pulse">🌳</div>
+          <p className="text-amber-200 text-sm font-light">Rooted and present</p>
+        </div>
+      )}
 
       {/* Grounding Reminders */}
       <div className="max-w-md text-center space-y-6 mb-16">
