@@ -91,7 +91,7 @@ export default function WalkaboutPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
       {stage === 'guidance' && (
         <WalkaboutGuidance onStartWalk={handleStartWalk} />
       )}

@@ -31,7 +31,7 @@ export default function WalkaboutTimer({ onEndWalk }: WalkaboutTimerProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-900 to-green-800 flex flex-col items-center justify-center p-6 text-white">
+    <div className="min-h-screen bg-gradient-to-b from-amber-900 to-orange-800 flex flex-col items-center justify-center p-6 text-white">
       {/* Minimal Header */}
       <div className="text-center mb-12">
         <div className="text-6xl mb-4">🌿</div>
@@ -45,7 +45,7 @@ export default function WalkaboutTimer({ onEndWalk }: WalkaboutTimerProps) {
 
       {/* Grounding Reminders */}
       <div className="max-w-md text-center space-y-6 mb-16">
-        <div className="h-px bg-green-600"></div>
+        <div className="h-px bg-amber-600"></div>
 
         <div className="space-y-4 text-lg font-light leading-relaxed">
           <p>Feel your feet on the ground.</p>
@@ -53,7 +53,7 @@ export default function WalkaboutTimer({ onEndWalk }: WalkaboutTimerProps) {
           <p>When waves come, return to your breath.</p>
         </div>
 
-        <div className="h-px bg-green-600"></div>
+        <div className="h-px bg-amber-600"></div>
       </div>
 
       {/* End Walk Button (Small, Bottom) */}
@@ -65,7 +65,7 @@ export default function WalkaboutTimer({ onEndWalk }: WalkaboutTimerProps) {
       </button>
 
       {/* Subtle coins indicator */}
-      <div className="mt-8 text-xs text-green-300 font-light">
+      <div className="mt-8 text-xs text-amber-300 font-light">
         {Math.floor(elapsedSeconds / 60)} coins earned
       </div>
     </div>

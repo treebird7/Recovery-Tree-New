@@ -41,12 +41,12 @@ export default async function DashboardPage() {
   ]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100">
-      <nav className="bg-white shadow-sm border-b border-green-100">
+    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
+      <nav className="bg-white shadow-sm border-b border-amber-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-green-800">🌳 Rooting Routine</h1>
+              <h1 className="text-2xl font-bold text-amber-800">🌳 Rooting Routine</h1>
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-600">{user.email}</span>
@@ -58,8 +58,8 @@ export default async function DashboardPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold text-green-900 mb-2">Welcome to Your Journey</h2>
-          <p className="text-lg text-green-700">
+          <h2 className="text-3xl font-bold text-amber-900 mb-2">Welcome to Your Journey</h2>
+          <p className="text-lg text-amber-700">
             Ready for today&apos;s recovery walk?
           </p>
         </div>
@@ -68,11 +68,11 @@ export default async function DashboardPage() {
         {(completedSessions > 0 || streak > 0 || coins > 0 || inventoryStreak > 0) && (
           <div className="grid grid-cols-4 gap-4 mb-8">
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-2xl font-bold text-green-600">{completedSessions}</div>
+              <div className="text-2xl font-bold text-amber-600">{completedSessions}</div>
               <div className="text-sm text-gray-600">Completed Walks</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-2xl font-bold text-green-600">{streak}</div>
+              <div className="text-2xl font-bold text-orange-600">{streak}</div>
               <div className="text-sm text-gray-600">Day Streak 🔥</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
@@ -80,7 +80,7 @@ export default async function DashboardPage() {
               <div className="text-sm text-gray-600">Coins 🪙</div>
             </div>
             <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-2xl font-bold text-purple-600">{inventoryStreak}</div>
+              <div className="text-2xl font-bold text-amber-700">{inventoryStreak}</div>
               <div className="text-sm text-gray-600">Inventory Streak 📝</div>
             </div>
           </div>
@@ -115,12 +115,12 @@ export default async function DashboardPage() {
             </Link>
           </div>
 
-          {/* Outside Walkabout */}
+          {/* Step Outside */}
           <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
             <div className="mb-4">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-emerald-600"
+                  className="w-6 h-6 text-amber-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -134,20 +134,20 @@ export default async function DashboardPage() {
                 </svg>
               </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Outside Walkabout</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Step Outside</h3>
             <p className="text-gray-600 mb-4">Ground yourself through nature and movement</p>
             <Link href="/walkabout">
-              <button className="w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700 transition">
-                Take a Walkabout
+              <button className="w-full bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition">
+                Step Outside
               </button>
             </Link>
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
             <div className="mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-green-600"
+                  className="w-6 h-6 text-orange-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -164,7 +164,7 @@ export default async function DashboardPage() {
             <h3 className="text-xl font-bold text-gray-900 mb-2">Step In</h3>
             <p className="text-gray-600 mb-4">Work through your 12-step journal questions</p>
             <Link href="/step-in">
-              <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+              <button className="w-full bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 transition">
                 Step In
               </button>
             </Link>
@@ -174,9 +174,9 @@ export default async function DashboardPage() {
           {!todaysInventory ? (
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
               <div className="mb-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
                   <svg
-                    className="w-6 h-6 text-purple-600"
+                    className="w-6 h-6 text-amber-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -193,17 +193,17 @@ export default async function DashboardPage() {
               <h3 className="text-xl font-bold text-gray-900 mb-2">Daily Inventory</h3>
               <p className="text-gray-600 mb-4">Take a few minutes to reflect on your day</p>
               <Link href="/inventory">
-                <button className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
+                <button className="w-full bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition">
                   Complete Today&apos;s Inventory
                 </button>
               </Link>
             </div>
           ) : (
-            <div className="bg-white rounded-lg shadow-md p-6 border-2 border-green-400">
+            <div className="bg-white rounded-lg shadow-md p-6 border-2 border-amber-400">
               <div className="mb-4">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
                   <svg
-                    className="w-6 h-6 text-green-600"
+                    className="w-6 h-6 text-amber-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -229,9 +229,9 @@ export default async function DashboardPage() {
 
           <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
             <div className="mb-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-blue-600"
+                  className="w-6 h-6 text-orange-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -248,7 +248,7 @@ export default async function DashboardPage() {
             <h3 className="text-xl font-bold text-gray-900 mb-2">Session History</h3>
             <p className="text-gray-600 mb-4">Review your past walks and reflections</p>
             <Link href="/history">
-              <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+              <button className="w-full bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 transition">
                 View History
               </button>
             </Link>
@@ -256,9 +256,9 @@ export default async function DashboardPage() {
 
           <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
             <div className="mb-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-purple-600"
+                  className="w-6 h-6 text-amber-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -275,7 +275,7 @@ export default async function DashboardPage() {
             <h3 className="text-xl font-bold text-gray-900 mb-2">My Prayers</h3>
             <p className="text-gray-600 mb-4">View and manage your Step 3 prayers</p>
             <Link href="/my-prayers">
-              <button className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
+              <button className="w-full bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition">
                 View Prayers
               </button>
             </Link>
@@ -283,9 +283,9 @@ export default async function DashboardPage() {
 
           <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition opacity-50 cursor-not-allowed">
             <div className="mb-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-purple-600"
+                  className="w-6 h-6 text-amber-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -307,8 +307,8 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="mt-12 bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">About the Elder Tree</h3>
+        <div className="mt-12 bg-white rounded-lg shadow-md p-6 border-l-4 border-amber-500">
+          <h3 className="text-xl font-bold text-amber-900 mb-4">About the Elder Tree</h3>
           <p className="text-gray-700 leading-relaxed">
             The Elder Tree is your wise companion on this journey. During your walks, it will guide
             you through recovery step work with direct, caring questions that help you see clearly
