@@ -108,14 +108,20 @@ END $$;
 -- PRAYERS TABLE INDEXES (Step 3 feature)
 -- ============================================================================
 
--- Index for user's prayers (My Prayers page)
-CREATE INDEX IF NOT EXISTS idx_prayers_user_created
-  ON prayers(user_id, created_at DESC);
+-- Check if table exists first
+DO $$
+BEGIN
+  IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'prayers') THEN
+    -- Index for user's prayers (My Prayers page)
+    CREATE INDEX IF NOT EXISTS idx_prayers_user_created
+      ON prayers(user_id, created_at DESC);
 
--- Index for prayer library queries
-CREATE INDEX IF NOT EXISTS idx_prayers_library
-  ON prayers(is_public, created_at DESC)
-  WHERE is_public = true;
+    -- Index for prayer library queries
+    CREATE INDEX IF NOT EXISTS idx_prayers_library
+      ON prayers(is_public, created_at DESC)
+      WHERE is_public = true;
+  END IF;
+END $$;
 
 -- ============================================================================
 -- QUERY PERFORMANCE ANALYSIS
@@ -138,7 +144,14 @@ ANALYZE steps_journal;
 ANALYZE step_questions;
 ANALYZE daily_inventories;
 ANALYZE user_coins;
-ANALYZE prayers;
+
+-- Analyze prayers table if it exists
+DO $$
+BEGIN
+  IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'prayers') THEN
+    EXECUTE 'ANALYZE prayers';
+  END IF;
+END $$;
 
 -- ============================================================================
 -- VERIFICATION QUERY
