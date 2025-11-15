@@ -13,6 +13,7 @@
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report",
     "coord": "node .coordination/coord-cli.js",
+    "agents": "node scripts/agent-status-cli.js",
     "build:mobile": "./scripts/build-mobile.sh",
     "cap:sync": "cap sync",
     "cap:ios": "cap open ios",
