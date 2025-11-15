@@ -14,6 +14,8 @@ import { analyzeMood, getMoodDescription, generateNatureImage } from '@/lib/serv
 import { selectNatureImage } from '@/lib/services/unsplash-images';
 import { createFromSavedSession } from '@/lib/services/conversation-manager';
 import { awardCoins, getUserCoins } from '@/lib/services/mining';
+import { extractSessionData, validateExtraction, sanitizeExtraction } from '@/lib/services/session-extraction';
+import { upsertUserContext, insertSessionSummary } from '@/lib/services/user-context';
 
 /**
  * POST /api/session/complete
@@ -152,6 +154,41 @@ export async function POST(request: NextRequest) {
         { error: 'Failed to complete session' },
         { status: 500 }
       );
+    }
+
+    // Extract session data for cross-session memory (Phase 2)
+    console.log('Extracting session data for context memory...');
+    try {
+      const extractionResult = await extractSessionData(
+        session.step_responses,
+        session.session_type || 'walk',
+        session.current_step
+      );
+
+      if (extractionResult && validateExtraction(extractionResult)) {
+        const sanitized = sanitizeExtraction(extractionResult);
+
+        // Update user context if profile changes detected
+        if (sanitized.profile_updates) {
+          console.log('Updating user context with profile changes');
+          await upsertUserContext(user.id, sanitized.profile_updates);
+        }
+
+        // Insert session summary for recent context
+        console.log('Creating session summary');
+        await insertSessionSummary(user.id, sessionId, {
+          ...sanitized.session_summary,
+          completed_at: new Date().toISOString(),
+          profile_updates: sanitized.profile_updates || undefined,
+        });
+
+        console.log('Session extraction complete');
+      } else {
+        console.warn('Extraction validation failed, skipping context update');
+      }
+    } catch (extractionError) {
+      // Log error but don't fail session completion
+      console.error('Extraction error (non-blocking):', extractionError);
     }
 
     // Create analytics record

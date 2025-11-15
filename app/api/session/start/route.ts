@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createSession, getIncompleteSession } from '@/lib/services/session';
 import { ConversationManager } from '@/lib/services/conversation-manager';
+import { getUserContext, getRecentSessionSummaries } from '@/lib/services/user-context';
 
 /**
  * POST /api/session/start
@@ -55,6 +56,22 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid step' }, { status: 400 });
     }
 
+    // Load user context for cross-session memory (Phase 2)
+    let userContext = null;
+    let recentSessions = [];
+
+    try {
+      userContext = await getUserContext(user.id);
+      recentSessions = await getRecentSessionSummaries(user.id, 3);
+      console.log('[Context] Loaded context:', {
+        hasContext: !!userContext,
+        recentSessionCount: recentSessions.length
+      });
+    } catch (contextError) {
+      // Log error but don't fail session start
+      console.error('[Context] Error loading context (non-blocking):', contextError);
+    }
+
     // Check if user has an incomplete session
     if (resumeSession) {
       const { data: incompleteSession, error: incompleteError } = await getIncompleteSession(
@@ -62,10 +79,14 @@ export async function POST(request: NextRequest) {
       );
 
       if (!incompleteError && incompleteSession) {
-        // Resume existing session
+        // Resume existing session with context
         const manager = new ConversationManager(
           incompleteSession.current_step,
-          incompleteSession.step_responses
+          incompleteSession.step_responses,
+          incompleteSession.location || undefined,
+          incompleteSession.body_need || undefined,
+          userContext,
+          recentSessions
         );
 
         return NextResponse.json({
@@ -96,8 +117,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Initialize conversation manager
-    const manager = new ConversationManager(step, undefined, location, bodyNeed);
+    // Initialize conversation manager with context
+    const manager = new ConversationManager(
+      step,
+      undefined,
+      location,
+      bodyNeed,
+      userContext,
+      recentSessions
+    );
     const initialQuestion = manager.getInitialQuestion();
 
     return NextResponse.json({

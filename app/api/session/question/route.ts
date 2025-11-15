@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { getSession, updateSessionResponses } from '@/lib/services/session';
 import { ConversationManager, createFromSavedSession } from '@/lib/services/conversation-manager';
+import { getUserContext, getRecentSessionSummaries } from '@/lib/services/user-context';
 
 /**
  * POST /api/session/question
@@ -64,13 +65,27 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    // Recreate conversation manager from saved state
+    // Load user context for cross-session memory
+    let userContext = null;
+    let recentSessions = [];
+
+    try {
+      userContext = await getUserContext(user.id);
+      recentSessions = await getRecentSessionSummaries(user.id, 3);
+    } catch (contextError) {
+      // Log error but don't fail question processing
+      console.error('[Context] Error loading context (non-blocking):', contextError);
+    }
+
+    // Recreate conversation manager from saved state with context
     const manager = createFromSavedSession(
       session.current_step,
       session.step_responses,
       undefined,
       session.location || undefined,
-      session.body_need || undefined
+      session.body_need || undefined,
+      userContext,
+      recentSessions
     );
 
     // Process answer and get next question
