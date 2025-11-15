@@ -41,8 +41,11 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Start new mining session (note: startMiningSession doesn't support duration yet, storing in metadata for now)
-    const { data: session, error: sessionError } = await startMiningSession(user.id);
+    // Start new mining session with optional duration
+    const { data: session, error: sessionError } = await startMiningSession(
+      user.id,
+      durationMinutes
+    );
 
     if (sessionError || !session) {
       console.error('Error starting mining session:', sessionError);
@@ -52,12 +55,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // If duration provided, we'll pass it to the client to track
-    // TODO: Store in database for persistence across page reloads
+    // Duration is now persisted in database for recovery across page reloads
     return NextResponse.json({
       sessionId: session.id,
       startedAt: session.mining_started_at,
-      durationMinutes: durationMinutes || null,
+      durationMinutes: session.mining_duration_minutes,
       message: 'Mining session started',
       isExisting: false,
     });

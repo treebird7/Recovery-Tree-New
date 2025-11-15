@@ -7,13 +7,6 @@ import {
 } from '@/lib/services/inventory';
 import Anthropic from '@anthropic-ai/sdk';
 
-// TODO: TECHNICAL DEBT - Move this inside POST handler
-// Module-level client instantiation violates FUCKBOARD lesson #2
-// This should be created inside the function, not at module level
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY!,
-});
-
 /**
  * GET /api/inventory/today
  *
@@ -170,6 +163,11 @@ export async function POST(request: NextRequest) {
 async function generateInventoryReflection(
   responses: InventoryResponses
 ): Promise<string> {
+  // Initialize Anthropic client inside function (not at module level)
+  const anthropic = new Anthropic({
+    apiKey: process.env.ANTHROPIC_API_KEY!,
+  });
+
   const systemPrompt = `You are the Elder Tree creating an end-of-day reflection for someone in recovery.
 
 Based on their daily inventory, offer:

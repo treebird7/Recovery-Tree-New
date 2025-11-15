@@ -25,23 +25,31 @@ export default async function DashboardPage() {
     redirect('/urge/reveal');
   }
 
-  // Get user stats
-  const { count: completedSessions } = await getTotalCompletedSessions(user.id);
-  const { streak } = await getUserStreak(user.id);
-  const { coins } = await getUserCoins(user.id);
-  const { data: todaysInventory } = await getTodaysInventory(user.id);
-  const { streak: inventoryStreak } = await getInventoryStreak(user.id);
+  // Get user stats in parallel for better performance
+  const [
+    { count: completedSessions },
+    { streak },
+    { coins },
+    { data: todaysInventory },
+    { streak: inventoryStreak },
+  ] = await Promise.all([
+    getTotalCompletedSessions(user.id),
+    getUserStreak(user.id),
+    getUserCoins(user.id),
+    getTodaysInventory(user.id),
+    getInventoryStreak(user.id),
+  ]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100">
-      <nav className="bg-white shadow-sm border-b border-green-100">
+    <div className="min-h-screen bg-black">
+      <nav className="bg-gray-900 shadow-sm border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-green-800">🌳 Rooting Routine</h1>
+              <h1 className="text-2xl font-bold text-green-400">🌳 Rooting Routine</h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">{user.email}</span>
+              <span className="text-sm text-gray-400">{user.email}</span>
               <LogoutButton />
             </div>
           </div>
@@ -50,8 +58,8 @@ export default async function DashboardPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold text-green-900 mb-2">Welcome to Your Journey</h2>
-          <p className="text-lg text-green-700">
+          <h2 className="text-3xl font-bold text-green-400 mb-2">Welcome to Your Journey</h2>
+          <p className="text-lg text-gray-300">
             Ready for today&apos;s recovery walk?
           </p>
         </div>
@@ -59,32 +67,32 @@ export default async function DashboardPage() {
         {/* Stats Cards */}
         {(completedSessions > 0 || streak > 0 || coins > 0 || inventoryStreak > 0) && (
           <div className="grid grid-cols-4 gap-4 mb-8">
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-2xl font-bold text-green-600">{completedSessions}</div>
-              <div className="text-sm text-gray-600">Completed Walks</div>
+            <div className="bg-gray-800 rounded-lg shadow border border-gray-700 p-4">
+              <div className="text-2xl font-bold text-green-400">{completedSessions}</div>
+              <div className="text-sm text-gray-400">Completed Walks</div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-2xl font-bold text-green-600">{streak}</div>
-              <div className="text-sm text-gray-600">Day Streak 🔥</div>
+            <div className="bg-gray-800 rounded-lg shadow border border-gray-700 p-4">
+              <div className="text-2xl font-bold text-green-400">{streak}</div>
+              <div className="text-sm text-gray-400">Day Streak 🔥</div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-2xl font-bold text-yellow-600">{coins || 0}</div>
-              <div className="text-sm text-gray-600">Coins 🪙</div>
+            <div className="bg-gray-800 rounded-lg shadow border border-gray-700 p-4">
+              <div className="text-2xl font-bold text-yellow-400">{coins || 0}</div>
+              <div className="text-sm text-gray-400">Coins 🪙</div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-2xl font-bold text-purple-600">{inventoryStreak}</div>
-              <div className="text-sm text-gray-600">Inventory Streak 📝</div>
+            <div className="bg-gray-800 rounded-lg shadow border border-gray-700 p-4">
+              <div className="text-2xl font-bold text-green-400">{inventoryStreak}</div>
+              <div className="text-sm text-gray-400">Inventory Streak 📝</div>
             </div>
           </div>
         )}
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {/* Urge/Crisis Button - High Priority */}
-          <div className="bg-red-50 rounded-lg shadow-md p-6 hover:shadow-lg transition border-2 border-red-200">
+          <div className="bg-red-900/30 rounded-lg shadow-md p-6 hover:shadow-lg transition border-2 border-red-600">
             <div className="mb-4">
-              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-red-900/50 rounded-full flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-red-600"
+                  className="w-6 h-6 text-red-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -98,8 +106,8 @@ export default async function DashboardPage() {
                 </svg>
               </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Need Help Now?</h3>
-            <p className="text-gray-600 mb-4">Talk to the Elder Tree about what&apos;s going on</p>
+            <h3 className="text-xl font-bold text-gray-100 mb-2">Need Help Now?</h3>
+            <p className="text-gray-300 mb-4">Talk to the Elder Tree about what&apos;s going on</p>
             <Link href="/urge">
               <button className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
                 I Need Support
@@ -107,12 +115,12 @@ export default async function DashboardPage() {
             </Link>
           </div>
 
-          {/* Outside Walkabout */}
-          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+          {/* Step Outside */}
+          <div className="bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition border border-gray-700">
             <div className="mb-4">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-green-900/30 rounded-full flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-emerald-600"
+                  className="w-6 h-6 text-green-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -126,20 +134,20 @@ export default async function DashboardPage() {
                 </svg>
               </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Outside Walkabout</h3>
-            <p className="text-gray-600 mb-4">Ground yourself through nature and movement</p>
+            <h3 className="text-xl font-bold text-gray-100 mb-2">Step Outside</h3>
+            <p className="text-gray-400 mb-4">Ground yourself through nature and movement</p>
             <Link href="/walkabout">
-              <button className="w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700 transition">
-                Take a Walkabout
+              <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+                Step Outside
               </button>
             </Link>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+          <div className="bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition border border-gray-700">
             <div className="mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-green-900/30 rounded-full flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-green-600"
+                  className="w-6 h-6 text-green-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -153,22 +161,22 @@ export default async function DashboardPage() {
                 </svg>
               </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Start New Walk</h3>
-            <p className="text-gray-600 mb-4">Begin today&apos;s recovery walk with step work</p>
-            <Link href="/walk">
+            <h3 className="text-xl font-bold text-gray-100 mb-2">Step In</h3>
+            <p className="text-gray-400 mb-4">Work through your 12-step journal questions</p>
+            <Link href="/step-in">
               <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
-                Begin Walk
+                Step In
               </button>
             </Link>
           </div>
 
           {/* Daily Inventory */}
           {!todaysInventory ? (
-            <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+            <div className="bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition border border-gray-700">
               <div className="mb-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-green-900/30 rounded-full flex items-center justify-center">
                   <svg
-                    className="w-6 h-6 text-purple-600"
+                    className="w-6 h-6 text-green-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -182,20 +190,20 @@ export default async function DashboardPage() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Daily Inventory</h3>
-              <p className="text-gray-600 mb-4">Take a few minutes to reflect on your day</p>
+              <h3 className="text-xl font-bold text-gray-100 mb-2">Daily Inventory</h3>
+              <p className="text-gray-400 mb-4">Take a few minutes to reflect on your day</p>
               <Link href="/inventory">
-                <button className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
+                <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
                   Complete Today&apos;s Inventory
                 </button>
               </Link>
             </div>
           ) : (
-            <div className="bg-white rounded-lg shadow-md p-6 border-2 border-green-400">
+            <div className="bg-gray-800 rounded-lg shadow-md p-6 border-2 border-green-500">
               <div className="mb-4">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-green-900/30 rounded-full flex items-center justify-center">
                   <svg
-                    className="w-6 h-6 text-green-600"
+                    className="w-6 h-6 text-green-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -209,21 +217,21 @@ export default async function DashboardPage() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Daily Inventory ✓</h3>
-              <p className="text-gray-600 mb-4">Completed for today</p>
+              <h3 className="text-xl font-bold text-gray-100 mb-2">Daily Inventory ✓</h3>
+              <p className="text-gray-400 mb-4">Completed for today</p>
               <Link href="/inventory">
-                <button className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition">
+                <button className="w-full bg-gray-700 text-gray-300 py-2 rounded-lg hover:bg-gray-600 transition">
                   View Inventory
                 </button>
               </Link>
             </div>
           )}
 
-          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+          <div className="bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition border border-gray-700">
             <div className="mb-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-green-900/30 rounded-full flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-blue-600"
+                  className="w-6 h-6 text-green-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -237,20 +245,47 @@ export default async function DashboardPage() {
                 </svg>
               </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Session History</h3>
-            <p className="text-gray-600 mb-4">Review your past walks and reflections</p>
+            <h3 className="text-xl font-bold text-gray-100 mb-2">Session History</h3>
+            <p className="text-gray-400 mb-4">Review your past walks and reflections</p>
             <Link href="/history">
-              <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+              <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
                 View History
               </button>
             </Link>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition opacity-50 cursor-not-allowed">
+          <div className="bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition border border-gray-700">
             <div className="mb-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-green-900/30 rounded-full flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-purple-600"
+                  className="w-6 h-6 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <h3 className="text-xl font-bold text-gray-100 mb-2">My Prayers</h3>
+            <p className="text-gray-400 mb-4">View and manage your Step 3 prayers</p>
+            <Link href="/my-prayers">
+              <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+                View Prayers
+              </button>
+            </Link>
+          </div>
+
+          <div className="bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition border border-gray-700 opacity-50 cursor-not-allowed">
+            <div className="mb-4">
+              <div className="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center">
+                <svg
+                  className="w-6 h-6 text-gray-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -264,17 +299,17 @@ export default async function DashboardPage() {
                 </svg>
               </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Progress Tracker</h3>
-            <p className="text-gray-600 mb-4">Track your journey over time</p>
-            <button disabled className="w-full bg-gray-300 text-white py-2 rounded-lg cursor-not-allowed">
+            <h3 className="text-xl font-bold text-gray-400 mb-2">Progress Tracker</h3>
+            <p className="text-gray-500 mb-4">Track your journey over time</p>
+            <button disabled className="w-full bg-gray-700 text-gray-500 py-2 rounded-lg cursor-not-allowed">
               Coming Soon
             </button>
           </div>
         </div>
 
-        <div className="mt-12 bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">About the Elder Tree</h3>
-          <p className="text-gray-700 leading-relaxed">
+        <div className="mt-12 bg-gray-800 rounded-lg shadow-md p-6 border-l-4 border-green-600">
+          <h3 className="text-xl font-bold text-green-400 mb-4">About the Elder Tree</h3>
+          <p className="text-gray-300 leading-relaxed">
             The Elder Tree is your wise companion on this journey. During your walks, it will guide
             you through recovery step work with direct, caring questions that help you see clearly
             and find your own truth. Like a good sponsor, the Elder Tree pushes for honesty and
