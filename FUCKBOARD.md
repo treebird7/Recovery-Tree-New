@@ -214,11 +214,27 @@ This persistent bastard appeared in:
 8. **Pause beats perfection** - Applies to code too, not just recovery
 9. **Scarcity creates bad decisions** - Limited resources + panic = worse outcomes
 10. **Read The Fucking File** - Before adding imports/code
+11. **READ YOUR OWN DOCUMENTATION** - The FUCKBOARD only works if you consult it before coding
+
+### React/Event Listener Patterns
+12. **Event listeners = Setup ONCE, cleanup on unmount** - Never inside click handlers
+13. **useEffect with empty deps []** - Runs once on mount, perfect for global listeners
+14. **Always return cleanup function** - `return () => listener.remove()` prevents leaks
+
+### Next.js 15 Patterns
+15. **Client initialization INSIDE route handlers** - Not at module level (Supabase, Anthropic, etc.)
+16. **Add `export const dynamic = 'force-dynamic'`** - To any page using runtime-only APIs
+17. **Test build locally** - `npm run build` catches static generation errors early
+
+### Database Wisdom
+18. **Index expressions must be immutable** - No function calls like DATE() in index definitions
+19. **Check migration dependencies** - Verify tables exist before creating indexes
+20. **Test migrations locally first** - Supabase CLI before production push
 
 ### Git Workflow
-11. **The Holy Trinity:** `git add .` → `git commit -m "message"` → `git push`
-12. **Always check `git status`** - Before assuming you pushed
-13. **Test locally FIRST** - Use Vercel CLI (`vercel build`) to catch errors before pushing
+21. **The Holy Trinity:** `git add .` → `git commit -m "message"` → `git push`
+22. **Always check `git status`** - Before assuming you pushed
+23. **Test locally FIRST** - Use Vercel CLI (`vercel build`) to catch errors before pushing
 
 ---
 
@@ -271,10 +287,148 @@ To the features we temporarily sacrificed for the greater good of deployment:
 
 ---
 
-*Last Updated: November 8, 2025*  
-*Status: DEPLOYED (finally)*  
-*Lessons Learned: Too many*  
-*Fucks Given: Ran out around hour 2*
+## 🎯 Hall of Shame - November 12, 2025
+
+### **"The OAuth Memory Leak Massacre"**
+
+*Duration: Full debug session*
+*Severity: CRITICAL*
+*Final Status: ✅ FIXED (but took architectural refactor)*
+
+---
+
+### 11. **The Mobile OAuth Listener Memory Leak**
+**What happened:** Every time user clicked OAuth button, a NEW listener was added and never removed
+**Why it was dumb:** Adding event listeners INSIDE the function that handles the click
+**The Error Pattern:**
+```typescript
+export async function signInWithOAuth(...) {
+  App.addListener('appUrlOpen', async (event) => {  // ❌ NEW LISTENER EVERY CLICK!
+    // handle callback
+  });
+}
+```
+**Why It's Catastrophic:**
+- Memory leaks on every button click
+- Multiple callbacks firing for same OAuth return
+- Potential duplicate sessions
+- App crashes after 20-30 OAuth attempts
+
+**The Fix:** Move listener to app initialization (global scope, set once)
+```typescript
+// app/hooks/useOAuthMobileListener.ts
+useEffect(() => {
+  const listener = App.addListener('appUrlOpen', async (event) => {
+    // handle callback ONCE
+  });
+  return () => listener.remove();  // ✅ CLEANUP!
+}, []); // Empty deps = runs once
+```
+**Lesson:** Event listeners at module/app level, NOT inside click handlers
+**Stupid Tax:** 2+ hours debugging + architectural refactor
+**Trophy:** 🥇 Most Dangerous Pattern In The Codebase
+
+---
+
+### 12. **The Static Generation vs Runtime Strikes Again**
+**What happened:** OAuth pages failed build with "Supabase credentials required" error
+**Why it was dumb:** We LITERALLY documented this in entry #3 (LemonSqueezy) but did it again
+**The Error:**
+```
+Error occurred prerendering page "/signup"
+Error: @supabase/ssr: Your project's URL and API key are required
+```
+**Root Cause:** Next.js 15 tries to statically generate pages at build time, hits client code that needs env vars
+**The Fix (AGAIN):** Add to every page that uses Supabase:
+```typescript
+export const dynamic = 'force-dynamic';
+```
+**Lesson:** When you document a mistake, READ YOUR OWN DOCUMENTATION before making it again
+**Stupid Tax:** 30 minutes + embarrassment
+**Meta Lesson:** The FUCKBOARD only works if you actually read it
+
+---
+
+### 13. **The Module-Level AI Client Déjà Vu**
+**What happened:** Anthropic client initialized at top of file (module level) instead of inside route handler
+**Why it was dumb:** EXACT same pattern as Supabase client issues (see #3, #12)
+**The Pattern (Wrong):**
+```typescript
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY!,
+}); // ❌ Module level = build time
+export async function POST(request: NextRequest) { ... }
+```
+**The Pattern (Right):**
+```typescript
+export async function POST(request: NextRequest) {
+  const anthropic = new Anthropic({
+    apiKey: process.env.ANTHROPIC_API_KEY!,
+  }); // ✅ Inside function = runtime
+}
+```
+**Files Affected:**
+- `app/api/inventory/today/route.ts`
+- `app/api/urge/response/route.ts`
+
+**Lesson:** Client initialization = RUNTIME OPERATION, not build-time (third time's the charm?)
+**Stupid Tax:** Found during code audit, not production failure (dodged a bullet)
+**Status:** Documented in TECHNICAL_DEBT_AUDIT.md, needs fixing
+
+---
+
+### 14. **The DATE() Migration Database Drama**
+**What happened:** Migration failed on Supabase with "cannot use non-immutable function in index"
+**Why it was dumb:** Used SQL DATE() function in index expression
+**The Error:**
+```sql
+CREATE INDEX idx_inventory_user_date
+  ON daily_inventory(user_id, DATE(created_at));  -- ❌ DATE() not allowed in index
+```
+**The Fix:**
+```sql
+CREATE INDEX idx_inventory_user_date
+  ON daily_inventory(user_id, created_at);  -- ✅ Index the full timestamp
+```
+**Lesson:** Database indexes require immutable expressions (no function calls)
+**Stupid Tax:** 20 minutes + migration rollback
+**Bonus Lesson:** Always test migrations locally before pushing to Supabase
+
+---
+
+### 15. **The Missing Prayers Table Graceful Failure**
+**What happened:** Migration tried to create index on `prayers` table that didn't exist yet
+**Why it was dumb:** Migration order dependencies not checked
+**The Fix:** Added conditional check:
+```sql
+CREATE INDEX IF NOT EXISTS idx_prayers_user
+  ON prayers(user_id)
+  WHERE EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'prayers');
+```
+**Lesson:** Migration dependencies matter - check table existence before creating indexes
+**Stupid Tax:** 15 minutes
+**Recovery Win:** Actually handled this gracefully instead of panic-disabling
+
+---
+
+## 🏆 Today's MVP Fuckup (November 12, 2025)
+
+**Winner: The OAuth Memory Leak**
+
+This sneaky bastard would have caused:
+- Gradual memory exhaustion
+- App crashes after repeated use
+- Production debugging nightmare
+- User complaints about "app getting slower"
+
+**Trophy:** 🥇 Most Insidious Bug (Would've Taken Weeks To Debug In Production)
+
+---
+
+*Last Updated: November 15, 2025*
+*Status: LEARNING (slowly)*
+*Lessons Learned: Still too many*
+*Times We've Made The Same Mistake: More than we'd like to admit*
 
 ---
 

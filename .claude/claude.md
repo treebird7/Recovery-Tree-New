@@ -311,3 +311,145 @@ Examples: `examples/agent-status-usage.ts`
 Database schema: `supabase/migrations/011_agent_status.sql`
 
 **This coordination system prevents conflicts and enables true parallel development across branches.**
+
+---
+
+## Learning from Mistakes: The FUCKBOARD
+
+**CRITICAL:** Before implementing any feature, ALWAYS consult `FUCKBOARD.md` in the project root.
+
+### What It Is
+
+The FUCKBOARD is our living documentation of every major bug, mistake, and lesson learned during development. It contains:
+- Real errors we encountered
+- Why they happened
+- How they were fixed (with code examples)
+- Lessons learned to prevent repeating them
+- "Stupid Tax" (time wasted) for each mistake
+
+### Why It's Essential
+
+**The FUCKBOARD only works if you READ IT before coding.**
+
+We've documented the same mistake (module-level client initialization) THREE TIMES because agents didn't consult the FUCKBOARD. Don't be the fourth.
+
+### When to Consult FUCKBOARD
+
+**BEFORE:**
+- Implementing any feature with Supabase client
+- Creating API routes with external clients (Anthropic, etc.)
+- Setting up OAuth or authentication flows
+- Writing database migrations
+- Adding event listeners in React components
+
+**AFTER:**
+- Encountering a non-trivial bug (document it!)
+- Fixing a deployment error (add to FUCKBOARD!)
+- Discovering a pattern causing issues (save others the pain!)
+
+### Common Patterns Documented
+
+1. **Module-level client initialization** (entries #3, #12, #13)
+   - DON'T initialize Supabase/Anthropic clients at top of file
+   - DO initialize inside route handler functions
+
+2. **Static generation vs runtime** (entries #3, #12)
+   - Add `export const dynamic = 'force-dynamic'` to pages using Supabase
+
+3. **Event listener memory leaks** (entry #11)
+   - DON'T add listeners inside click handlers
+   - DO add in useEffect with cleanup function
+
+4. **Database migration safety** (entries #14, #15)
+   - DON'T use function calls in index expressions
+   - DO check table existence before creating indexes
+
+### How to Update FUCKBOARD
+
+When you encounter a bug that took >15 minutes to fix:
+
+1. Add entry to FUCKBOARD.md under appropriate date section
+2. Follow the format:
+   ```markdown
+   ### X. **The [Descriptive Name]**
+   **What happened:** [Honest description]
+   **Why it was dumb:** [Root cause analysis]
+   **The Error:** [Actual error message or code]
+   **The Fix:** [Working code example]
+   **Lesson:** [Principle to remember]
+   **Stupid Tax:** [Time wasted]
+   ```
+3. Update "Hard-Won Wisdom" section with new pattern
+4. Reference FUCKBOARD entry in commit message
+
+**The FUCKBOARD is not just documentation—it's a development superpower IF YOU USE IT.**
+
+---
+
+## Best Practices & Brilliant Innovations
+
+**Reference:** `BEST_PRACTICES.md` for comprehensive patterns to replicate
+
+### What to Consult BEST_PRACTICES For
+
+**Before starting new features:**
+- Agent coordination workflow
+- Cross-session memory architecture
+- Elder Tree communication patterns
+- Testing strategies (E2E with Playwright)
+- Privacy-first architecture patterns
+
+**During development:**
+- Runtime vs build-time patterns
+- React event listener patterns
+- Database migration safety
+- Error handling consistency
+- Parallel query optimization
+
+**For new projects:**
+- What patterns to replicate
+- What workflows saved time
+- What architectural decisions paid off
+- What to improve next time
+
+### Core Innovations Worth Replicating
+
+1. **FUCKBOARD Pattern** - Document mistakes immediately
+2. **Agent Coordination System** - Enable parallel development
+3. **Cross-Session Memory** - Privacy-first context retention
+4. **Elder Tree Style Guide** - Authentic communication
+5. **Progressive Feature Unlocking** - Therapeutic pacing
+6. **Comprehensive E2E Testing** - 630+ tests prevent regressions
+
+### Documentation Philosophy
+
+**Living Documentation Beats Stale Wikis:**
+- Date everything (know when context was valid)
+- Separate by purpose (specs, bugs, decisions, guides)
+- Update immediately (documentation rots fast)
+- Include code examples (show, don't just tell)
+- Reference docs in commits (create knowledge trail)
+
+**Multiple doc types serve different needs:**
+- `FUCKBOARD.md` - Mistakes and lessons learned
+- `BEST_PRACTICES.md` - Patterns worth replicating
+- `TECHNICAL_DEBT_AUDIT.md` - Known issues to fix
+- `SCREEN_MAP.md` - UI flows for designers
+- `YYYYMMDD_SPEC_*.md` - Feature specifications
+- `AGENT_STATUS_GUIDE.md` - Workflow documentation
+
+**Before implementing a feature:**
+1. Check FUCKBOARD for related mistakes
+2. Check BEST_PRACTICES for proven patterns
+3. Check existing specs for architectural decisions
+4. Create new spec if feature is complex
+
+**After implementing a feature:**
+1. Update FUCKBOARD with any mistakes made
+2. Add to BEST_PRACTICES if pattern was brilliant
+3. Document in code with JSDoc
+4. Reference docs in commit message
+
+**The documentation is only valuable if you actually use it. Read before you code.**
+
+---
