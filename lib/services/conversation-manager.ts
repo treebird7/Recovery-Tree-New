@@ -8,6 +8,7 @@ import {
 } from '../questions/step1';
 import { getInitialStep2Question, getRandomStep2Question } from '../questions/step2';
 import { getInitialStep3Question, getRandomStep3Question } from '../questions/step3';
+import type { UserContext, SessionSummary } from './user-context';
 
 export interface ConversationTurn {
   question: string;
@@ -27,6 +28,8 @@ export interface ConversationState {
   askedQuestionIndices: number[]; // Track which questions have been asked
   location?: string;
   bodyNeed?: string;
+  userContext?: UserContext | null; // Cross-session memory
+  recentSessions?: SessionSummary[]; // Recent session summaries
 }
 
 /**
@@ -41,7 +44,9 @@ export class ConversationManager {
     initialStep: 'step1' | 'step2' | 'step3',
     existingHistory?: ConversationTurn[],
     location?: string,
-    bodyNeed?: string
+    bodyNeed?: string,
+    userContext?: UserContext | null,
+    recentSessions?: SessionSummary[]
   ) {
     this.state = {
       currentStep: initialStep,
@@ -53,6 +58,8 @@ export class ConversationManager {
       askedQuestionIndices: [],
       location,
       bodyNeed,
+      userContext,
+      recentSessions,
     };
   }
 
@@ -100,6 +107,8 @@ export class ConversationManager {
       currentPhase: this.state.currentPhase,
       location: this.state.location,
       bodyNeed: this.state.bodyNeed,
+      userContext: this.state.userContext,
+      recentSessions: this.state.recentSessions,
     });
 
     // Update state
@@ -234,9 +243,18 @@ export function createFromSavedSession(
   history: ConversationTurn[],
   currentPhase?: string,
   location?: string,
-  bodyNeed?: string
+  bodyNeed?: string,
+  userContext?: UserContext | null,
+  recentSessions?: SessionSummary[]
 ): ConversationManager {
-  const manager = new ConversationManager(step, history, location, bodyNeed);
+  const manager = new ConversationManager(
+    step,
+    history,
+    location,
+    bodyNeed,
+    userContext,
+    recentSessions
+  );
 
   // Restore state from history
   if (currentPhase) {

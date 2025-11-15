@@ -1,4 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
+import { buildContextPrompt } from './context-builder';
+import type { UserContext, SessionSummary } from './user-context';
 
 // Initialize Anthropic client
 const anthropic = new Anthropic({
@@ -80,6 +82,8 @@ interface GenerateQuestionParams {
   currentPhase?: string;
   location?: string;
   bodyNeed?: string;
+  userContext?: UserContext | null;
+  recentSessions?: SessionSummary[];
 }
 
 interface GenerateReflectionParams {
@@ -99,6 +103,8 @@ export async function generateNextQuestion({
   currentPhase,
   location,
   bodyNeed,
+  userContext,
+  recentSessions,
 }: GenerateQuestionParams): Promise<{
   question: string;
   hasRedFlags: boolean;
@@ -112,8 +118,12 @@ export async function generateNextQuestion({
   const locationContext = location ? `\nNature location: ${location}` : '';
   const bodyNeedContext = bodyNeed ? `\nBody need: ${bodyNeed}` : '';
 
+  // Build user context prompt (cross-session memory)
+  const userContextPrompt = buildContextPrompt(userContext, recentSessions || []);
+  const contextSection = userContextPrompt ? `\n\n${userContextPrompt}\n` : '';
+
   const prompt = `Current step: ${currentStep.toUpperCase()}
-${currentPhase ? `Current phase: ${currentPhase}` : ''}${locationContext}${bodyNeedContext}
+${currentPhase ? `Current phase: ${currentPhase}` : ''}${locationContext}${bodyNeedContext}${contextSection}
 
 Conversation so far:
 ${historyContext}
