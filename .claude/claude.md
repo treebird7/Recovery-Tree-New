@@ -235,3 +235,79 @@ It will hopefully help you find your own daily and weekly routine, make it easy 
 ---
 
 **These principles shape every interaction users have with Recovery Tree. They are not suggestions—they are the foundation of ethical, effective recovery support.**
+
+---
+
+## Agent Coordination Protocol
+
+**IMPORTANT:** This project uses a multi-agent coordination system. Before starting work on any task, you MUST check the current status of other agents.
+
+### Required Actions Before Starting Work
+
+1. **Check agent status** to see what other agents are working on:
+   ```typescript
+   import { createAgentStatusClient } from '@/lib/agent-status';
+
+   const agent = createAgentStatusClient({
+     sessionId: 'your-session-id',
+     branchName: 'your-branch',
+     agentType: 'claude-code-web' // or 'vscode' or 'terminal'
+   });
+
+   // See what others are doing
+   const others = await agent.getOtherAgents();
+   const onMyBranch = await agent.getAgentsOnBranch('branch-name');
+   ```
+
+2. **Update your status** when starting work:
+   ```typescript
+   await agent.updateStatus('working', 'Clear description of current task');
+   ```
+
+3. **Check for conflicts** before major changes:
+   - Are other agents working on the same files?
+   - Is anyone blocked on something you could help with?
+   - Are there dependencies between your work and others?
+
+4. **Update status throughout your work:**
+   - When blocked: `await agent.markBlocked('Reason for being blocked')`
+   - When complete: `await agent.markComplete()`
+   - When switching tasks: `await agent.updateStatus('working', 'New task description')`
+
+5. **Clean up** when done:
+   ```typescript
+   await agent.cleanup();
+   ```
+
+### Coordination Best Practices
+
+- **Avoid file conflicts**: Check if other agents are modifying the same files
+- **Communicate blockers**: If you're blocked, mark it so others can help or work around it
+- **Respect branch work**: Check what's happening on target branches before merging
+- **Be specific**: Use clear task descriptions like "Implementing auth in login.ts" not "working on auth"
+
+### Quick Reference
+
+**From code:**
+```typescript
+const agent = createAgentStatusClient({ sessionId, branchName, agentType });
+await agent.updateStatus('working', 'Task description');
+const others = await agent.getOtherAgents();
+await agent.markComplete();
+```
+
+**From terminal:**
+```bash
+npm run agents update "Task description" working
+npm run agents list
+npm run agents branch main
+npm run agents complete
+```
+
+### Documentation
+
+Full documentation: `AGENT_STATUS_GUIDE.md`
+Examples: `examples/agent-status-usage.ts`
+Database schema: `supabase/migrations/011_agent_status.sql`
+
+**This coordination system prevents conflicts and enables true parallel development across branches.**
